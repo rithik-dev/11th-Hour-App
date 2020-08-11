@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "433590201105",
+    "firebase_url": "https://eleventhhour-eb2e0.firebaseio.com",
+    "project_id": "eleventhhour-eb2e0",
+    "storage_bucket": "eleventhhour-eb2e0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:433590201105:android:7b2e02568aee335fd1bab0",
+        "android_client_info": {
+          "package_name": "com.example.eleventh_hour"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "433590201105-6ji3qrfs4c2tel6ckhke0lnbg6bbbnn2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.eleventh_hour",
+            "certificate_hash": "cf4a48055913539aa4349e801667b332057bbe21"
+          }
+        },
+        {
+          "client_id": "433590201105-oiuq9pdca202qvf8m2913pqtbvmfd7ia.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBE_8diDSq8iNUltBu8mFiEwh6k-zSRWjk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "433590201105-oiuq9pdca202qvf8m2913pqtbvmfd7ia.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
