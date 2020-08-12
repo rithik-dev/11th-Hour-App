@@ -1,9 +1,10 @@
-import 'package:eleventh_hour/components/connectionLost.dart';
+import 'package:eleventh_hour/components/ConnectionLostClipper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ConnectionLost extends StatelessWidget {
   static const String id = '/connection';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

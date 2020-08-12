@@ -1,5 +1,7 @@
-import 'package:eleventh_hour/screens/SplashScreen.dart';
-import 'package:eleventh_hour/screens/connectionLost.dart';
+import 'package:eleventh_hour/views/LoginScreen.dart';
+import 'package:eleventh_hour/views/RegistrationScreen.dart';
+import 'package:eleventh_hour/views/SplashScreen.dart';
+import 'package:eleventh_hour/views/ConnectionLostScreen.dart';
 import 'package:flutter/material.dart';
 
 class RouteGenerator {
@@ -8,6 +10,10 @@ class RouteGenerator {
     final args = settings.arguments;
 
     switch (settings.name) {
+      case LoginScreen.id:
+        return MaterialPageRoute(builder: (_) => LoginScreen());
+      case RegistrationScreen.id:
+        return MaterialPageRoute(builder: (_) => RegistrationScreen());
       case SplashScreen.id:
         return MaterialPageRoute(builder: (_) => SplashScreen());
       case ConnectionLost.id:
