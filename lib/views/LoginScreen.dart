@@ -1,8 +1,8 @@
 import 'package:eleventh_hour/components/CustomTextFormField.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
+import 'package:eleventh_hour/models/Exceptions.dart';
 import 'package:eleventh_hour/views/RegistrationScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:eleventh_hour/models/Exceptions.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 // ignore: must_be_immutable
@@ -65,8 +65,8 @@ class LoginScreen extends StatelessWidget {
                       try {
                         final bool loginSuccessful =
                             await UserController.loginUser(
-                          _email.trim(),
-                          _password,
+                          email: _email.trim(),
+                          password: _password,
                         );
                         if (loginSuccessful)
                           // TODO: navigate to app screen

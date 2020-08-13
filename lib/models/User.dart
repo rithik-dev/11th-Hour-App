@@ -18,12 +18,16 @@ class User extends ChangeNotifier {
     @required this.phone,
     @required this.collegeId,
     @required this.userId,
-     this.myCourses,
-     this.myUploadedCourses,
-     this.wishlist,
+    this.myCourses,
+    this.myUploadedCourses,
+    this.wishlist,
   });
   void updatePersonalDetails(
-      {String name, String collegeId, String profileURL, String phone,String email}) {
+      {String name,
+      String collegeId,
+      String profileURL,
+      String phone,
+      String email}) {
     this.name = name;
     this.collegeId = collegeId;
     this.email = email;

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 class Course {
   String id;
   String title;
+  List<String> lecturesId;
   String subject;
   String instructorName;
   double price;

@@ -2,12 +2,14 @@ import 'dart:async';
 
 import 'package:connectivity/connectivity.dart';
 import 'package:eleventh_hour/models/RouteGenerator.dart';
+import 'package:eleventh_hour/models/User.dart';
+import 'package:eleventh_hour/utilities/UserSharedPref.dart';
 import 'package:eleventh_hour/utilities/constants.dart';
 import 'package:eleventh_hour/views/ConnectionLostScreen.dart';
-import 'package:eleventh_hour/views/LoginScreen.dart';
 import 'package:eleventh_hour/views/SplashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart' as Provider;
 
 void main() {
   runApp(MyApp());
@@ -34,7 +36,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-
+    getCurrentUser();
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     connectivitySubscription = Connectivity()
         .onConnectivityChanged
@@ -50,16 +52,29 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  User user;
+  void getCurrentUser() async {
+    User result = await UserSharedPref.getUserFromSharedPreferences();
+    setState(() {
+      user = result;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
-    return MaterialApp(
-      theme: kDefaultTheme,
-      debugShowCheckedModeBanner: false,
-      onGenerateRoute: RouteGenerator.generateRoute,
-      initialRoute: LoginScreen.id,
+    return Provider.MultiProvider(
+      providers: [
+        Provider.ChangeNotifierProvider<User>.value(value: user),
+      ],
+      child: MaterialApp(
+        theme: kDefaultTheme,
+        debugShowCheckedModeBanner: false,
+        onGenerateRoute: RouteGenerator.generateRoute,
+        initialRoute: SplashScreen.id,
+      ),
     );
   }
 }

@@ -3,10 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserSharedPref {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  static final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future updatePersonalDetails(
-      {String name, String profileURL, String collegeId, String phone,String email}) async {
+  static Future updatePersonalDetails(
+      {String name,
+      String profileURL,
+      String collegeId,
+      String phone,
+      String email}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('collegeId');
     await prefs.remove('phone');
@@ -21,7 +25,7 @@ class UserSharedPref {
     await prefs.setString('email', email);
   }
 
-  Future storeUserInSharedPreferences({
+  static Future storeUserInSharedPreferences({
     String userId,
     String phone,
     String name,
@@ -45,7 +49,7 @@ class UserSharedPref {
   }
 
   //fetch the user details from shared preferences
-  Future<User> getUserFromSharedPreferences() async {
+  static Future<User> getUserFromSharedPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return User(
       collegeId: prefs.getString('collegeId'),
@@ -57,7 +61,7 @@ class UserSharedPref {
     );
   }
 
-  Future logOutUser() async {
+  static Future logOutUser() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.remove('userId');

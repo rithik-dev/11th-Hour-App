@@ -8,18 +8,18 @@ class UserController {
   static final FirebaseAuth _auth = FirebaseAuth.instance;
   static final Firestore _fireStore = Firestore.instance;
 
-//  static Future<FirebaseUser> getCurrentUser() async {
-//    try {
-//      final FirebaseUser currentUser = await _auth.currentUser();
-//      if (currentUser != null && currentUser.isEmailVerified)
-//        return currentUser;
-//      else
-//        return null;
-//    } catch (e) {
-//      print("ERROR WHILE GETTING CURRENT USER : $e");
-//      return null;
-//    }
-//  }
+  static Future<FirebaseUser> getCurrentUser() async {
+    try {
+      final FirebaseUser currentUser = await _auth.currentUser();
+      if (currentUser != null && currentUser.isEmailVerified)
+        return currentUser;
+      else
+        return null;
+    } catch (e) {
+      print("ERROR WHILE GETTING CURRENT USER : $e");
+      return null;
+    }
+  }
 
   static Future<bool> sendPasswordResetEmail(String email) async {
     try {
@@ -48,7 +48,12 @@ class UserController {
   }
 
   static Future<bool> registerUser(
-      {String email, String password, String name}) async {
+      {String name,
+      String profileURL,
+      String collegeId,
+      String phone,
+      String email,
+      String password}) async {
     try {
       final user = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -56,9 +61,12 @@ class UserController {
       await user.user.sendEmailVerification();
 
       if (user != null) {
-        // creating document for new user
         _fireStore.collection("users").document(user.user.uid).setData({
-//          "fullName": fullName,
+          "name": name,
+          "phone": phone,
+          "collegeId": collegeId,
+          "profileURL": profileURL,
+          "email": email
         });
         return true;
       } else
@@ -69,7 +77,7 @@ class UserController {
     }
   }
 
-  static Future<bool> loginUser(String email, String password) async {
+  static Future<bool> loginUser({String email, String password}) async {
     try {
       final user = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
@@ -97,14 +105,19 @@ class UserController {
   }
 
   static Future<bool> updatePersonalDetails(
-      {name, updatedProfileUrl, uid, collegeId, phone,email}) async {
+      {String name,
+      String updatedProfileUrl,
+      String uid,
+      String collegeId,
+      String phone,
+      String email}) async {
     try {
       await _fireStore.collection('users').document(uid).updateData({
         'name': name,
         'profileURL': updatedProfileUrl,
         'collegeId': collegeId,
         'phone': phone,
-        'email':email
+        'email': email
       });
       return true;
     } catch (e) {
