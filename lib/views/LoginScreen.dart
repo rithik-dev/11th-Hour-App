@@ -1,6 +1,7 @@
 import 'package:eleventh_hour/components/CustomTextFormField.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/models/Exceptions.dart';
+import 'package:eleventh_hour/views/Home.dart';
 import 'package:eleventh_hour/views/RegistrationScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -70,7 +71,7 @@ class LoginScreen extends StatelessWidget {
                         );
                         if (loginSuccessful)
                           // TODO: navigate to app screen
-                          print("LOGIN USER");
+                          Navigator.pushReplacementNamed(context, Home.id);
                         else
                           msg =
                               "Error While Logging In . Please try again after some time.";

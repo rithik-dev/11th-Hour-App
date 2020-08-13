@@ -9,7 +9,7 @@ class IntroScreen extends StatelessWidget {
       body: Container(
         child: FlatButton(
           onPressed: () {
-            Navigator.popAndPushNamed(context, LoginScreen.id);
+            Navigator.pushReplacementNamed(context, LoginScreen.id);
           },
           child: Text("Go"),
         ),

@@ -21,13 +21,13 @@ class _SplashScreenState extends State<SplashScreen> {
     if (_seen) {
       final FirebaseUser user = await UserController.getCurrentUser();
       if (user != null) {
-        Navigator.popAndPushNamed(context, Home.id);
+        Navigator.pushReplacementNamed(context, Home.id);
       } else {
-        Navigator.popAndPushNamed(context, LoginScreen.id);
+        Navigator.pushReplacementNamed(context, LoginScreen.id);
       }
     } else {
       await prefs.setBool('seen', true);
-      Navigator.pushNamed(context, IntroScreen.id);
+      Navigator.pushReplacementNamed(context, IntroScreen.id);
     }
   }
 
