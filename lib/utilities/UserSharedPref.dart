@@ -18,10 +18,10 @@ class UserSharedPref {
     await prefs.remove('email');
     await prefs.remove('profileURL');
     /////////////////////////////////
-    await prefs.setString('phoneNumber', phone);
+    await prefs.setString('phone', phone);
     await prefs.setString('collegeId', collegeId);
     await prefs.setString('name', name);
-    await prefs.setString('profileUrl', profileURL);
+    await prefs.setString('profileURL', profileURL);
     await prefs.setString('email', email);
   }
 
@@ -43,7 +43,10 @@ class UserSharedPref {
     await prefs.setString('collegeId', collegeId);
     await prefs.setString('name', name);
     await prefs.setString('email', email);
-    await prefs.setString('profileUrl', profileURL);
+    await prefs.setString('profileURL', profileURL);
+    await prefs.setStringList('myUploadedCourses', []);
+    await prefs.setStringList('myCourses', []);
+    await prefs.setStringList('wishlist', []);
 
     print('saved successfully');
   }
