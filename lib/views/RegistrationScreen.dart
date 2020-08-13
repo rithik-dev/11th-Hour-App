@@ -1,6 +1,6 @@
 import 'package:eleventh_hour/components/CustomTextFormField.dart';
-import 'package:eleventh_hour/models/Exceptions.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
+import 'package:eleventh_hour/models/Exceptions.dart';
 import 'package:eleventh_hour/views/LoginScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -82,10 +82,9 @@ class RegistrationScreen extends StatelessWidget {
                       try {
                         final bool registerSuccessful =
                             await UserController.registerUser(
-                          _email.trim(),
-                          _password,
-                          fullName: _fullName.trim(),
-                        );
+                                email: _email.trim(),
+                                password: _password,
+                                name: _fullName);
                         if (registerSuccessful)
                           msg = "Verification Email Sent Successfully !";
                         else {

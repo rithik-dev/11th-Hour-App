@@ -6,7 +6,7 @@ class UserController {
   UserController._();
 
   static final FirebaseAuth _auth = FirebaseAuth.instance;
-  static final Firestore _firestore = Firestore.instance;
+  static final Firestore _fireStore = Firestore.instance;
 
 //  static Future<FirebaseUser> getCurrentUser() async {
 //    try {
@@ -47,8 +47,8 @@ class UserController {
     }
   }
 
-  static Future<bool> registerUser(String email, String password,
-      {String fullName}) async {
+  static Future<bool> registerUser(
+      {String email, String password, String name}) async {
     try {
       final user = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -57,8 +57,8 @@ class UserController {
 
       if (user != null) {
         // creating document for new user
-        _firestore.collection("users").document(user.user.uid).setData({
-          "fullName": fullName,
+        _fireStore.collection("users").document(user.user.uid).setData({
+//          "fullName": fullName,
         });
         return true;
       } else
@@ -92,6 +92,23 @@ class UserController {
       return true;
     } catch (e) {
       print("EXCEPTION WHILE LOGGING OUT USER : $e");
+      return false;
+    }
+  }
+
+  static Future<bool> updatePersonalDetails(
+      {name, updatedProfileUrl, uid, collegeId, phone,email}) async {
+    try {
+      await _fireStore.collection('users').document(uid).updateData({
+        'name': name,
+        'profileURL': updatedProfileUrl,
+        'collegeId': collegeId,
+        'phone': phone,
+        'email':email
+      });
+      return true;
+    } catch (e) {
+      print("caught error: $e");
       return false;
     }
   }

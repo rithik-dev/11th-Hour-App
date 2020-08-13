@@ -1,14 +1,13 @@
 import 'dart:async';
 
 import 'package:connectivity/connectivity.dart';
-import 'package:eleventh_hour/views/SplashScreen.dart';
+import 'package:eleventh_hour/models/RouteGenerator.dart';
 import 'package:eleventh_hour/utilities/constants.dart';
 import 'package:eleventh_hour/views/ConnectionLostScreen.dart';
 import 'package:eleventh_hour/views/LoginScreen.dart';
+import 'package:eleventh_hour/views/SplashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'package:eleventh_hour/models/routeGenerator.dart';
 
 void main() {
   runApp(MyApp());
