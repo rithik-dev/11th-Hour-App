@@ -1,6 +1,8 @@
+import 'package:eleventh_hour/components/DrawerBoilerPlate.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/views/LoginScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_inner_drawer/inner_drawer.dart';
 
 class Home extends StatefulWidget {
   static const id = '/home';
@@ -10,20 +12,34 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final GlobalKey<InnerDrawerState> _innerDrawerKey =
+      GlobalKey<InnerDrawerState>();
+  void toggle() {
+    _innerDrawerKey.currentState.toggle(direction: InnerDrawerDirection.start);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: Container(),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.exit_to_app),
-            onPressed: () async {
-              await UserController.logoutUser();
-              Navigator.popAndPushNamed(context, LoginScreen.id);
+    return CustomDrawer(
+      innerDrawerKey: _innerDrawerKey,
+      scaffold: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.filter_list),
+            onPressed: () {
+              toggle();
             },
-          )
-        ],
+          ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.exit_to_app),
+              onPressed: () async {
+                await UserController.logoutUser();
+                Navigator.popAndPushNamed(context, LoginScreen.id);
+              },
+            )
+          ],
+        ),
       ),
     );
   }
