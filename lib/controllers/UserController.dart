@@ -47,9 +47,9 @@ class UserController {
     }
   }
 
-  static Future<bool> registerUser(
+  static Future<String> registerUser(
       {String name,
-      String profileURL,
+      String profilePicURL,
       String collegeId,
       String phone,
       String email,
@@ -65,12 +65,12 @@ class UserController {
           "name": name,
           "phone": phone,
           "collegeId": collegeId,
-          "profileURL": profileURL,
+          "profilePicURL": profilePicURL,
           "email": email
         });
-        return true;
+        return user.user.uid;
       } else
-        return false;
+        return null;
     } catch (e) {
       print("EXCEPTION WHILE REGISTERING NEW USER : $e");
       throw RegistrationException(e.message);

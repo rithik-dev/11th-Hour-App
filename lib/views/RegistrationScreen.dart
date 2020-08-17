@@ -1,9 +1,12 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eleventh_hour/components/CustomTextFormField.dart';
+import 'package:eleventh_hour/controllers/CollegeController.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/models/College.dart';
 import 'package:eleventh_hour/models/Exceptions.dart';
+import 'package:eleventh_hour/utilities/UiIcons.dart';
 import 'package:eleventh_hour/views/LoginScreen.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -23,22 +26,21 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final _formKey = GlobalKey<FormState>();
+  Firestore _firestore = Firestore.instance;
 
   String _email;
-
   String _password;
-
   String _fullName;
-
   String _phone;
+  String _profilePicURL;
+  College _selectedCollege;
+  Future _future;
 
-  College _college;
-
-  String uploadFileUrl;
   final picker = ImagePicker();
   File _image;
   bool imageSelected = false;
   bool isLoading = false;
+
   Future getImage(ImageSource source) async {
     final pickedFile = await picker.getImage(source: source);
     setState(() {
@@ -47,18 +49,46 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     });
   }
 
-  Future uploadFile() async {
-    print("here");
-    String filePath = DateTime.now().toString();
+  Future uploadFile(String userId) async {
     StorageUploadTask uploadTask =
-        _storage.ref().child('images/$filePath.png').putFile(_image);
+        _storage.ref().child('Profile Pictures/$userId.png').putFile(_image);
     await uploadTask.onComplete;
-    print('File Uploaded');
-    String fileURL =
-        await _storage.ref().child('images/$filePath.png').getDownloadURL();
+    String fileURL = await _storage
+        .ref()
+        .child('Profile Pictures/$userId.png')
+        .getDownloadURL();
     setState(() {
-      uploadFileUrl = fileURL;
+      _profilePicURL = fileURL;
     });
+  }
+
+  List<College> colleges = [];
+
+  Future<List<College>> _fetchColleges() async {
+    colleges = await CollegeController.getColleges();
+    return colleges;
+  }
+
+  List<DropdownMenuItem<College>> get _dropDownItems {
+    List<DropdownMenuItem<College>> items = [];
+
+    for (int index = 0; index < colleges.length; index++) {
+      items.add(
+        DropdownMenuItem<College>(
+          child: Text(colleges[index].name),
+          value: colleges[index],
+        ),
+      );
+    }
+
+    return items;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _future = _fetchColleges();
   }
 
   @override
@@ -155,9 +185,41 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 validator: (String value) {
                   if (value.isEmpty || value.trim() == "") {
                     return 'Please Enter Your Email';
-                  }
+                  } else if (!(value.contains("@") && value.contains(".")))
+                    return "Invalid Email";
                   return null;
                 },
+              ),
+              SizedBox(height: 10.0),
+              ListTile(
+                leading: Icon(FontAwesomeIcons.building),
+                title: FutureBuilder(
+                  future: _future,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return DropdownButtonFormField<College>(
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                          hintStyle: TextStyle(
+                              color: Colors.black, fontFamily: 'karla'),
+                        ),
+                        hint: Text("Select College"),
+                        validator: (College newCollege) {
+                          if (newCollege == null)
+                            return "Please Select College";
+                          return null;
+                        },
+                        items: _dropDownItems,
+                        onChanged: (College newCollege) {
+                          setState(() {
+                            _selectedCollege = newCollege;
+                          });
+                        },
+                      );
+                    } else
+                      return LinearProgressIndicator();
+                  },
+                ),
               ),
               SizedBox(height: 10.0),
               CustomTextFormField(
@@ -169,7 +231,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 validator: (String value) {
                   if (value.isEmpty || value.trim() == "") {
                     return 'Please Enter your phone';
-                  }
+                  } else if (value.length != 10) return "Invalid Phone Number";
                   return null;
                 },
               ),
@@ -194,21 +256,25 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     onPressed: () async {
                       if (_formKey.currentState.validate()) {
                         String msg;
-                        Fluttertoast.showToast(msg: "Loading..");
                         try {
-                          await uploadFile();
-                          final bool registerSuccessful =
-                              await UserController.registerUser(
-                                  email: _email.trim(),
-                                  collegeId: "laeda",
-//                                _college.cid,
-                                  profileURL: imageSelected == true
-                                      ? uploadFileUrl
-                                      : "https://firebasestorage.googleapis.com/v0/b/eleventhhour-eb2e0.appspot.com/o/userDefault.jpeg?alt=media&token=ac1366cc-f928-4a08-8bee-1dfd5788db68",
-                                  phone: _phone,
-                                  password: _password,
-                                  name: _fullName);
-                          if (registerSuccessful) {
+                          final String userId = await UserController.registerUser(
+                              email: _email.trim(),
+                              collegeId: _selectedCollege.cid,
+                              profilePicURL:
+                                  "https://firebasestorage.googleapis.com/v0/b/eleventhhour-eb2e0.appspot.com/o/userDefault.jpeg?alt=media&token=ac1366cc-f928-4a08-8bee-1dfd5788db68",
+                              phone: _phone,
+                              password: _password,
+                              name: _fullName);
+                          if (userId != null) {
+                            if (imageSelected) {
+                              await uploadFile(userId);
+                              await _firestore
+                                  .collection("users")
+                                  .document(userId)
+                                  .updateData({
+                                "profilePicURL": _profilePicURL,
+                              });
+                            }
                             msg = "Verification Email Sent Successfully !";
                           } else {
                             msg = "Error While Registering New User";

@@ -18,21 +18,21 @@ AlertStyle kAlertStyle = AlertStyle(
   ),
 );
 
-const kTextFieldDecoration = InputDecoration(
-  hintText: 'Enter a value',
-  contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-  border: OutlineInputBorder(
-    borderRadius: BorderRadius.all(Radius.circular(22.0)),
-  ),
-  enabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.lightBlueAccent, width: 1.0),
-    borderRadius: BorderRadius.all(Radius.circular(22.0)),
-  ),
-  focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.lightBlueAccent, width: 2.0),
-    borderRadius: BorderRadius.all(Radius.circular(22.0)),
-  ),
-);
+//const kTextFieldDecoration = InputDecoration(
+//  hintText: 'Enter a value',
+//  contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+//  border: OutlineInputBorder(
+//    borderRadius: BorderRadius.all(Radius.circular(22.0)),
+//  ),
+//  enabledBorder: OutlineInputBorder(
+//    borderSide: BorderSide(color: Colors.lightBlueAccent, width: 1.0),
+//    borderRadius: BorderRadius.all(Radius.circular(22.0)),
+//  ),
+//  focusedBorder: OutlineInputBorder(
+//    borderSide: BorderSide(color: Colors.lightBlueAccent, width: 2.0),
+//    borderRadius: BorderRadius.all(Radius.circular(22.0)),
+//  ),
+//);
 
 var kDefaultTheme = ThemeData.dark();
 
@@ -111,24 +111,24 @@ const kButtonTextStyle =
 //          TextStyle(fontSize: 12.0, color: Colors.black, fontFamily: 'karla'),
 //    ));
 
-//const kTextFieldDecoration = InputDecoration(
-//  prefixIcon: Icon(
-//    Icons.person,
-//    color: Colors.black,
-//  ),
-//  focusedBorder: OutlineInputBorder(
-//      borderSide: BorderSide(
-//    color: Colors.black38,
-//    style: BorderStyle.solid,
-//    width: 2,
-//  )),
-//  labelText: "Enter Value",
-//  labelStyle: TextStyle(color: Colors.black, fontFamily: 'karla'),
-//  hintStyle: TextStyle(color: Colors.grey, fontFamily: 'karla'),
-//  hintText: "Enter",
-//
-//// hintColor: Colors.blue,
-//  border: OutlineInputBorder(
-//    borderRadius: BorderRadius.all(Radius.circular(20.0)),
-//  ),
-//);
+const kTextFieldDecoration = InputDecoration(
+  prefixIcon: Icon(
+    Icons.person,
+    color: Colors.black,
+  ),
+  focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(
+    color: Colors.black38,
+    style: BorderStyle.solid,
+    width: 2,
+  )),
+  labelText: "Enter Value",
+  labelStyle: TextStyle(color: Colors.black, fontFamily: 'karla'),
+  hintStyle: TextStyle(color: Colors.grey, fontFamily: 'karla'),
+  hintText: "Enter",
+
+// hintColor: Colors.blue,
+  border: OutlineInputBorder(
+    borderRadius: BorderRadius.all(Radius.circular(20.0)),
+  ),
+);

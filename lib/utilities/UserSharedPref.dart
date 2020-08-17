@@ -7,7 +7,7 @@ class UserSharedPref {
 
   static Future updatePersonalDetails(
       {String name,
-      String profileURL,
+      String profilePicURL,
       String collegeId,
       String phone,
       String email}) async {
@@ -16,12 +16,12 @@ class UserSharedPref {
     await prefs.remove('phone');
     await prefs.remove('name');
     await prefs.remove('email');
-    await prefs.remove('profileURL');
+    await prefs.remove('profilePicURL');
     /////////////////////////////////
     await prefs.setString('phone', phone);
     await prefs.setString('collegeId', collegeId);
     await prefs.setString('name', name);
-    await prefs.setString('profileURL', profileURL);
+    await prefs.setString('profilePicURL', profilePicURL);
     await prefs.setString('email', email);
   }
 
@@ -30,7 +30,7 @@ class UserSharedPref {
     String phone,
     String name,
     String email,
-    String profileURL,
+    String profilePicURL,
     String collegeId,
     List<String> myUploadedCourses,
     List<String> wishlist,
@@ -43,7 +43,7 @@ class UserSharedPref {
     await prefs.setString('collegeId', collegeId);
     await prefs.setString('name', name);
     await prefs.setString('email', email);
-    await prefs.setString('profileURL', profileURL);
+    await prefs.setString('profilePicURL', profilePicURL);
     await prefs.setStringList('myUploadedCourses', []);
     await prefs.setStringList('myCourses', []);
     await prefs.setStringList('wishlist', []);
@@ -56,7 +56,7 @@ class UserSharedPref {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return User(
       collegeId: prefs.getString('collegeId'),
-      profileURL: prefs.getString('profileURL'),
+      profilePicURL: prefs.getString('profilePicURL'),
       phone: prefs.getString('phone'),
       name: prefs.getString('name'),
       userId: prefs.getString('userId'),
@@ -72,7 +72,7 @@ class UserSharedPref {
       await prefs.remove('phone');
       await prefs.remove('name');
       await prefs.remove('email');
-      await prefs.remove('profileURL');
+      await prefs.remove('profilePicURL');
       await _auth.signOut();
     } catch (err) {
       print(err);
