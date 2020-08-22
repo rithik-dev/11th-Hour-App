@@ -6,7 +6,6 @@ import 'package:eleventh_hour/controllers/CollegeController.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/models/College.dart';
 import 'package:eleventh_hour/models/Exceptions.dart';
-import 'package:eleventh_hour/utilities/UiIcons.dart';
 import 'package:eleventh_hour/views/LoginScreen.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -225,13 +224,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               CustomTextFormField(
                 labelText: "Phone",
                 icon: FontAwesomeIcons.phone,
+                flipIcon: true,
                 onChanged: (String value) {
                   _phone = value;
                 },
                 validator: (String value) {
-                  if (value.isEmpty || value.trim() == "") {
-                    return 'Please Enter your phone';
-                  } else if (value.length != 10) return "Invalid Phone Number";
+                  if (value.isEmpty || value.trim() == "")
+                    return 'Please Enter your Phone Number';
+                  else if (value.length != 10) return "Invalid Phone Number";
                   return null;
                 },
               ),
@@ -243,9 +243,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   _password = value;
                 },
                 validator: (String value) {
-                  if (value.isEmpty || value.trim() == "") {
+                  if (value.isEmpty || value.trim() == "")
                     return 'Please Enter Your Password';
-                  }
+                  else if (value.length < 6) return "Invalid Password";
                   return null;
                 },
               ),

@@ -2,6 +2,7 @@ import 'package:eleventh_hour/views/ConnectionLostScreen.dart';
 import 'package:eleventh_hour/views/Home.dart';
 import 'package:eleventh_hour/views/IntroScreen.dart';
 import 'package:eleventh_hour/views/LoginScreen.dart';
+import 'package:eleventh_hour/views/ProfileScreen.dart';
 import 'package:eleventh_hour/views/RegistrationScreen.dart';
 import 'package:eleventh_hour/views/SplashScreen.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,8 @@ class RouteGenerator {
     final args = settings.arguments;
 
     switch (settings.name) {
+      case ProfileScreen.id:
+        return MaterialPageRoute(builder: (_) => ProfileScreen());
       case Home.id:
         return MaterialPageRoute(builder: (_) => Home());
       case IntroScreen.id:
@@ -23,6 +26,7 @@ class RouteGenerator {
       case SplashScreen.id:
         return MaterialPageRoute(builder: (_) => SplashScreen());
       case ConnectionLost.id:
+        print("connect lost");
         return MaterialPageRoute(builder: (_) => ConnectionLost());
 // Validation of correct data type
 //        if (args is String) {

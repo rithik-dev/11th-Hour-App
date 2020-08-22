@@ -1,3 +1,5 @@
+import 'dart:math' as math show pi;
+
 import 'package:eleventh_hour/utilities/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +12,7 @@ class CustomTextFormField extends StatefulWidget {
   final bool autofocus;
   final Function validator;
   final IconData icon;
+  final bool flipIcon;
 
   CustomTextFormField(
       {@required this.labelText,
@@ -18,6 +21,7 @@ class CustomTextFormField extends StatefulWidget {
       this.showTrailingWidget = true,
       this.defaultValue,
       this.autofocus = false,
+      this.flipIcon = false,
       this.validator,
       this.icon});
 
@@ -37,17 +41,25 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: this.widget.icon == null ? null : Icon(this.widget.icon),
+      leading: this.widget.icon == null
+          ? null
+          : this.widget.flipIcon
+          ? Transform(
+        alignment: Alignment.center,
+        transform: Matrix4.rotationY(math.pi),
+        child: Icon(this.widget.icon),
+      )
+          : Icon(this.widget.icon),
       title: TextFormField(
         validator: this.widget.validator,
         initialValue: this.widget.defaultValue ?? "",
         textAlign: TextAlign.center,
         autofocus: this.widget.autofocus,
         keyboardType:
-            keyboardTypes[this.widget.labelText] ?? TextInputType.text,
+        keyboardTypes[this.widget.labelText] ?? TextInputType.text,
         onChanged: this.widget.onChanged,
         obscureText:
-            (this.widget.labelText == "Password") ? !_showPassword : false,
+        (this.widget.labelText == "Password") ? !_showPassword : false,
         decoration: kTextFieldDecoration.copyWith(
           border: InputBorder.none,
           hintText: "Enter ${this.widget.labelText}",
@@ -56,17 +68,17 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       ),
       trailing: (this.widget.labelText == "Password")
           ? IconButton(
-              color: Colors.lightBlueAccent,
-              icon: _showPassword
-                  ? Icon(Icons.visibility)
-                  : Icon(Icons.visibility_off),
-              iconSize: 30.0,
-              onPressed: () {
-                setState(() {
-                  _showPassword = !_showPassword;
-                });
-              },
-            )
+        color: Colors.lightBlueAccent,
+        icon: _showPassword
+            ? Icon(Icons.visibility)
+            : Icon(Icons.visibility_off),
+        iconSize: 30.0,
+        onPressed: () {
+          setState(() {
+            _showPassword = !_showPassword;
+          });
+        },
+      )
           : null,
     );
   }

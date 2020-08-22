@@ -77,17 +77,17 @@ class UserController {
     }
   }
 
-  static Future<bool> loginUser({String email, String password}) async {
+  static Future<String> loginUser({String email, String password}) async {
     try {
       final user = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       if (user != null) {
         if (user.user.isEmailVerified)
-          return true;
+          return user.user.uid;
         else
           throw LoginException("EMAIL_NOT_VERIFIED");
       } else
-        return false;
+        return null;
     } catch (e) {
       print("EXCEPTION WHILE LOGGING IN USER : $e");
       throw LoginException(e.message);

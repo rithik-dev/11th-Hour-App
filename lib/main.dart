@@ -1,15 +1,16 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:eleventh_hour/models/RouteGenerator.dart';
 import 'package:eleventh_hour/models/User.dart';
-import 'package:eleventh_hour/utilities/UserSharedPref.dart';
 import 'package:eleventh_hour/utilities/constants.dart';
 import 'package:eleventh_hour/views/ConnectionLostScreen.dart';
 import 'package:eleventh_hour/views/SplashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart' as Provider;
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MyApp());
@@ -42,22 +43,34 @@ class _MyAppState extends State<MyApp> {
         .onConnectivityChanged
         .listen((ConnectivityResult connectivityResult) {
       if (connectivityResult == ConnectivityResult.none) {
-        nav.currentState.push(
-            MaterialPageRoute(builder: (BuildContext _) => ConnectionLost()));
+        nav.currentState.pushNamed(ConnectionLost.id);
       } else if (_previousResult == ConnectivityResult.none) {
-        nav.currentState.push(
-            MaterialPageRoute(builder: (BuildContext _) => SplashScreen()));
+        nav.currentState.pushNamed(SplashScreen.id);
       }
       _previousResult = connectivityResult;
     });
   }
 
   User user;
+
   void getCurrentUser() async {
-    User result = await UserSharedPref.getUserFromSharedPreferences();
-    setState(() {
-      user = result;
-    });
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String _userId = (prefs.getString('userId') ?? null);
+
+    print("userId $_userId");
+
+    if (_userId != null) {
+      final snapshot =
+          await Firestore.instance.collection("users").document(_userId).get();
+
+      // TODO: add data
+
+      setState(() {
+        user = User.fromDocumentSnapshot(snapshot);
+      });
+      print(user.toString());
+    } else
+      user = null;
   }
 
   @override
@@ -65,11 +78,12 @@ class _MyAppState extends State<MyApp> {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
-    return Provider.MultiProvider(
+    return MultiProvider(
       providers: [
-        Provider.ChangeNotifierProvider<User>.value(value: user),
+        ChangeNotifierProvider<User>.value(value: user),
       ],
       child: MaterialApp(
+        navigatorKey: nav,
         theme: kDefaultTheme,
         debugShowCheckedModeBanner: false,
         onGenerateRoute: RouteGenerator.generateRoute,

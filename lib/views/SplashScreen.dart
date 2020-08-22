@@ -1,14 +1,13 @@
-import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/views/Home.dart';
 import 'package:eleventh_hour/views/IntroScreen.dart';
 import 'package:eleventh_hour/views/LoginScreen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
-  static const id = '/splash';
+  static const id = '/';
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -17,10 +16,10 @@ class _SplashScreenState extends State<SplashScreen> {
   Future checkFirstSeen() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool _seen = (prefs.getBool('seen') ?? false);
+    String _userId = (prefs.getString('userId') ?? null);
 
     if (_seen) {
-      final FirebaseUser user = await UserController.getCurrentUser();
-      if (user != null) {
+      if (_userId != null) {
         Navigator.pushReplacementNamed(context, Home.id);
       } else {
         Navigator.pushReplacementNamed(context, LoginScreen.id);
@@ -42,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: SpinKitFoldingCube(
+        child: SpinKitRipple(
           color: Theme.of(context).accentColor,
         ),
       ),

@@ -1,6 +1,4 @@
 import 'package:eleventh_hour/components/DrawerBoilerPlate.dart';
-import 'package:eleventh_hour/controllers/UserController.dart';
-import 'package:eleventh_hour/views/LoginScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inner_drawer/inner_drawer.dart';
 
@@ -30,15 +28,6 @@ class _HomeState extends State<Home> {
               toggle();
             },
           ),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.exit_to_app),
-              onPressed: () async {
-                await UserController.logoutUser();
-                Navigator.popAndPushNamed(context, LoginScreen.id);
-              },
-            )
-          ],
         ),
       ),
     );

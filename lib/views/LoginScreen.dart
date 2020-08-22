@@ -1,10 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eleventh_hour/components/CustomTextFormField.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/models/Exceptions.dart';
+import 'package:eleventh_hour/models/User.dart';
 import 'package:eleventh_hour/views/Home.dart';
 import 'package:eleventh_hour/views/RegistrationScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class LoginScreen extends StatelessWidget {
@@ -36,9 +40,10 @@ class LoginScreen extends StatelessWidget {
                 _email = value;
               },
               validator: (String value) {
-                if (value.isEmpty || value.trim() == "") {
+                if (value.isEmpty || value.trim() == "")
                   return 'Please Enter Your Email';
-                }
+                else if (!(value.contains("@") && value.contains(".")))
+                  return "Invalid Email";
                 return null;
               },
             ),
@@ -50,9 +55,9 @@ class LoginScreen extends StatelessWidget {
                 _password = value;
               },
               validator: (String value) {
-                if (value.isEmpty || value.trim() == "") {
+                if (value.isEmpty || value.trim() == "")
                   return 'Please Enter Your Password';
-                }
+                else if (value.length < 6) return "Invalid Password";
                 return null;
               },
             ),
@@ -64,15 +69,27 @@ class LoginScreen extends StatelessWidget {
                     if (_formKey.currentState.validate()) {
                       String msg;
                       try {
-                        final bool loginSuccessful =
-                            await UserController.loginUser(
+                        final String userId = await UserController.loginUser(
                           email: _email.trim(),
                           password: _password,
                         );
-                        if (loginSuccessful)
-                          // TODO: navigate to app screen
+                        if (userId != null) {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          await prefs.setString('userId', userId);
+
+                          final DocumentSnapshot snapshot = await Firestore
+                              .instance
+                              .collection("users")
+                              .document(userId)
+                              .get();
+
+                          final User user = User.fromDocumentSnapshot(snapshot);
+                          Provider.of<User>(context, listen: false)
+                              .updateUserInProvider(user);
+
                           Navigator.pushReplacementNamed(context, Home.id);
-                        else
+                        } else
                           msg =
                               "Error While Logging In . Please try again after some time.";
                       } on LoginException catch (e) {
@@ -90,13 +107,13 @@ class LoginScreen extends StatelessWidget {
                               onPressed: () async {
                                 final bool success = await UserController
                                     .resendEmailVerificationLink(
-                                        _email, _password);
+                                    _email, _password);
                                 if (success)
                                   msg =
-                                      "Email Verification Link Sent Successfully !";
+                                  "Email Verification Link Sent Successfully !";
                                 else
                                   msg =
-                                      "An Error Occurred While Sending Email Verification Link !";
+                                  "An Error Occurred While Sending Email Verification Link !";
 
                                 if (msg != null)
                                   Fluttertoast.showToast(msg: msg);
@@ -119,7 +136,7 @@ class LoginScreen extends StatelessWidget {
                 if (_email != null && _email.trim() != "") {
                   try {
                     final bool success =
-                        await UserController.sendPasswordResetEmail(_email);
+                    await UserController.sendPasswordResetEmail(_email);
                     if (success)
                       msg = "Password Reset Email Sent !";
                     else
