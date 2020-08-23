@@ -6,10 +6,10 @@ import 'package:eleventh_hour/controllers/CollegeController.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/models/College.dart';
 import 'package:eleventh_hour/models/Exceptions.dart';
+import 'package:eleventh_hour/views/LoadingScreen.dart';
 import 'package:eleventh_hour/views/LoginScreen.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
@@ -41,6 +41,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   bool imageSelected = false;
   bool isLoading = false;
   bool isAsyncCall = false;
+
   Future getImage(ImageSource source) async {
     final pickedFile = await picker.getImage(source: source);
     if (pickedFile == null) return;
@@ -312,16 +313,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               ),
             ),
           ]),
-          isAsyncCall
-              ? Container(
-                  height: double.infinity,
-                  width: double.infinity,
-                  color: Colors.black.withOpacity(0.4),
-                  child: SpinKitChasingDots(
-                    color: Theme.of(context).accentColor,
-                  ),
-                )
-              : SizedBox.shrink()
+          isAsyncCall ? LoadingScreen() : SizedBox.shrink(),
         ],
       ),
     );

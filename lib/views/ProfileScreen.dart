@@ -41,13 +41,10 @@ class ProfileScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  Column(
-                    children: [
-                      Text(
-                        user.name,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline1,
-                      ),
+                  SizedBox(height: 20.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
                       Stack(
                         children: <Widget>[
                           ClipOval(
@@ -56,7 +53,7 @@ class ProfileScreen extends StatelessWidget {
                               height: 100,
                               imageUrl: user.profilePicURL,
                               fit: BoxFit.cover,
-                              placeholder: (context, q) => Shimmer.fromColors(
+                              placeholder: (context, url) => Shimmer.fromColors(
                                   child: CircleAvatar(
                                     radius: 50,
                                   ),
@@ -85,8 +82,30 @@ class ProfileScreen extends StatelessWidget {
                           )
                         ],
                       ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            user.name,
+                            textAlign: TextAlign.center,
+                            style: Theme
+                                .of(context)
+                                .textTheme
+                                .headline1,
+                          ),
+                          Text(
+                            user.email,
+                            textAlign: TextAlign.center,
+                            style: Theme
+                                .of(context)
+                                .textTheme
+                                .headline5,
+                          ),
+                        ],
+                      )
                     ],
                   ),
+                  SizedBox(height: 20.0),
                   FutureBuilder(
                     future: CollegeController.getCollegeFromId(user.collegeId),
                     builder: (context, snapshot) {

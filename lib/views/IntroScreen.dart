@@ -1,4 +1,4 @@
-import 'package:eleventh_hour/views/LoginScreen.dart';
+import 'package:eleventh_hour/views/RegistrationScreen.dart';
 import 'package:flutter/material.dart';
 
 class IntroScreen extends StatelessWidget {
@@ -9,7 +9,7 @@ class IntroScreen extends StatelessWidget {
       body: Container(
         child: FlatButton(
           onPressed: () {
-            Navigator.pushReplacementNamed(context, LoginScreen.id);
+            Navigator.pushReplacementNamed(context, RegistrationScreen.id);
           },
           child: Text("Go"),
         ),

@@ -4,9 +4,9 @@ import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/models/Exceptions.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:eleventh_hour/views/Home.dart';
+import 'package:eleventh_hour/views/LoadingScreen.dart';
 import 'package:eleventh_hour/views/RegistrationScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String _email;
   bool isLoading = false;
   String _password;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,16 +125,21 @@ class _LoginScreenState extends State<LoginScreen> {
                                 action: SnackBarAction(
                                   label: "RESEND LINK !",
                                   onPressed: () async {
+                                    setState(() {
+                                      isLoading = true;
+                                    });
                                     final bool success = await UserController
                                         .resendEmailVerificationLink(
-                                            _email, _password);
+                                            _email.trim(), _password);
                                     if (success)
                                       msg =
                                           "Email Verification Link Sent Successfully !";
                                     else
                                       msg =
                                           "An Error Occurred While Sending Email Verification Link !";
-
+                                    setState(() {
+                                      isLoading = false;
+                                    });
                                     if (msg != null)
                                       Fluttertoast.showToast(msg: msg);
                                   },
@@ -188,16 +194,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
             ),
           ),
-          isLoading
-              ? Container(
-                  height: double.infinity,
-                  width: double.infinity,
-                  color: Colors.black.withOpacity(0.4),
-                  child: SpinKitChasingDots(
-                    color: Theme.of(context).accentColor,
-                  ),
-                )
-              : SizedBox.shrink()
+          isLoading ? LoadingScreen() : SizedBox.shrink(),
         ],
       ),
     );

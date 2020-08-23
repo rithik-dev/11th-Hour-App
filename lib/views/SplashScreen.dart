@@ -1,8 +1,8 @@
 import 'package:eleventh_hour/views/Home.dart';
 import 'package:eleventh_hour/views/IntroScreen.dart';
+import 'package:eleventh_hour/views/LoadingScreen.dart';
 import 'package:eleventh_hour/views/LoginScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -40,11 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SpinKitRipple(
-          color: Theme.of(context).accentColor,
-        ),
-      ),
+      body: LoadingScreen(),
     );
   }
 }

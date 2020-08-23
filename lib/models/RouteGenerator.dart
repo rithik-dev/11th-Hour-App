@@ -2,9 +2,12 @@ import 'package:eleventh_hour/views/ConnectionLostScreen.dart';
 import 'package:eleventh_hour/views/Home.dart';
 import 'package:eleventh_hour/views/IntroScreen.dart';
 import 'package:eleventh_hour/views/LoginScreen.dart';
+import 'package:eleventh_hour/views/MyCoursesScreen.dart';
+import 'package:eleventh_hour/views/MyUploadedCoursesScreen.dart';
 import 'package:eleventh_hour/views/ProfileScreen.dart';
 import 'package:eleventh_hour/views/RegistrationScreen.dart';
 import 'package:eleventh_hour/views/SplashScreen.dart';
+import 'package:eleventh_hour/views/WishlistScreen.dart';
 import 'package:flutter/material.dart';
 
 class RouteGenerator {
@@ -13,6 +16,12 @@ class RouteGenerator {
     final args = settings.arguments;
 
     switch (settings.name) {
+      case WishlistScreen.id:
+        return MaterialPageRoute(builder: (_) => WishlistScreen());
+      case MyCoursesScreen.id:
+        return MaterialPageRoute(builder: (_) => MyCoursesScreen());
+      case MyUploadedCoursesScreen.id:
+        return MaterialPageRoute(builder: (_) => MyUploadedCoursesScreen());
       case ProfileScreen.id:
         return MaterialPageRoute(builder: (_) => ProfileScreen());
       case Home.id:
