@@ -70,6 +70,7 @@ class ProfileScreen extends StatelessWidget {
                               backgroundColor: Colors.black,
                               radius: 15.0,
                               child: IconButton(
+                                tooltip: "Edit Profile pic",
                                 icon: Icon(Icons.edit),
                                 color: Colors.white,
                                 iconSize: 15.0,
@@ -88,18 +89,12 @@ class ProfileScreen extends StatelessWidget {
                           Text(
                             user.name,
                             textAlign: TextAlign.center,
-                            style: Theme
-                                .of(context)
-                                .textTheme
-                                .headline1,
+                            style: Theme.of(context).textTheme.headline1,
                           ),
                           Text(
                             user.email,
                             textAlign: TextAlign.center,
-                            style: Theme
-                                .of(context)
-                                .textTheme
-                                .headline5,
+                            style: Theme.of(context).textTheme.headline5,
                           ),
                         ],
                       )
