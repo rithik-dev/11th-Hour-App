@@ -51,26 +51,21 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  User user;
+  User user = User();
 
   void getCurrentUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String _userId = (prefs.getString('userId') ?? null);
 
-    print("userId $_userId");
-
     if (_userId != null) {
       final snapshot =
           await Firestore.instance.collection("users").document(_userId).get();
-
-      // TODO: add data
 
       setState(() {
         user = User.fromDocumentSnapshot(snapshot);
       });
       print(user.toString());
-    } else
-      user = null;
+    }
   }
 
   @override

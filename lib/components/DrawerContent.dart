@@ -27,9 +27,7 @@ class DrawerContent extends StatelessWidget {
             title: "Profile",
             icon: FontAwesomeIcons.userCircle,
             onTap: () {
-//              final User user = Provider.of<User>(context, listen: false);
-////              print(user.name);
-              Navigator.pushNamed(context, ProfileScreen.id);
+              Navigator.popAndPushNamed(context, ProfileScreen.id);
             },
           ),
           DrawerItem(
@@ -38,9 +36,6 @@ class DrawerContent extends StatelessWidget {
             onTap: () {
 //              Navigator.pushNamed(context, EditStoryScreen.id, arguments: user);
             },
-          ),
-          SizedBox(
-            height: 20,
           ),
           DrawerItem(
               title: "Sign Out",

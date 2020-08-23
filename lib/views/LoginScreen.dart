@@ -66,6 +66,7 @@ class LoginScreen extends StatelessWidget {
                 return FlatButton(
                   child: Text("LOGIN"),
                   onPressed: () async {
+                    //TODO: add loading screen
                     if (_formKey.currentState.validate()) {
                       String msg;
                       try {
@@ -85,6 +86,7 @@ class LoginScreen extends StatelessWidget {
                               .get();
 
                           final User user = User.fromDocumentSnapshot(snapshot);
+                          print(user.toString());
                           Provider.of<User>(context, listen: false)
                               .updateUserInProvider(user);
 
@@ -95,7 +97,7 @@ class LoginScreen extends StatelessWidget {
                       } on LoginException catch (e) {
                         if (e.message != null) msg = e.message;
                       } catch (e) {
-                        msg = e.message;
+                        msg = e.toString();
                       }
 
                       if (msg == "EMAIL_NOT_VERIFIED")
@@ -144,7 +146,7 @@ class LoginScreen extends StatelessWidget {
                   } on ForgotPasswordException catch (e) {
                     msg = e.message;
                   } catch (e) {
-                    msg = e.message;
+                    msg = e.toString();
                   }
                 } else
                   msg = "Please Enter Your Email !";

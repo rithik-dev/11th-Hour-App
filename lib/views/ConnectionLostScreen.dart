@@ -37,9 +37,7 @@ class ConnectionLost extends StatelessWidget {
             padding: EdgeInsets.all(10),
             child: Text(
               "Hey,\nIt looks like you are not connected to internet.\n\n Try Again Later!!!",
-              style: Theme.of(context).textTheme.bodyText2.copyWith(
-                    color: Colors.black,
-                  ),
+              style: Theme.of(context).textTheme.headline1,
               softWrap: true,
               textAlign: TextAlign.center,
             ),

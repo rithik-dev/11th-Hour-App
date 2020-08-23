@@ -42,6 +42,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   Future getImage(ImageSource source) async {
     final pickedFile = await picker.getImage(source: source);
+    if (pickedFile == null) return;
     setState(() {
       imageSelected = true;
       _image = File(pickedFile.path);
@@ -282,7 +283,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         } on RegistrationException catch (e) {
                           if (e.message != null) msg = e.message;
                         } catch (e) {
-                          msg = e.message;
+                          msg = e.toString();
                         }
                         Fluttertoast.showToast(msg: msg);
                       }
