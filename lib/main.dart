@@ -51,7 +51,13 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  User user = User();
+  User user = User(
+      profilePicURL: "",
+      phone: "",
+      email: "",
+      name: "",
+      userId: "",
+      collegeId: "");
 
   void getCurrentUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

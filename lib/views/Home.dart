@@ -19,6 +19,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return CustomDrawer(
+      screenId: Home.id,
       innerDrawerKey: _innerDrawerKey,
       scaffold: Scaffold(
         appBar: AppBar(

@@ -8,6 +8,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DrawerContent extends StatelessWidget {
+  final String screenId;
+  DrawerContent({@required this.screenId});
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -15,27 +17,39 @@ class DrawerContent extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          screenId != Home.id
+              ? DrawerItem(
+                  title: "Home",
+                  icon: FontAwesomeIcons.bed,
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.popAndPushNamed(context, Home.id);
+                  },
+                )
+              : SizedBox.shrink(),
+          screenId != ProfileScreen.id
+              ? DrawerItem(
+                  title: "Profile",
+                  icon: FontAwesomeIcons.userCircle,
+                  onTap: () {
+                    Navigator.popAndPushNamed(context, ProfileScreen.id);
+                  },
+                )
+              : SizedBox.shrink(),
           DrawerItem(
-            title: "Home",
-            icon: FontAwesomeIcons.bed,
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.popAndPushNamed(context, Home.id);
-            },
+            title: "Wishlist",
+            icon: FontAwesomeIcons.heart,
+            onTap: () {},
           ),
           DrawerItem(
-            title: "Profile",
-            icon: FontAwesomeIcons.userCircle,
-            onTap: () {
-              Navigator.popAndPushNamed(context, ProfileScreen.id);
-            },
+            title: "My Courses",
+            icon: FontAwesomeIcons.video,
+            onTap: () {},
           ),
           DrawerItem(
-            title: "Compose",
-            icon: FontAwesomeIcons.penFancy,
-            onTap: () {
-//              Navigator.pushNamed(context, EditStoryScreen.id, arguments: user);
-            },
+            title: "Uploaded Courses",
+            icon: FontAwesomeIcons.inbox,
+            onTap: () {},
           ),
           DrawerItem(
               title: "Sign Out",
@@ -77,7 +91,7 @@ class DrawerItem extends StatelessWidget {
       color: Colors.transparent,
       shadowColor: Colors.transparent,
       child: ListTile(
-        contentPadding: EdgeInsets.all(30),
+        contentPadding: EdgeInsets.all(20),
         leading: FaIcon(icon),
         onTap: onTap,
         title: Text(title),

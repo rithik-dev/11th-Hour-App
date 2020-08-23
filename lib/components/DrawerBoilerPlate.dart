@@ -6,8 +6,8 @@ import 'DrawerContent.dart';
 class CustomDrawer extends StatelessWidget {
   final Widget scaffold;
   final GlobalKey<InnerDrawerState> innerDrawerKey;
-
-  CustomDrawer({this.scaffold, this.innerDrawerKey});
+  final String screenId;
+  CustomDrawer({this.scaffold, this.innerDrawerKey, this.screenId});
   @override
   Widget build(BuildContext context) {
     return InnerDrawer(
@@ -28,7 +28,9 @@ class CustomDrawer extends StatelessWidget {
             Theme.of(context).primaryColor
           ])),
       colorTransitionScaffold: Theme.of(context).primaryColor,
-      leftChild: DrawerContent(),
+      leftChild: DrawerContent(
+        screenId: screenId,
+      ),
       scale: IDOffset.horizontal(0.8),
       scaffold: scaffold,
     );
