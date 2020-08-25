@@ -17,6 +17,7 @@ class WishlistScreen extends StatelessWidget {
       screenId: WishlistScreen.id,
       innerDrawerKey: _innerDrawerKey,
       scaffold: Scaffold(
+        backgroundColor: Colors.lightGreenAccent,
         appBar: AppBar(
           leading: IconButton(
             onPressed: () {

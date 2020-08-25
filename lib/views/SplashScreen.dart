@@ -14,19 +14,20 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   Future checkFirstSeen() async {
+    await Future.delayed(Duration(seconds: 3));
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool _seen = (prefs.getBool('seen') ?? false);
     String _userId = (prefs.getString('userId') ?? null);
 
     if (_seen) {
       if (_userId != null) {
-        Navigator.pushReplacementNamed(context, Home.id);
+        Navigator.popAndPushNamed(context, Home.id);
       } else {
-        Navigator.pushReplacementNamed(context, LoginScreen.id);
+        Navigator.popAndPushNamed(context, LoginScreen.id);
       }
     } else {
       await prefs.setBool('seen', true);
-      Navigator.pushReplacementNamed(context, IntroScreen.id);
+      Navigator.popAndPushNamed(context, IntroScreen.id);
     }
   }
 

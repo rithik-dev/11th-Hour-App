@@ -187,8 +187,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 FlatButton(
                   child: Text("Register ?"),
                   onPressed: () {
-                    Navigator.pushReplacementNamed(
-                        context, RegistrationScreen.id);
+                    Navigator.popAndPushNamed(context, RegistrationScreen.id);
                   },
                 )
               ],

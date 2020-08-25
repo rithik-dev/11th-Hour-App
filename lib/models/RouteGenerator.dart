@@ -9,6 +9,7 @@ import 'package:eleventh_hour/views/RegistrationScreen.dart';
 import 'package:eleventh_hour/views/SplashScreen.dart';
 import 'package:eleventh_hour/views/WishlistScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -17,26 +18,41 @@ class RouteGenerator {
 
     switch (settings.name) {
       case WishlistScreen.id:
-        return MaterialPageRoute(builder: (_) => WishlistScreen());
+        return PageTransition(
+            child: WishlistScreen(),
+            type: PageTransitionType.leftToRightWithFade);
       case MyCoursesScreen.id:
-        return MaterialPageRoute(builder: (_) => MyCoursesScreen());
+        return PageTransition(
+            child: MyCoursesScreen(),
+            type: PageTransitionType.leftToRightWithFade);
       case MyUploadedCoursesScreen.id:
-        return MaterialPageRoute(builder: (_) => MyUploadedCoursesScreen());
+        return PageTransition(
+            child: MyUploadedCoursesScreen(),
+            type: PageTransitionType.leftToRightWithFade);
       case ProfileScreen.id:
-        return MaterialPageRoute(builder: (_) => ProfileScreen());
+        return PageTransition(
+            child: ProfileScreen(),
+            type: PageTransitionType.leftToRightWithFade);
       case Home.id:
-        return MaterialPageRoute(builder: (_) => Home());
+        return PageTransition(
+            child: Home(), type: PageTransitionType.leftToRightWithFade);
       case IntroScreen.id:
-        return MaterialPageRoute(builder: (_) => IntroScreen());
+        return PageTransition(
+            child: IntroScreen(), type: PageTransitionType.leftToRightWithFade);
       case LoginScreen.id:
-        return MaterialPageRoute(builder: (_) => LoginScreen());
+        return PageTransition(
+            child: LoginScreen(), type: PageTransitionType.rightToLeftWithFade);
       case RegistrationScreen.id:
-        return MaterialPageRoute(builder: (_) => RegistrationScreen());
+        return PageTransition(
+            child: RegistrationScreen(),
+            type: PageTransitionType.rightToLeftWithFade);
       case SplashScreen.id:
-        return MaterialPageRoute(builder: (_) => SplashScreen());
+        return PageTransition(
+            child: SplashScreen(), type: PageTransitionType.rotate);
       case ConnectionLost.id:
-        print("connect lost");
-        return MaterialPageRoute(builder: (_) => ConnectionLost());
+        return PageTransition(
+            child: ConnectionLost(),
+            type: PageTransitionType.leftToRightWithFade);
 // Validation of correct data type
 //        if (args is String) {
 //          return MaterialPageRoute(
