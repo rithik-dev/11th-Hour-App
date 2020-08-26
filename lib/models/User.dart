@@ -9,6 +9,8 @@ class User extends ChangeNotifier {
   String collegeId;
   String userId;
   List<String> transactionIds;
+  List<String> cart;
+  List<String> recentCoursesIds;
   List<String> myCourses;
   List<String> myUploadedCourses;
   List<String> wishlist;
@@ -21,6 +23,8 @@ class User extends ChangeNotifier {
     @required this.collegeId,
     @required this.userId,
     this.transactionIds,
+    this.recentCoursesIds,
+    this.cart,
     this.myCourses,
     this.myUploadedCourses,
     this.wishlist,
@@ -35,6 +39,8 @@ class User extends ChangeNotifier {
       collegeId: snapshot['collegeId'] as String,
       userId: snapshot.documentID,
       transactionIds: snapshot['transactionIds'] as List<String>,
+      recentCoursesIds: snapshot['recentCoursesIds'] as List<String>,
+      cart: snapshot['cart'] as List<String>,
       myCourses: snapshot['myCourses'] as List<String>,
       myUploadedCourses: snapshot['myUploadedCourses'] as List<String>,
       wishlist: snapshot['wishlist'] as List<String>,
@@ -52,6 +58,8 @@ class User extends ChangeNotifier {
       'userId': this.userId,
       'transactionIds': this.transactionIds,
       'myCourses': this.myCourses,
+      'recentCoursesIds': this.recentCoursesIds,
+      'cart': this.cart,
       'myUploadedCourses': this.myUploadedCourses,
       'wishlist': this.wishlist,
     } as Map<String, dynamic>;
@@ -59,7 +67,7 @@ class User extends ChangeNotifier {
 
   @override
   String toString() {
-    return 'User{name: $name, email: $email, profilePicURL: $profilePicURL, phone: $phone, collegeId: $collegeId, userId: $userId, transactionIds: $transactionIds, myCourses: $myCourses, myUploadedCourses: $myUploadedCourses, wishlist: $wishlist}';
+    return 'User{name: $name, email: $email, profilePicURL: $profilePicURL, phone: $phone, collegeId: $collegeId, userId: $userId, transactionIds: $transactionIds, myCourses: $myCourses, myUploadedCourses: $myUploadedCourses, wishlist: $wishlist, recentCoursesIds: $recentCoursesIds , cart: $cart}';
   }
 
   void updateUserInProvider(User user) {
@@ -73,6 +81,8 @@ class User extends ChangeNotifier {
     this.myCourses = user.myCourses;
     this.myUploadedCourses = user.myUploadedCourses;
     this.wishlist = user.wishlist;
+    this.recentCoursesIds = user.recentCoursesIds;
+    this.cart = user.cart;
     notifyListeners();
   }
 }

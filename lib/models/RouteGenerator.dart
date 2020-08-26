@@ -1,3 +1,4 @@
+import 'package:eleventh_hour/views/Cart.dart';
 import 'package:eleventh_hour/views/ConnectionLostScreen.dart';
 import 'package:eleventh_hour/views/Home.dart';
 import 'package:eleventh_hour/views/IntroScreen.dart';
@@ -39,6 +40,9 @@ class RouteGenerator {
       case IntroScreen.id:
         return PageTransition(
             child: IntroScreen(), type: PageTransitionType.leftToRightWithFade);
+      case CartScreen.id:
+        return PageTransition(
+            child: CartScreen(), type: PageTransitionType.rightToLeftWithFade);
       case LoginScreen.id:
         return PageTransition(
             child: LoginScreen(), type: PageTransitionType.rightToLeftWithFade);

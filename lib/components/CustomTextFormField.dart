@@ -44,41 +44,41 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       leading: this.widget.icon == null
           ? null
           : this.widget.flipIcon
-          ? Transform(
-        alignment: Alignment.center,
-        transform: Matrix4.rotationY(math.pi),
-        child: Icon(this.widget.icon),
-      )
-          : Icon(this.widget.icon),
+              ? Transform(
+                  alignment: Alignment.center,
+                  transform: Matrix4.rotationY(math.pi),
+                  child: Icon(this.widget.icon),
+                )
+              : Icon(this.widget.icon),
       title: TextFormField(
         validator: this.widget.validator,
         initialValue: this.widget.defaultValue ?? "",
         textAlign: TextAlign.center,
         autofocus: this.widget.autofocus,
         keyboardType:
-        keyboardTypes[this.widget.labelText] ?? TextInputType.text,
+            keyboardTypes[this.widget.labelText] ?? TextInputType.text,
         onChanged: this.widget.onChanged,
         obscureText:
-        (this.widget.labelText == "Password") ? !_showPassword : false,
+            (this.widget.labelText == "Password") ? !_showPassword : false,
         decoration: kTextFieldDecoration.copyWith(
-          border: InputBorder.none,
+//          border: InputBorder.,
           hintText: "Enter ${this.widget.labelText}",
           labelText: this.widget.labelText,
         ),
       ),
       trailing: (this.widget.labelText == "Password")
           ? IconButton(
-        color: Colors.lightBlueAccent,
-        icon: _showPassword
-            ? Icon(Icons.visibility)
-            : Icon(Icons.visibility_off),
-        iconSize: 30.0,
-        onPressed: () {
-          setState(() {
-            _showPassword = !_showPassword;
-          });
-        },
-      )
+              color: Colors.lightBlueAccent,
+              icon: _showPassword
+                  ? Icon(Icons.visibility)
+                  : Icon(Icons.visibility_off),
+              iconSize: 30.0,
+              onPressed: () {
+                setState(() {
+                  _showPassword = !_showPassword;
+                });
+              },
+            )
           : null,
     );
   }

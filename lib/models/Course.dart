@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 class Course {
   String id;
   String title;
-  List<String> lectureIds;
   String subject;
   String instructorName;
   double price;
@@ -22,6 +21,7 @@ class Course {
     @required this.price,
     @required this.lectures,
     @required this.date,
+    @required this.instructorId,
     @required this.enrolledUsers,
     @required this.subject,
   });

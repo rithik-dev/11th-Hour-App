@@ -14,7 +14,6 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   Future checkFirstSeen() async {
-    await Future.delayed(Duration(seconds: 3));
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool _seen = (prefs.getBool('seen') ?? false);
     String _userId = (prefs.getString('userId') ?? null);

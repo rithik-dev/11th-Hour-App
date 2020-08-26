@@ -1,10 +1,8 @@
 import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/views/Home.dart';
 import 'package:eleventh_hour/views/LoginScreen.dart';
-import 'package:eleventh_hour/views/MyCoursesScreen.dart';
 import 'package:eleventh_hour/views/MyUploadedCoursesScreen.dart';
 import 'package:eleventh_hour/views/ProfileScreen.dart';
-import 'package:eleventh_hour/views/WishlistScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -22,17 +20,6 @@ class DrawerContent extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          screenId != Home.id
-              ? DrawerItem(
-                  title: "Home",
-                  icon: FontAwesomeIcons.bed,
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pop(context);
-                    Navigator.popAndPushNamed(context, Home.id);
-                  },
-                )
-              : SizedBox.shrink(),
           screenId != ProfileScreen.id
               ? DrawerItem(
                   title: "Profile",
@@ -42,27 +29,15 @@ class DrawerContent extends StatelessWidget {
                     Navigator.popAndPushNamed(context, ProfileScreen.id);
                   },
                 )
-              : SizedBox.shrink(),
-          screenId != WishlistScreen.id
-              ? DrawerItem(
-                  title: "Wishlist",
-                  icon: FontAwesomeIcons.heart,
+              : DrawerItem(
+                  title: "Home",
+                  icon: FontAwesomeIcons.bed,
                   onTap: () {
-                    if (screenId != Home.id) Navigator.pop(context);
-                    Navigator.popAndPushNamed(context, WishlistScreen.id);
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    Navigator.popAndPushNamed(context, Home.id);
                   },
-                )
-              : SizedBox.shrink(),
-          screenId != MyCoursesScreen.id
-              ? DrawerItem(
-                  title: "My Courses",
-                  icon: FontAwesomeIcons.video,
-                  onTap: () {
-                    if (screenId != Home.id) Navigator.pop(context);
-                    Navigator.popAndPushNamed(context, MyCoursesScreen.id);
-                  },
-                )
-              : SizedBox.shrink(),
+                ),
           screenId != MyUploadedCoursesScreen.id
               ? DrawerItem(
                   title: "Uploaded Courses",
@@ -73,7 +48,15 @@ class DrawerContent extends StatelessWidget {
                         context, MyUploadedCoursesScreen.id);
                   },
                 )
-              : SizedBox.shrink(),
+              : DrawerItem(
+                  title: "Home",
+                  icon: FontAwesomeIcons.bed,
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    Navigator.popAndPushNamed(context, Home.id);
+                  },
+                ),
           DrawerItem(
               title: "Sign Out",
               icon: FontAwesomeIcons.signOutAlt,
