@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eleventh_hour/components/DrawerBoilerPlate.dart';
-import 'package:eleventh_hour/controllers/CollegeController.dart';
 import 'package:eleventh_hour/models/College.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,8 +21,8 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Consumer<User>(
-        builder: (context, user, child) {
+      child: Consumer2<User, College>(
+        builder: (context, user, college, child) {
           return CustomDrawer(
             screenId: ProfileScreen.id,
             innerDrawerKey: _innerDrawerKey,
@@ -101,23 +100,24 @@ class ProfileScreen extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 20.0),
-                  FutureBuilder(
-                    future: CollegeController.getCollegeFromId(user.collegeId),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        final College college = snapshot.data;
-                        return ListTile(
-                          title: Text(college.name),
-                          subtitle: Text(college.subjectWithCourses.toString()),
-                        );
-                      } else
-                        return Shimmer.fromColors(
-                            child: CircleAvatar(),
-                            baseColor: Colors.grey,
-                            direction: ShimmerDirection.btt,
-                            highlightColor: Colors.grey[300]);
-                    },
+                  ListTile(
+                    title: Text(college.name),
+                    subtitle: Text(college.subjectWithCourses.toString()),
                   )
+//                  FutureBuilder(
+//                    future: CollegeController.getCollegeFromId(user.collegeId),
+//                    builder: (context, snapshot) {
+//                      if (snapshot.hasData) {
+//                        final College college = snapshot.data;
+//                        return
+//                      } else
+//                        return Shimmer.fromColors(
+//                            child: CircleAvatar(),
+//                            baseColor: Colors.grey,
+//                            direction: ShimmerDirection.btt,
+//                            highlightColor: Colors.grey[300]);
+//                    },
+//                  )
                 ],
               ),
             ),

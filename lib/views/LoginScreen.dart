@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eleventh_hour/components/CustomTextFormField.dart';
+import 'package:eleventh_hour/components/HomeBoilerPlate.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/models/Exceptions.dart';
 import 'package:eleventh_hour/models/User.dart';
-import 'package:eleventh_hour/views/Home.dart';
 import 'package:eleventh_hour/views/LoadingScreen.dart';
 import 'package:eleventh_hour/views/RegistrationScreen.dart';
 import 'package:flutter/material.dart';
@@ -104,7 +104,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               Provider.of<User>(context, listen: false)
                                   .updateUserInProvider(user);
 
-                              Navigator.pushReplacementNamed(context, Home.id);
+                              Navigator.pushReplacementNamed(
+                                  context, HomeBoilerPlate.id);
                             } else
                               msg =
                                   "Error While Logging In . Please try again after some time.";

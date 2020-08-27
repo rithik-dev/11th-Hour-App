@@ -10,29 +10,31 @@ class CustomDrawer extends StatelessWidget {
   CustomDrawer({this.scaffold, this.innerDrawerKey, this.screenId});
   @override
   Widget build(BuildContext context) {
-    return InnerDrawer(
-      key: innerDrawerKey,
-      proportionalChildArea: true, // default true
-      borderRadius: 50, // default 0
-      boxShadow: [
-        BoxShadow(spreadRadius: 10, blurRadius: 3, color: Colors.transparent)
-      ],
-      leftAnimationType: InnerDrawerAnimation.linear,
-      onTapClose: true,
-      backgroundDecoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-            Theme.of(context).accentColor,
-            Theme.of(context).primaryColor
-          ])),
-      colorTransitionScaffold: Theme.of(context).primaryColor,
-      leftChild: DrawerContent(
-        screenId: screenId,
+    return SafeArea(
+      child: InnerDrawer(
+        key: innerDrawerKey,
+        proportionalChildArea: true, // default true
+        borderRadius: 50, // default 0
+        boxShadow: [
+          BoxShadow(spreadRadius: 10, blurRadius: 3, color: Colors.transparent)
+        ],
+        leftAnimationType: InnerDrawerAnimation.linear,
+        onTapClose: true,
+        backgroundDecoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+              Colors.amber,
+              Theme.of(context).primaryColor,
+            ])),
+        colorTransitionScaffold: Theme.of(context).primaryColor,
+        leftChild: DrawerContent(
+          screenId: screenId,
+        ),
+        scale: IDOffset.horizontal(0.8),
+        scaffold: scaffold,
       ),
-      scale: IDOffset.horizontal(0.8),
-      scaffold: scaffold,
     );
   }
 }

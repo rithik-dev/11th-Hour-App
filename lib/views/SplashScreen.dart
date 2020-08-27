@@ -1,4 +1,4 @@
-import 'package:eleventh_hour/views/Home.dart';
+import 'package:eleventh_hour/components/HomeBoilerPlate.dart';
 import 'package:eleventh_hour/views/IntroScreen.dart';
 import 'package:eleventh_hour/views/LoadingScreen.dart';
 import 'package:eleventh_hour/views/LoginScreen.dart';
@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (_seen) {
       if (_userId != null) {
-        Navigator.popAndPushNamed(context, Home.id);
+        Navigator.popAndPushNamed(context, HomeBoilerPlate.id);
       } else {
         Navigator.popAndPushNamed(context, LoginScreen.id);
       }

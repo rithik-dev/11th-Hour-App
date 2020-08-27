@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity/connectivity.dart';
+import 'package:eleventh_hour/models/College.dart';
 import 'package:eleventh_hour/models/RouteGenerator.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:eleventh_hour/utilities/constants.dart';
 import 'package:eleventh_hour/views/ConnectionLostScreen.dart';
+import 'package:eleventh_hour/views/LoginScreen.dart';
 import 'package:eleventh_hour/views/SplashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -58,29 +60,42 @@ class _MyAppState extends State<MyApp> {
       name: "",
       userId: "",
       collegeId: "");
-
+  College college = College(name: "", subjectWithCourses: {}, cid: "");
   void getCurrentUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String _userId = (prefs.getString('userId') ?? null);
 
     if (_userId != null) {
-      final snapshot =
-          await Firestore.instance.collection("users").document(_userId).get();
-
-      setState(() {
-        user = User.fromDocumentSnapshot(snapshot);
-      });
-      print(user.toString());
+      try {
+        final userSnapshot = await Firestore.instance
+            .collection("users")
+            .document(_userId)
+            .get();
+        final collegeSnapshot = await Firestore.instance
+            .collection("colleges")
+            .document(userSnapshot['collegeId'])
+            .get();
+        setState(() {
+          user = User.fromDocumentSnapshot(userSnapshot);
+          college = College.fromDocumentSnapshot(collegeSnapshot);
+        });
+        print(user.toString());
+        print(college.name);
+      } catch (err) {
+        print(err);
+        Navigator.popAndPushNamed(context, LoginScreen.id);
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
+      statusBarColor: Colors.grey[800],
     ));
     return MultiProvider(
       providers: [
+        Provider<College>.value(value: college),
         ChangeNotifierProvider<User>.value(value: user),
       ],
       child: MaterialApp(

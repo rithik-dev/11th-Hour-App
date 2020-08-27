@@ -1,14 +1,12 @@
+import 'package:eleventh_hour/components/HomeBoilerPlate.dart';
 import 'package:eleventh_hour/views/Cart.dart';
 import 'package:eleventh_hour/views/ConnectionLostScreen.dart';
-import 'package:eleventh_hour/views/Home.dart';
 import 'package:eleventh_hour/views/IntroScreen.dart';
 import 'package:eleventh_hour/views/LoginScreen.dart';
-import 'package:eleventh_hour/views/MyCoursesScreen.dart';
 import 'package:eleventh_hour/views/MyUploadedCoursesScreen.dart';
 import 'package:eleventh_hour/views/ProfileScreen.dart';
 import 'package:eleventh_hour/views/RegistrationScreen.dart';
 import 'package:eleventh_hour/views/SplashScreen.dart';
-import 'package:eleventh_hour/views/WishlistScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -16,16 +14,20 @@ class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
 // Getting arguments passed in while calling Navigator.pushNamed
     final args = settings.arguments;
-
+    print(settings.name);
     switch (settings.name) {
-      case WishlistScreen.id:
+      case HomeBoilerPlate.id:
         return PageTransition(
-            child: WishlistScreen(),
+            child: HomeBoilerPlate(),
             type: PageTransitionType.leftToRightWithFade);
-      case MyCoursesScreen.id:
-        return PageTransition(
-            child: MyCoursesScreen(),
-            type: PageTransitionType.leftToRightWithFade);
+//      case WishlistScreen.id:
+//        return PageTransition(
+//            child: WishlistScreen(),
+//            type: PageTransitionType.leftToRightWithFade);
+//      case MyCoursesScreen.id:
+//        return PageTransition(
+//            child: MyCoursesScreen(),
+//            type: PageTransitionType.leftToRightWithFade);
       case MyUploadedCoursesScreen.id:
         return PageTransition(
             child: MyUploadedCoursesScreen(),
@@ -34,15 +36,15 @@ class RouteGenerator {
         return PageTransition(
             child: ProfileScreen(),
             type: PageTransitionType.leftToRightWithFade);
-      case Home.id:
-        return PageTransition(
-            child: Home(), type: PageTransitionType.leftToRightWithFade);
+//      case Home.id:
+//        return PageTransition(
+//            child: Home(), type: PageTransitionType.leftToRightWithFade);
       case IntroScreen.id:
         return PageTransition(
             child: IntroScreen(), type: PageTransitionType.leftToRightWithFade);
       case CartScreen.id:
         return PageTransition(
-            child: CartScreen(), type: PageTransitionType.rightToLeftWithFade);
+            child: CartScreen(), type: PageTransitionType.downToUp);
       case LoginScreen.id:
         return PageTransition(
             child: LoginScreen(), type: PageTransitionType.rightToLeftWithFade);

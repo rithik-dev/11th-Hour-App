@@ -1,5 +1,6 @@
+import 'package:eleventh_hour/components/HomeBoilerPlate.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
-import 'package:eleventh_hour/views/Home.dart';
+import 'package:eleventh_hour/utilities/UiIcons.dart';
 import 'package:eleventh_hour/views/LoginScreen.dart';
 import 'package:eleventh_hour/views/MyUploadedCoursesScreen.dart';
 import 'package:eleventh_hour/views/ProfileScreen.dart';
@@ -25,17 +26,17 @@ class DrawerContent extends StatelessWidget {
                   title: "Profile",
                   icon: FontAwesomeIcons.userCircle,
                   onTap: () {
-                    if (screenId != Home.id) Navigator.pop(context);
+                    if (screenId != HomeBoilerPlate.id) Navigator.pop(context);
                     Navigator.popAndPushNamed(context, ProfileScreen.id);
                   },
                 )
               : DrawerItem(
                   title: "Home",
-                  icon: FontAwesomeIcons.bed,
+                  icon: UiIcons.home,
                   onTap: () {
                     Navigator.pop(context);
                     Navigator.pop(context);
-                    Navigator.popAndPushNamed(context, Home.id);
+                    Navigator.popAndPushNamed(context, HomeBoilerPlate.id);
                   },
                 ),
           screenId != MyUploadedCoursesScreen.id
@@ -43,18 +44,18 @@ class DrawerContent extends StatelessWidget {
                   title: "Uploaded Courses",
                   icon: FontAwesomeIcons.inbox,
                   onTap: () {
-                    if (screenId != Home.id) Navigator.pop(context);
+                    if (screenId != HomeBoilerPlate.id) Navigator.pop(context);
                     Navigator.popAndPushNamed(
                         context, MyUploadedCoursesScreen.id);
                   },
                 )
               : DrawerItem(
                   title: "Home",
-                  icon: FontAwesomeIcons.bed,
+                  icon: UiIcons.home,
                   onTap: () {
                     Navigator.pop(context);
                     Navigator.pop(context);
-                    Navigator.popAndPushNamed(context, Home.id);
+                    Navigator.popAndPushNamed(context, HomeBoilerPlate.id);
                   },
                 ),
           DrawerItem(
@@ -67,7 +68,7 @@ class DrawerContent extends StatelessWidget {
                   await prefs.remove('userId');
                   final bool success = await UserController.logoutUser();
                   if (success) {
-                    if (screenId != Home.id) Navigator.pop(context);
+                    if (screenId != HomeBoilerPlate.id) Navigator.pop(context);
                     Navigator.pop(context);
                     Navigator.popAndPushNamed(context, LoginScreen.id);
                   } else {
