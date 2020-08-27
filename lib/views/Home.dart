@@ -35,19 +35,35 @@ class _HomeState extends State<Home> {
               ),
               Wrap(
                 alignment: WrapAlignment.center,
-                spacing: 30,
+                spacing: 20,
                 children: [
                   Chip(
-                    label: Text("CS"),
+                    padding: EdgeInsets.all(10),
+                    label: Text(
+                      "CS",
+                      style: Theme.of(context).textTheme.headline4,
+                    ),
                   ),
                   Chip(
-                    label: Text("MEC"),
+                    padding: EdgeInsets.all(10),
+                    label: Text(
+                      "MEC",
+                      style: Theme.of(context).textTheme.headline4,
+                    ),
                   ),
                   Chip(
-                    label: Text("BBA"),
+                    padding: EdgeInsets.all(10),
+                    label: Text(
+                      "BBA",
+                      style: Theme.of(context).textTheme.headline4,
+                    ),
                   ),
                   Chip(
-                    label: Text("LAW"),
+                    padding: EdgeInsets.all(10),
+                    label: Text(
+                      "LAW",
+                      style: Theme.of(context).textTheme.headline4,
+                    ),
                   ),
                 ],
               ),
