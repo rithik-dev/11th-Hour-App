@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:vertical_card_pager/vertical_card_pager.dart';
 
-class MyCoursesScreen extends StatelessWidget {
-  static const id = '/my_courses';
+class SubjectDetails extends StatelessWidget {
+  static const id = '/subject_details';
 
-  @override
   Widget build(BuildContext context) {
     final List<String> titles = [
       "RED",

@@ -7,6 +7,7 @@ import 'package:eleventh_hour/views/MyUploadedCoursesScreen.dart';
 import 'package:eleventh_hour/views/ProfileScreen.dart';
 import 'package:eleventh_hour/views/RegistrationScreen.dart';
 import 'package:eleventh_hour/views/SplashScreen.dart';
+import 'package:eleventh_hour/views/SubjectDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -16,6 +17,9 @@ class RouteGenerator {
     final args = settings.arguments;
     print(settings.name);
     switch (settings.name) {
+      case SubjectDetails.id:
+        return PageTransition(
+            child: SubjectDetails(), type: PageTransitionType.downToUp);
       case HomeBoilerPlate.id:
         return PageTransition(
             child: HomeBoilerPlate(),

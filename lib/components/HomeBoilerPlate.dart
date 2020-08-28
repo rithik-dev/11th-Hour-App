@@ -59,7 +59,7 @@ class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
                   activeColor: Colors.white,
                   iconSize: 24,
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                  duration: Duration(milliseconds: 800),
+                  duration: Duration(milliseconds: 600),
                   tabBackgroundColor: Colors.grey[800],
                   tabs: [
                     GButton(

@@ -2,6 +2,7 @@ import 'package:eleventh_hour/components/SlimyBottom.dart';
 import 'package:eleventh_hour/components/SlimyTop.dart';
 import 'package:eleventh_hour/models/College.dart';
 import 'package:eleventh_hour/models/User.dart';
+import 'package:eleventh_hour/views/SubjectDetails.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +28,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
         GestureDetector(
           onTap: () {
             print(college.subjectWithCourses[subject]);
+            Navigator.pushNamed(context, SubjectDetails.id);
           },
           child: Chip(
             padding: EdgeInsets.all(10),
