@@ -1,15 +1,61 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'dart:io';
+
 import 'package:eleventh_hour/components/DrawerBoilerPlate.dart';
+import 'package:eleventh_hour/components/ProfilePicture.dart';
 import 'package:eleventh_hour/models/College.dart';
 import 'package:eleventh_hour/models/User.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inner_drawer/inner_drawer.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   static const id = '/profile';
+
+  @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  final FirebaseStorage _storage =
+      FirebaseStorage(storageBucket: 'gs://eleventhhour-eb2e0.appspot.com');
+
+  final picker = ImagePicker();
+
+  File _image;
+
+  bool imageSelected = false;
+
+  bool isLoading = false;
+
+  bool isAsyncCall = false;
+  String _profilePicURL;
+
+  Future getImage(ImageSource source) async {
+    final pickedFile = await picker.getImage(source: source);
+    if (pickedFile == null) return;
+    setState(() {
+      imageSelected = true;
+      _image = File(pickedFile.path);
+    });
+  }
+
+  Future uploadFile() async {
+    String userId = Provider.of<User>(context).userId;
+
+    StorageUploadTask uploadTask =
+        _storage.ref().child('Profile Pictures/$userId.png').putFile(_image);
+    await uploadTask.onComplete;
+    String fileURL = await _storage
+        .ref()
+        .child('Profile Pictures/$userId.png')
+        .getDownloadURL();
+    setState(() {
+      _profilePicURL = fileURL;
+    });
+  }
 
   final GlobalKey<InnerDrawerState> _innerDrawerKey =
       GlobalKey<InnerDrawerState>();
@@ -46,22 +92,7 @@ class ProfileScreen extends StatelessWidget {
                     children: <Widget>[
                       Stack(
                         children: <Widget>[
-                          ClipOval(
-                            child: CachedNetworkImage(
-                              width: 100,
-                              height: 100,
-                              imageUrl: user.profilePicURL,
-                              fit: BoxFit.cover,
-                              placeholder: (context, url) => Shimmer.fromColors(
-                                  child: CircleAvatar(
-                                    radius: 50,
-                                  ),
-                                  baseColor: Colors.grey,
-                                  highlightColor: Colors.grey[300]),
-                              errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
-                            ),
-                          ),
+                          ProfilePicture(user.profilePicURL),
                           Positioned(
                             bottom: 0,
                             right: 0,
@@ -74,8 +105,7 @@ class ProfileScreen extends StatelessWidget {
                                 color: Colors.white,
                                 iconSize: 15.0,
                                 onPressed: () {
-                                  //TODO: edit image
-                                  print("edit profile pic");
+                                  //TODO: edit pic
                                 },
                               ),
                             ),

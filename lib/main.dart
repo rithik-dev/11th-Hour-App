@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:eleventh_hour/models/College.dart';
+import 'package:eleventh_hour/models/Course.dart';
+import 'package:eleventh_hour/models/CourseProvider.dart';
 import 'package:eleventh_hour/models/RouteGenerator.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:eleventh_hour/utilities/constants.dart';
@@ -39,7 +41,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    getCurrentUser();
+    getState();
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     connectivitySubscription = Connectivity()
         .onConnectivityChanged
@@ -61,9 +63,21 @@ class _MyAppState extends State<MyApp> {
       userId: "",
       collegeId: "");
   College college = College(name: "", subjectWithCourses: {}, cid: "");
-  void getCurrentUser() async {
+  CourseProvider courseProvider = CourseProvider(courses: []);
+
+  void getState() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String _userId = (prefs.getString('userId') ?? null);
+
+    final coursesSnapshot =
+        await Firestore.instance.collection("courses").getDocuments();
+
+    List<Course> courses = [];
+    for (DocumentSnapshot snapshot in coursesSnapshot.documents) {
+      final Course course = Course.fromDocumentSnapshot(snapshot);
+      courses.add(course);
+      print(course.toString());
+    }
 
     if (_userId != null) {
       try {
@@ -75,12 +89,12 @@ class _MyAppState extends State<MyApp> {
             .collection("colleges")
             .document(userSnapshot['collegeId'])
             .get();
+
         setState(() {
           user = User.fromDocumentSnapshot(userSnapshot);
           college = College.fromDocumentSnapshot(collegeSnapshot);
+          courseProvider = CourseProvider(courses: courses);
         });
-        print(user.toString());
-        print(college.name);
       } catch (err) {
         print(err);
         Navigator.popAndPushNamed(context, LoginScreen.id);
@@ -95,8 +109,9 @@ class _MyAppState extends State<MyApp> {
     ));
     return MultiProvider(
       providers: [
-        Provider<College>.value(value: college),
+        ChangeNotifierProvider<College>.value(value: college),
         ChangeNotifierProvider<User>.value(value: user),
+        ChangeNotifierProvider<CourseProvider>.value(value: courseProvider),
       ],
       child: MaterialApp(
         navigatorKey: nav,

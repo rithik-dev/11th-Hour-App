@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eleventh_hour/components/CustomTextFormField.dart';
 import 'package:eleventh_hour/components/HomeBoilerPlate.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
+import 'package:eleventh_hour/models/College.dart';
 import 'package:eleventh_hour/models/Exceptions.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:eleventh_hour/views/LoadingScreen.dart';
@@ -98,11 +99,21 @@ class _LoginScreenState extends State<LoginScreen> {
                                   .document(userId)
                                   .get();
 
+                              final collegeSnapshot = await Firestore.instance
+                                  .collection("colleges")
+                                  .document(snapshot['collegeId'])
+                                  .get();
+
                               final User user =
                                   User.fromDocumentSnapshot(snapshot);
+                              final College college =
+                                  College.fromDocumentSnapshot(collegeSnapshot);
+
                               print(user.toString());
                               Provider.of<User>(context, listen: false)
                                   .updateUserInProvider(user);
+                              Provider.of<College>(context, listen: false)
+                                  .updateCollegeInProvider(college);
 
                               Navigator.pushReplacementNamed(
                                   context, HomeBoilerPlate.id);

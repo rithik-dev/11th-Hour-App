@@ -14,9 +14,44 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
+  Future future;
+
+  List<GestureDetector> _getChips() {
+    List<GestureDetector> chips = [];
+
+    final College college = Provider.of<College>(context);
+
+    for (String subject in college.subjectWithCourses.keys) {
+      chips.add(
+        GestureDetector(
+          onTap: () {
+            print(college.subjectWithCourses[subject]);
+          },
+          child: Chip(
+            padding: EdgeInsets.all(10),
+            label: Text(
+              subject,
+              style: Theme.of(context).textTheme.headline4,
+            ),
+          ),
+        ),
+      );
+    }
+
+    return chips;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+//    future = Firestore.instance.collection("courses").getDocuments();
+  }
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       body: Consumer2<User, College>(
         builder: (context, user, college, child) {
@@ -36,59 +71,8 @@ class _HomeState extends State<Home> {
               Wrap(
                 alignment: WrapAlignment.center,
                 spacing: 20,
-                children: [
-                  Chip(
-                    padding: EdgeInsets.all(10),
-                    label: Text(
-                      "CS",
-                      style: Theme.of(context).textTheme.headline4,
-                    ),
-                  ),
-                  Chip(
-                    padding: EdgeInsets.all(10),
-                    label: Text(
-                      "MEC",
-                      style: Theme.of(context).textTheme.headline4,
-                    ),
-                  ),
-                  Chip(
-                    padding: EdgeInsets.all(10),
-                    label: Text(
-                      "BBA",
-                      style: Theme.of(context).textTheme.headline4,
-                    ),
-                  ),
-                  Chip(
-                    padding: EdgeInsets.all(10),
-                    label: Text(
-                      "LAW",
-                      style: Theme.of(context).textTheme.headline4,
-                    ),
-                  ),
-                ],
+                children: _getChips(),
               ),
-//              ListView.builder(
-//                shrinkWrap: true,
-//                scrollDirection: Axis.horizontal,
-//                itemCount: 5,
-//                itemBuilder: (context, index) {
-//                  return Padding(
-//                    padding:
-//                    EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-//                    child: SlimyCard(
-//                      color:
-//                      index % 2 == 0 ? Colors.purple : Colors.grey[700],
-//                      width: 200,
-//                      topCardHeight: 150,
-//                      bottomCardHeight: 100,
-//                      borderRadius: 15,
-//                      topCardWidget: SlimyTop(),
-//                      bottomCardWidget: SlimyBottom(),
-//                      slimeEnabled: true,
-//                    ),
-//                  );
-//                },
-//              ),
               Text(
                 "Trending",
                 style: Theme.of(context).textTheme.headline1,
@@ -96,31 +80,46 @@ class _HomeState extends State<Home> {
               SizedBox(
                 height: 20,
               ),
-              SizedBox(
-                height: 325,
-                child: ListView.builder(
-                  physics: BouncingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-                      child: SlimyCard(
-                        color:
-                            index % 2 == 0 ? Colors.purple : Colors.grey[700],
-                        width: 200,
-                        topCardHeight: 150,
-                        bottomCardHeight: 100,
-                        borderRadius: 15,
-                        topCardWidget: SlimyTop(),
-                        bottomCardWidget: SlimyBottom(),
-                        slimeEnabled: true,
-                      ),
-                    );
-                  },
-                ),
-              ),
+//              StreamBuilder<QuerySnapshot>(
+//                  stream: Firestore.instance.collection("courses").snapshots(),
+//                  builder: (context, snapshot) {
+//                    if (snapshot.hasData) {
+//                      print(snapshot.data.documents[0].data);
+//
+//                      return SizedBox(
+//                        height: 325,
+//                        child: ListView.builder(
+//                          physics: BouncingScrollPhysics(),
+//                          scrollDirection: Axis.horizontal,
+//                          itemCount: 5,
+//                          itemBuilder: (context, index) {
+//                            return Padding(
+//                              padding: EdgeInsets.symmetric(
+//                                  vertical: 0, horizontal: 20),
+//                              child: SlimyCard(
+//                                color: index % 2 == 0
+//                                    ? Colors.purple
+//                                    : Colors.grey[700],
+//                                width: 200,
+//                                topCardHeight: 150,
+//                                bottomCardHeight: 100,
+//                                borderRadius: 15,
+//                                topCardWidget: SlimyTop(),
+//                                bottomCardWidget: SlimyBottom(),
+//                                slimeEnabled: true,
+//                              ),
+//                            );
+//                          },
+//                        ),
+//                      );
+//                    } else
+//                      return Shimmer.fromColors(
+//                          child: Container(
+//                            width: 100,
+//                          ),
+//                          baseColor: Colors.grey,
+//                          highlightColor: Colors.white);
+//                  }),
               Text(
                 "Continue Watching",
                 style: Theme.of(context).textTheme.headline1,
@@ -138,10 +137,10 @@ class _HomeState extends State<Home> {
                   itemBuilder: (context, index) {
                     return Padding(
                       padding:
-                          EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+                      EdgeInsets.symmetric(vertical: 0, horizontal: 20),
                       child: SlimyCard(
                         color:
-                            index % 2 == 0 ? Colors.purple : Colors.grey[700],
+                        index % 2 == 0 ? Colors.purple : Colors.grey[700],
                         width: 200,
                         topCardHeight: 150,
                         bottomCardHeight: 100,
@@ -174,4 +173,8 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

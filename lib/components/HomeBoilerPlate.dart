@@ -1,5 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eleventh_hour/components/DrawerBoilerPlate.dart';
+import 'package:eleventh_hour/components/ProfilePicture.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:eleventh_hour/utilities/UiIcons.dart';
 import 'package:eleventh_hour/views/Cart.dart';
@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inner_drawer/inner_drawer.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
 
 class HomeBoilerPlate extends StatefulWidget {
   static const id = '/homeBP';
@@ -24,11 +23,13 @@ class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
   List homeScreenPages = [Home(), MyCoursesScreen(), WishlistScreen()];
   final GlobalKey<InnerDrawerState> _innerDrawerKey =
       GlobalKey<InnerDrawerState>();
+
   void toggle() {
     _innerDrawerKey.currentState.toggle(direction: InnerDrawerDirection.start);
   }
 
   int _selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return CustomDrawer(
@@ -52,7 +53,7 @@ class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
             ),
             child: Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
               child: GNav(
                   gap: 8,
                   activeColor: Colors.white,
@@ -65,21 +66,21 @@ class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
                       icon: UiIcons.home,
                       text: 'Home',
                       gap: 20,
-                      iconSize: 30,
+                      iconSize: 27,
                       iconColor: Colors.black,
                     ),
                     GButton(
                       icon: UiIcons.video_camera,
                       text: 'Courses',
                       gap: 20,
-                      iconSize: 30,
+                      iconSize: 27,
                       iconColor: Colors.black,
                     ),
                     GButton(
                       icon: UiIcons.heart,
                       text: 'Wishlist',
                       gap: 20,
-                      iconSize: 30,
+                      iconSize: 27,
                       iconColor: Colors.black,
                     ),
                   ],
@@ -114,33 +115,23 @@ class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
                         children: [
                           Expanded(
                             child: Text(
-                              Provider.of<User>(context).name,
+                              Provider
+                                  .of<User>(context)
+                                  .name,
                               overflow: TextOverflow.ellipsis,
                               softWrap: true,
                               maxLines: 2,
-                              style: Theme.of(context)
+                              style: Theme
+                                  .of(context)
                                   .textTheme
                                   .headline1
                                   .copyWith(fontSize: 36),
                             ),
                           ),
-                          ClipOval(
-                            child: CachedNetworkImage(
-                              width: 90,
-                              height: 90,
-                              imageUrl:
-                                  Provider.of<User>(context).profilePicURL,
-                              fit: BoxFit.cover,
-                              placeholder: (context, url) => Shimmer.fromColors(
-                                  child: CircleAvatar(
-                                    radius: 50,
-                                  ),
-                                  baseColor: Colors.grey,
-                                  highlightColor: Colors.grey[300]),
-                              errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
-                            ),
-                          ),
+                          ProfilePicture(
+                              Provider
+                                  .of<User>(context)
+                                  .profilePicURL),
                         ],
                       ),
                     )
