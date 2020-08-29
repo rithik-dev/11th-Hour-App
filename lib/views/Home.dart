@@ -1,12 +1,12 @@
-import 'package:eleventh_hour/components/SlimyBottom.dart';
-import 'package:eleventh_hour/components/SlimyTop.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:eleventh_hour/components/CourseCard.dart';
+import 'package:eleventh_hour/controllers/CourseController.dart';
 import 'package:eleventh_hour/models/College.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:eleventh_hour/views/SubjectDetails.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:slimy_card/slimy_card.dart';
 
 class Home extends StatefulWidget {
   static const id = '/home';
@@ -55,8 +55,8 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      body: Consumer2<User, College>(
-        builder: (context, user, college, child) {
+      body: Consumer3<User, College, CourseController>(
+        builder: (context, user, college, courses, child) {
           return ListView(
             physics: BouncingScrollPhysics(),
             shrinkWrap: true,
@@ -68,7 +68,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                 style: Theme.of(context).textTheme.headline2,
               ),
               SizedBox(
-                height: 20,
+                height: 10,
               ),
               Wrap(
                 alignment: WrapAlignment.center,
@@ -76,99 +76,62 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                 children: _getChips(),
               ),
               Text(
-                "Trending",
-                style: Theme.of(context).textTheme.headline1,
+                "  Trending",
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .headline1,
               ),
               SizedBox(
                 height: 20,
               ),
-//              StreamBuilder<QuerySnapshot>(
-//                  stream: Firestore.instance.collection("courses").snapshots(),
-//                  builder: (context, snapshot) {
-//                    if (snapshot.hasData) {
-//                      print(snapshot.data.documents[0].data);
-//
-//                      return SizedBox(
-//                        height: 325,
-//                        child: ListView.builder(
-//                          physics: BouncingScrollPhysics(),
-//                          scrollDirection: Axis.horizontal,
-//                          itemCount: 5,
-//                          itemBuilder: (context, index) {
-//                            return Padding(
-//                              padding: EdgeInsets.symmetric(
-//                                  vertical: 0, horizontal: 20),
-//                              child: SlimyCard(
-//                                color: index % 2 == 0
-//                                    ? Colors.purple
-//                                    : Colors.grey[700],
-//                                width: 200,
-//                                topCardHeight: 150,
-//                                bottomCardHeight: 100,
-//                                borderRadius: 15,
-//                                topCardWidget: SlimyTop(),
-//                                bottomCardWidget: SlimyBottom(),
-//                                slimeEnabled: true,
-//                              ),
-//                            );
-//                          },
-//                        ),
-//                      );
-//                    } else
-//                      return Shimmer.fromColors(
-//                          child: Container(
-//                            width: 100,
-//                          ),
-//                          baseColor: Colors.grey,
-//                          highlightColor: Colors.white);
-//                  }),
+              CarouselSlider(
+                  items: courses
+                      .getTrendingCourses()
+                      .map((course) => CourseCard(course: course))
+                      .toList(),
+                  options: CarouselOptions(
+                    height: 340,
+                    viewportFraction: 0.8,
+                    initialPage: 0,
+                    enableInfiniteScroll: true,
+                    reverse: false,
+                    autoPlay: true,
+                    autoPlayInterval: Duration(seconds: 3),
+                    autoPlayAnimationDuration: Duration(milliseconds: 800),
+                    autoPlayCurve: Curves.fastOutSlowIn,
+                    enlargeCenterPage: true,
+                    scrollDirection: Axis.horizontal,
+                  )
+              ),
+              SizedBox(height: 10),
               Text(
-                "Continue Watching",
-                style: Theme.of(context).textTheme.headline1,
+                "  Continue Watching",
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .headline1,
               ),
               SizedBox(
                 height: 20,
               ),
-              SizedBox(
-                height: 325,
-                child: ListView.builder(
-                  physics: BouncingScrollPhysics(),
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding:
-                      EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-                      child: SlimyCard(
-                        color:
-                        index % 2 == 0 ? Colors.purple : Colors.grey[700],
-                        width: 200,
-                        topCardHeight: 150,
-                        bottomCardHeight: 100,
-                        borderRadius: 15,
-                        topCardWidget: SlimyTop(),
-                        bottomCardWidget: SlimyBottom(),
-                        slimeEnabled: true,
-                      ),
-                    );
-                  },
-                ),
+              CarouselSlider(
+                  items: courses
+                      .getTrendingCourses()
+                      .map((course) => CourseCard(course: course))
+                      .toList(),
+                  options: CarouselOptions(
+                    height: 340,
+                    scrollPhysics: BouncingScrollPhysics(),
+                    viewportFraction: 0.9,
+                    initialPage: 0,
+                    enableInfiniteScroll: false,
+                    reverse: false,
+                    autoPlay: false,
+                    enlargeCenterPage: false,
+                    scrollDirection: Axis.horizontal,
+                  )
               ),
-//              ListView.builder(
-//                scrollDirection: Axis.horizontal,
-//                itemCount: 0,
-//                itemBuilder: (context, index) {
-//                  return;
-//                },
-//              ),
-//              ListView.builder(
-//                scrollDirection: Axis.horizontal,
-//                itemCount: 0,
-//                itemBuilder: (context, index) {
-//                  return;
-//                },
-//              )
             ],
           );
         },

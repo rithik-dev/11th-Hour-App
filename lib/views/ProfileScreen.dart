@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:eleventh_hour/components/DrawerBoilerPlate.dart';
 import 'package:eleventh_hour/components/ProfilePicture.dart';
+import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/models/College.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -72,83 +73,74 @@ class _ProfileScreenState extends State<ProfileScreen> {
           return CustomDrawer(
             screenId: ProfileScreen.id,
             innerDrawerKey: _innerDrawerKey,
-            scaffold: Scaffold(
-              appBar: AppBar(
-                leading: IconButton(
-                  onPressed: () {
-                    toggle();
-                  },
-                  icon: Icon(Icons.filter_list),
-                ),
-                title: Text("Profile"),
-              ),
-              body: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(height: 20.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Stack(
-                        children: <Widget>[
-                          ProfilePicture(user.profilePicURL),
-                          Positioned(
-                            bottom: 0,
-                            right: 0,
-                            child: CircleAvatar(
-                              backgroundColor: Colors.black,
-                              radius: 15.0,
-                              child: IconButton(
-                                tooltip: "Edit Profile pic",
-                                icon: Icon(Icons.edit),
-                                color: Colors.white,
-                                iconSize: 15.0,
-                                onPressed: () {
-                                  //TODO: edit pic
-                                },
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            user.name,
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.headline1,
-                          ),
-                          Text(
-                            user.email,
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.headline5,
-                          ),
-                        ],
-                      )
-                    ],
+            scaffold: RefreshIndicator(
+              onRefresh: () async {
+                final User newUser = await UserController.getUser(user.userId);
+                Provider.of<User>(context, listen: false)
+                    .updateUserInProvider(newUser);
+              },
+              child: Scaffold(
+                appBar: AppBar(
+                  leading: IconButton(
+                    onPressed: () {
+                      toggle();
+                    },
+                    icon: Icon(Icons.filter_list),
                   ),
-                  SizedBox(height: 20.0),
-                  ListTile(
-                    title: Text(college.name),
-                    subtitle: Text(college.subjectWithCourses.toString()),
-                  )
-//                  FutureBuilder(
-//                    future: CollegeController.getCollegeFromId(user.collegeId),
-//                    builder: (context, snapshot) {
-//                      if (snapshot.hasData) {
-//                        final College college = snapshot.data;
-//                        return
-//                      } else
-//                        return Shimmer.fromColors(
-//                            child: CircleAvatar(),
-//                            baseColor: Colors.grey,
-//                            direction: ShimmerDirection.btt,
-//                            highlightColor: Colors.grey[300]);
-//                    },
-//                  )
-                ],
+                  title: Text("Profile"),
+                ),
+                body: ListView(
+                  children: <Widget>[
+                    SizedBox(height: 20.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Stack(
+                          children: <Widget>[
+                            ProfilePicture(user.profilePicURL),
+                            Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: CircleAvatar(
+                                backgroundColor: Colors.black,
+                                radius: 15.0,
+                                child: IconButton(
+                                  tooltip: "Edit Profile pic",
+                                  icon: Icon(Icons.edit),
+                                  color: Colors.white,
+                                  iconSize: 15.0,
+                                  onPressed: () {
+                                    //TODO: edit pic
+                                  },
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              user.name,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.headline1,
+                            ),
+                            Text(
+                              user.email,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.headline5,
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                    SizedBox(height: 20.0),
+                    ListTile(
+                      title: Text(college.name),
+                      subtitle: Text(college.subjectWithCourses.toString()),
+                    )
+                  ],
+                ),
               ),
             ),
           );

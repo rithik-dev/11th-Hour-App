@@ -9,22 +9,24 @@ class Course {
   String instructorName;
   int price;
   String instructorId;
+  String courseThumbnail;
   List<dynamic> lectures;
   Timestamp date;
   String collegeId;
   List<dynamic> enrolledUsers;
 
-  Course({
-    @required this.id,
-    @required this.collegeId,
-    @required this.title,
-    @required this.instructorName,
-    @required this.price,
+  Course(
+      {@required this.id,
+      @required this.collegeId,
+      @required this.title,
+      @required this.instructorName,
+      @required this.price,
     @required this.lectures,
     @required this.date,
     @required this.instructorId,
     @required this.enrolledUsers,
     @required this.subject,
+    @required this.courseThumbnail
   });
 
   @override
@@ -37,6 +39,7 @@ class Course {
       id: snapshot.documentID,
       title: snapshot['title'] as String,
       subject: snapshot['subject'] as String,
+      courseThumbnail: snapshot['courseThumbnail'] as String,
       instructorName: snapshot['instructorName'] as String,
       price: snapshot['price'] as int,
       instructorId: snapshot['instructorId'] as String,

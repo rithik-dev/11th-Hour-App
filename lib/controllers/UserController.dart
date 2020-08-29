@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eleventh_hour/models/Exceptions.dart';
+import 'package:eleventh_hour/models/User.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class UserController {
@@ -7,6 +8,13 @@ class UserController {
 
   static final FirebaseAuth _auth = FirebaseAuth.instance;
   static final Firestore _fireStore = Firestore.instance;
+
+  static Future<User> getUser(String userId) async {
+    DocumentSnapshot snapshot =
+        await _fireStore.collection("users").document(userId).get();
+    final User user = User.fromDocumentSnapshot(snapshot);
+    return user;
+  }
 
   static Future<FirebaseUser> getCurrentUser() async {
     try {

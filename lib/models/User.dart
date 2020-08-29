@@ -8,12 +8,12 @@ class User extends ChangeNotifier {
   String phone;
   String collegeId;
   String userId;
-  List<String> transactionIds;
-  List<String> cart;
-  List<String> recentCoursesIds;
-  List<String> myCourses;
-  List<String> myUploadedCourses;
-  List<String> wishlist;
+  List<dynamic> transactionIds;
+  List<dynamic> cart;
+  List<dynamic> recentCoursesIds;
+  List<dynamic> myCourses;
+  List<dynamic> myUploadedCourses;
+  List<dynamic> wishlist;
 
   User({
     @required this.name,
@@ -38,12 +38,12 @@ class User extends ChangeNotifier {
       phone: snapshot['phone'] as String,
       collegeId: snapshot['collegeId'] as String,
       userId: snapshot.documentID,
-      transactionIds: snapshot['transactionIds'] as List<String>,
-      recentCoursesIds: snapshot['recentCoursesIds'] as List<String>,
-      cart: snapshot['cart'] as List<String>,
-      myCourses: snapshot['myCourses'] as List<String>,
-      myUploadedCourses: snapshot['myUploadedCourses'] as List<String>,
-      wishlist: snapshot['wishlist'] as List<String>,
+      transactionIds: snapshot['transactionIds'] as List<dynamic>,
+      recentCoursesIds: snapshot['recentCoursesIds'] as List<dynamic>,
+      cart: snapshot['cart'] as List<dynamic>,
+      myCourses: snapshot['myCourses'] as List<dynamic>,
+      myUploadedCourses: snapshot['myUploadedCourses'] as List<dynamic>,
+      wishlist: snapshot['wishlist'] as List<dynamic>,
     );
   }
 
