@@ -33,7 +33,6 @@ dependencies:
   lottie: ^0.6.0
   # implement
   flutter_bounce: ^1.0.8
-  # implement
   animations: ^1.1.2
   shimmer: ^1.1.1
 dev_dependencies:

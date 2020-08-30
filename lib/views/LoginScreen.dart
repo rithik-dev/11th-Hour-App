@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eleventh_hour/components/CustomTextFormField.dart';
 import 'package:eleventh_hour/components/HomeBoilerPlate.dart';
+import 'package:eleventh_hour/controllers/CourseController.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/models/College.dart';
 import 'package:eleventh_hour/models/Exceptions.dart';
@@ -114,7 +115,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   .updateUserInProvider(user);
                               Provider.of<College>(context, listen: false)
                                   .updateCollegeInProvider(college);
-
+                              await Provider.of<CourseController>(context,
+                                      listen: false)
+                                  .getCourses();
                               Navigator.pushReplacementNamed(
                                   context, HomeBoilerPlate.id);
                             } else
