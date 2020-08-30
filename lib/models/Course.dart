@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 
 class Course {
   String id;
+  double rating;
   String title;
   String subject;
   String instructorName;
@@ -19,24 +20,25 @@ class Course {
       {@required this.id,
       @required this.collegeId,
       @required this.title,
+      @required this.rating,
       @required this.instructorName,
       @required this.price,
-    @required this.lectures,
-    @required this.date,
-    @required this.instructorId,
-    @required this.enrolledUsers,
-    @required this.subject,
-    @required this.courseThumbnail
-  });
+      @required this.lectures,
+      @required this.date,
+      @required this.instructorId,
+      @required this.enrolledUsers,
+      @required this.subject,
+      @required this.courseThumbnail});
 
   @override
   String toString() {
-    return 'Course{id: $id, title: $title, subject: $subject, instructorName: $instructorName, price: $price, instructorId: $instructorId, lectures: $lectures, date: $date, collegeId: $collegeId, enrolledUsers: $enrolledUsers}';
+    return 'Course{id: $id, title: $title,rating $rating, subject: $subject, instructorName: $instructorName, price: $price, instructorId: $instructorId, lectures: $lectures, date: $date, collegeId: $collegeId, enrolledUsers: $enrolledUsers}';
   }
 
   factory Course.fromDocumentSnapshot(DocumentSnapshot snapshot) {
     return new Course(
       id: snapshot.documentID,
+      rating: snapshot['rating'] as double,
       title: snapshot['title'] as String,
       subject: snapshot['subject'] as String,
       courseThumbnail: snapshot['courseThumbnail'] as String,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class Card404 extends StatelessWidget {
   final String title;
@@ -8,7 +9,16 @@ class Card404 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      children: <Widget>[Text("NO ${this.title} found.")],
+      children: [
+        Lottie.asset('assets/lottie/404.json'),
+        Text(
+          title != "UPLOADED COURSES"
+              ? "\nTheir are no courses in your ${title.toLowerCase()}."
+              : "\nTo Add a Cousre\nplease login from website.",
+          style: Theme.of(context).textTheme.headline1,
+          textAlign: TextAlign.center,
+        ),
+      ],
     );
   }
 }

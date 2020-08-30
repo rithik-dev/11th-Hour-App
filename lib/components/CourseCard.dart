@@ -1,16 +1,23 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eleventh_hour/models/Course.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:shimmer/shimmer.dart';
 
-class CourseCard extends StatelessWidget {
+class CourseCard extends StatefulWidget {
   final Course course;
 
   CourseCard({this.course});
 
   @override
+  _CourseCardState createState() => _CourseCardState();
+}
+
+class _CourseCardState extends State<CourseCard> {
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
       child: GestureDetector(
         onTap: () {
           print("course page");
@@ -28,73 +35,79 @@ class CourseCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Container(
-                    height: 200.0,
-                    child: CachedNetworkImage(
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                      imageUrl: this.course.courseThumbnail,
-                      placeholder: (context, url) => Shimmer.fromColors(
-                        child: Container(color: Colors.grey),
-                        baseColor: Colors.grey[300],
-                        highlightColor: Colors.grey,
+                  Stack(
+                    children: [
+                      Container(
+                        height: 180.0,
+                        child: CachedNetworkImage(
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                          imageUrl: this.widget.course.courseThumbnail,
+                          placeholder: (context, url) => Shimmer.fromColors(
+                            child: Container(color: Colors.grey),
+                            baseColor: Colors.grey[300],
+                            highlightColor: Colors.grey,
+                          ),
+                        ),
                       ),
-                    ),
+                      Positioned(
+                        right: 10,
+                        top: 10,
+                        child: Bounce(
+                          duration: Duration(milliseconds: 500),
+                          onPressed: () {
+                            print("gulavi dil");
+                          },
+                          child: Icon(
+                            Icons.favorite,
+                            size: 30,
+                            color: Colors.red,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(height: 15.0),
                   Padding(
                     padding: EdgeInsets.only(left: 10.0),
-                    child: Text(
-                      this.course.title,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 17.0,
-                      ),
-                    ),
+                    child: Text(this.widget.course.title,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline2
+                            .copyWith(color: Colors.black)),
                   ),
                   SizedBox(height: 5.0),
                   Padding(
                     padding: EdgeInsets.only(left: 10.0),
                     child: Text(
-                      this.course.instructorName,
-                      style: TextStyle(fontSize: 14.0, color: Colors.grey),
+                      this.widget.course.instructorName,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline4
+                          .copyWith(color: Colors.black54),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.0),
+                    padding: EdgeInsets.fromLTRB(10, 5, 10, 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                          "Rs ${this.course.price}/- ",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 19.0),
+                          "Rs ${this.widget.course.price}/- ",
+                          style: Theme.of(context).textTheme.headline5,
                         ),
-                        Container(
-                          height: 40.0,
-                          width: 40.0,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0),
-                              color: Colors.grey.withOpacity(0.2)),
-                          child: Center(
-                            child: IconButton(
-                              icon: Icon(Icons.favorite),
-                              color: Colors.red,
-                              onPressed: () {
-                                print("add to fav");
-                              },
-                            ),
-                          ),
-                        )
+                        Text(
+                          '⭐ ${this.widget.course.rating.toString()}',
+                          style: Theme.of(context).textTheme.headline5,
+                        ),
                       ],
                     ),
                   ),
-                  SizedBox(height: 10.0)
+                  SizedBox(
+                    height: 10,
+                  )
                 ],
               )),
         ),

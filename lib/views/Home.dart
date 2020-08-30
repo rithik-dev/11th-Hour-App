@@ -28,7 +28,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
         GestureDetector(
           onTap: () {
             print(college.subjectWithCourses[subject]);
-            Navigator.pushNamed(context, SubjectDetails.id);
+            Navigator.pushNamed(context, SubjectDetails.id, arguments: subject);
           },
           child: Chip(
             padding: EdgeInsets.all(10),
@@ -77,10 +77,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
               ),
               Text(
                 "  Trending",
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .headline1,
+                style: Theme.of(context).textTheme.headline1,
               ),
               SizedBox(
                 height: 20,
@@ -91,7 +88,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                       .map((course) => CourseCard(course: course))
                       .toList(),
                   options: CarouselOptions(
-                    height: 340,
+                    height: 345,
                     viewportFraction: 0.8,
                     initialPage: 0,
                     enableInfiniteScroll: true,
@@ -102,15 +99,11 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                     autoPlayCurve: Curves.fastOutSlowIn,
                     enlargeCenterPage: true,
                     scrollDirection: Axis.horizontal,
-                  )
-              ),
+                  )),
               SizedBox(height: 10),
               Text(
                 "  Continue Watching",
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .headline1,
+                style: Theme.of(context).textTheme.headline1,
               ),
               SizedBox(
                 height: 20,
@@ -130,8 +123,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                     autoPlay: false,
                     enlargeCenterPage: false,
                     scrollDirection: Axis.horizontal,
-                  )
-              ),
+                  )),
             ],
           );
         },

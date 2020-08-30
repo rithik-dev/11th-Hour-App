@@ -1,4 +1,5 @@
 import 'package:eleventh_hour/components/404Card.dart';
+import 'package:eleventh_hour/components/SmallCourseCard.dart';
 import 'package:eleventh_hour/controllers/CourseController.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:flutter/material.dart';
@@ -12,16 +13,21 @@ class MyCoursesScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Consumer2<User, CourseController>(
-            builder: (context, user, course, child) {
+            builder: (context, user, courses, child) {
           if (user.myCourses == null || user.myCourses.length == 0)
-            return Card404(title: "MY COURSES");
+            return Card404(title: "COURSES");
           else {
             return Column(
               children: <Widget>[
                 Expanded(
                   child: Container(
                     child: ListView(
-                      children: [Text("COurses")],
+                      children: courses
+                          .getCoursesByIds(user.myCourses.cast<String>())
+                          .map((course) => SmallCourseCard(
+                                course: course,
+                              ))
+                          .toList(),
                     ),
                   ),
                 ),

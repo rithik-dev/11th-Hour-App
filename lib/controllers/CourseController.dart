@@ -35,9 +35,16 @@ class CourseController extends ChangeNotifier {
 
   List<Course> getCoursesByIds(List<String> courseIds) {
     List<Course> _courses = [];
-
-    for (String courseId in courseIds) {
-      _courses.add(getCourseByID(courseId));
+    print(courseIds);
+    try {
+      for (String courseId in courseIds) {
+        var c = getCourseByID(courseId.trim());
+        print(c);
+        _courses.add(c);
+      }
+      print(_courses);
+    } catch (err) {
+      print(err);
     }
     return _courses;
   }

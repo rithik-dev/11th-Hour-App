@@ -40,6 +40,7 @@ const kButtonTextStyle =
     TextStyle(fontFamily: 'karla', fontSize: 25, fontWeight: FontWeight.bold);
 
 var kDefaultTheme = ThemeData.dark().copyWith(
+    scaffoldBackgroundColor: Color(0xff3B4254),
     accentColor: Colors.grey[300],
     textTheme: TextTheme(
       button: TextStyle(color: Color(0xFF252525)),

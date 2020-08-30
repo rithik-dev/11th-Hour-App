@@ -19,7 +19,11 @@ class RouteGenerator {
     switch (settings.name) {
       case SubjectDetails.id:
         return PageTransition(
-            child: SubjectDetails(), type: PageTransitionType.downToUp);
+          child: SubjectDetails(
+            subject: args,
+          ),
+          type: PageTransitionType.downToUp,
+        );
       case HomeBoilerPlate.id:
         return PageTransition(
             child: HomeBoilerPlate(),

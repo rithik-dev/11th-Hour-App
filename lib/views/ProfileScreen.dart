@@ -97,7 +97,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       children: <Widget>[
                         Stack(
                           children: <Widget>[
-                            ProfilePicture(user.profilePicURL),
+                            ProfilePicture(url: user.profilePicURL),
                             Positioned(
                               bottom: 0,
                               right: 0,
