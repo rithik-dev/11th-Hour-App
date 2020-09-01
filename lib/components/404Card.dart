@@ -14,7 +14,7 @@ class Card404 extends StatelessWidget {
         Text(
           title != "UPLOADED COURSES"
               ? "\nTheir are no courses in your ${title.toLowerCase()}."
-              : "\nTo Add a Cousre\nplease login from website.",
+              : "\nTo Add a Course\nplease login from website.",
           style: Theme.of(context).textTheme.headline1,
           textAlign: TextAlign.center,
         ),

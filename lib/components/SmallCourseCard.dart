@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eleventh_hour/models/Course.dart';
+import 'package:eleventh_hour/views/CourseDetail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shimmer/shimmer.dart';
 
 class SmallCourseCard extends StatelessWidget {
@@ -14,7 +16,10 @@ class SmallCourseCard extends StatelessWidget {
       elevation: 8.0,
       margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
       child: Container(
-        decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
+        decoration: BoxDecoration(
+            color: course.blackListed
+                ? Colors.grey
+                : Color.fromRGBO(64, 75, 96, .9)),
         child: ListTile(
             contentPadding:
                 EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
@@ -46,8 +51,22 @@ class SmallCourseCard extends StatelessWidget {
                   .headline5
                   .copyWith(fontSize: 17, color: Colors.grey[300]),
             ),
-            trailing: Icon(Icons.keyboard_arrow_right,
-                color: Colors.white, size: 30.0)),
+            onTap: !course.blackListed
+                ? () {
+                    Navigator.pushNamed(context, CourseDetails.id,
+                        arguments: course);
+                  }
+                : () {
+                    Fluttertoast.showToast(msg: "BlackListed");
+                  },
+            trailing: course.blackListed
+                ? Icon(
+                    Icons.error,
+                    color: Colors.white,
+                    size: 30.0,
+                  )
+                : Icon(Icons.keyboard_arrow_right,
+                    color: Colors.white, size: 30.0)),
       ),
     );
   }

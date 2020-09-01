@@ -1,8 +1,9 @@
 import 'package:eleventh_hour/components/404Card.dart';
+import 'package:eleventh_hour/components/SmallCourseCard.dart';
+import 'package:eleventh_hour/controllers/CourseController.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
@@ -26,7 +27,7 @@ class _CartScreenState extends State<CartScreen> {
     razorPay.clear();
   }
 
-  static const platform = const MethodChannel("razorpay_flutter");
+//  static const platform = const MethodChannel("razorpay_flutter");
   void handlerErrorFailure(PaymentFailureResponse response) {
     print("Payment error");
     Fluttertoast.showToast(msg: "Payment Error");
@@ -75,31 +76,44 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("My Cart"),
+        centerTitle: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(15),
+            bottomRight: Radius.circular(15),
+          ),
+        ),
+        backgroundColor: Theme.of(context).primaryColor,
+        elevation: 0,
+        automaticallyImplyLeading: true,
+      ),
       body: SafeArea(
-        child: Consumer<User>(builder: (context, user, child) {
+        child: Consumer2<User, CourseController>(
+            builder: (context, user, courses, child) {
           return RefreshIndicator(
             onRefresh: () async {
               final User newUser = await UserController.getUser(user.userId);
               Provider.of<User>(context, listen: false)
                   .updateUserInProvider(newUser);
             },
-            child: !(user.cart == null || user.cart.length == 0)
+            child: (user.cart == null || user.cart.length == 0)
                 ? Card404(title: "CART")
                 : Column(
                     children: <Widget>[
                       Expanded(
                         child: Container(
                           child: ListView(
-                            children: [Text("COurses")],
+                            children: courses
+                                .getCoursesByIds(user.cart.cast<String>())
+                                .map((course) => SmallCourseCard(
+                                      course: course,
+                                    ))
+                                .toList(),
                           ),
                         ),
                       ),
-                      FlatButton(
-                        child: Text("lol"),
-                        onPressed: () {
-                          openCheckout();
-                        },
-                      )
                     ],
                   ),
           );

@@ -1,6 +1,9 @@
 import 'package:eleventh_hour/components/HomeBoilerPlate.dart';
+import 'package:eleventh_hour/views/AboutUs.dart';
 import 'package:eleventh_hour/views/Cart.dart';
 import 'package:eleventh_hour/views/ConnectionLostScreen.dart';
+import 'package:eleventh_hour/views/ContactUs.dart';
+import 'package:eleventh_hour/views/CourseDetail.dart';
 import 'package:eleventh_hour/views/IntroScreen.dart';
 import 'package:eleventh_hour/views/LoginScreen.dart';
 import 'package:eleventh_hour/views/MyUploadedCoursesScreen.dart';
@@ -8,6 +11,7 @@ import 'package:eleventh_hour/views/ProfileScreen.dart';
 import 'package:eleventh_hour/views/RegistrationScreen.dart';
 import 'package:eleventh_hour/views/SplashScreen.dart';
 import 'package:eleventh_hour/views/SubjectDetails.dart';
+import 'package:eleventh_hour/views/Terms&Condn.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -40,13 +44,26 @@ class RouteGenerator {
         return PageTransition(
             child: MyUploadedCoursesScreen(),
             type: PageTransitionType.leftToRightWithFade);
+      case CourseDetails.id:
+        return PageTransition(
+            child: CourseDetails(
+              course: args,
+            ),
+            type: PageTransitionType.leftToRightWithFade);
+      case AboutUs.id:
+        return PageTransition(
+            child: AboutUs(), type: PageTransitionType.leftToRightWithFade);
+      case ContactUs.id:
+        return PageTransition(
+            child: ContactUs(), type: PageTransitionType.leftToRightWithFade);
+      case TermsAndCondition.id:
+        return PageTransition(
+            child: TermsAndCondition(),
+            type: PageTransitionType.leftToRightWithFade);
       case ProfileScreen.id:
         return PageTransition(
             child: ProfileScreen(),
             type: PageTransitionType.leftToRightWithFade);
-//      case Home.id:
-//        return PageTransition(
-//            child: Home(), type: PageTransitionType.leftToRightWithFade);
       case IntroScreen.id:
         return PageTransition(
             child: IntroScreen(), type: PageTransitionType.leftToRightWithFade);

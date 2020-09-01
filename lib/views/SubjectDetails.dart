@@ -12,6 +12,19 @@ class SubjectDetails extends StatelessWidget {
   SubjectDetails({this.subject});
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(subject),
+        centerTitle: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(15),
+            bottomRight: Radius.circular(15),
+          ),
+        ),
+        backgroundColor: Theme.of(context).primaryColor,
+        elevation: 0,
+        automaticallyImplyLeading: true,
+      ),
       body: SafeArea(
         child: Consumer3<User, College, CourseController>(
             builder: (context, user, college, course, child) {

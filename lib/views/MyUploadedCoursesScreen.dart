@@ -1,5 +1,6 @@
 import 'package:eleventh_hour/components/404Card.dart';
 import 'package:eleventh_hour/components/DrawerBoilerPlate.dart';
+import 'package:eleventh_hour/components/SmallCourseCard.dart';
 import 'package:eleventh_hour/controllers/CourseController.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/models/User.dart';
@@ -15,7 +16,6 @@ class MyUploadedCoursesScreen extends StatelessWidget {
   void toggle() {
     _innerDrawerKey.currentState.toggle(direction: InnerDrawerDirection.start);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -33,32 +33,35 @@ class MyUploadedCoursesScreen extends StatelessWidget {
           title: Text("MY UPLOADED COURSES"),
         ),
         body: Consumer2<User, CourseController>(
-            builder: (context, user, course, child) {
-              return RefreshIndicator(
-                onRefresh: () async {
-                  final User newUser = await UserController.getUser(
-                      user.userId);
-                  Provider.of<User>(context, listen: false)
-                      .updateUserInProvider(newUser);
-                },
-                child: (user.myUploadedCourses == null ||
+            builder: (context, user, courses, child) {
+          return RefreshIndicator(
+            onRefresh: () async {
+              final User newUser = await UserController.getUser(user.userId);
+              Provider.of<User>(context, listen: false)
+                  .updateUserInProvider(newUser);
+            },
+            child: (user.myUploadedCourses == null ||
                     user.myUploadedCourses.length == 0)
-                    ? Card404(title: "UPLOADED COURSES")
-                    : Column(
-                  children: <Widget>[
-                    Expanded(
-                      child: Container(
-                        child: ListView(
-                          children: [
-                            Text("uploaded COurses")
-                          ],
+                ? Card404(title: "UPLOADED COURSES")
+                : Column(
+                    children: <Widget>[
+                      Expanded(
+                        child: Container(
+                          child: ListView(
+                            children: courses
+                                .getCoursesByIds(
+                                    user.myUploadedCourses.cast<String>())
+                                .map((course) => SmallCourseCard(
+                                      course: course,
+                                    ))
+                                .toList(),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              );
-            }),
+                    ],
+                  ),
+          );
+        }),
       ),
     );
   }

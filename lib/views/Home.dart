@@ -32,9 +32,13 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
           },
           child: Chip(
             padding: EdgeInsets.all(10),
+            backgroundColor: Theme.of(context).accentColor,
             label: Text(
               subject,
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline4
+                  .copyWith(color: Colors.black),
             ),
           ),
         ),
