@@ -9,6 +9,7 @@ import 'package:eleventh_hour/views/LoginScreen.dart';
 import 'package:eleventh_hour/views/MyUploadedCoursesScreen.dart';
 import 'package:eleventh_hour/views/ProfileScreen.dart';
 import 'package:eleventh_hour/views/RegistrationScreen.dart';
+import 'package:eleventh_hour/views/SearchPage.dart';
 import 'package:eleventh_hour/views/SplashScreen.dart';
 import 'package:eleventh_hour/views/SubjectDetails.dart';
 import 'package:eleventh_hour/views/Terms&Condn.dart';
@@ -40,6 +41,9 @@ class RouteGenerator {
 //        return PageTransition(
 //            child: MyCoursesScreen(),
 //            type: PageTransitionType.leftToRightWithFade);
+      case SearchPage.id:
+        return PageTransition(
+            child: SearchPage(), type: PageTransitionType.leftToRightWithFade);
       case MyUploadedCoursesScreen.id:
         return PageTransition(
             child: MyUploadedCoursesScreen(),

@@ -8,10 +8,12 @@ import 'package:eleventh_hour/utilities/UiIcons.dart';
 import 'package:eleventh_hour/views/Cart.dart';
 import 'package:eleventh_hour/views/Home.dart';
 import 'package:eleventh_hour/views/MyCoursesScreen.dart';
+import 'package:eleventh_hour/views/SearchPage.dart';
 import 'package:eleventh_hour/views/WishlistScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inner_drawer/inner_drawer.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +25,12 @@ class HomeBoilerPlate extends StatefulWidget {
 }
 
 class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
-  List homeScreenPages = [Home(), MyCoursesScreen(), WishlistScreen()];
+  List homeScreenPages = [
+    Home(),
+    MyCoursesScreen(),
+    WishlistScreen(),
+    SearchPage()
+  ];
   final GlobalKey<InnerDrawerState> _innerDrawerKey =
       GlobalKey<InnerDrawerState>();
 
@@ -84,6 +91,13 @@ class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
                         text: 'Wishlist',
                         gap: 20,
                         iconSize: 27,
+                        iconColor: Colors.black,
+                      ),
+                      GButton(
+                        icon: FontAwesomeIcons.search,
+                        text: 'Search',
+                        gap: 20,
+                        iconSize: 24,
                         iconColor: Colors.black,
                       ),
                     ],
