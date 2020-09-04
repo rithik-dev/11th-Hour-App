@@ -29,11 +29,10 @@ dependencies:
   flutter_inner_drawer: ^0.5.6+1
   cloud_firestore: ^0.13.7
   cached_network_image: ^2.2.0+1
-  # implement
   lottie: ^0.6.0
-  # implement
   flutter_bounce: ^1.0.8
   animations: ^1.1.2
+  awsome_video_player: ^1.0.8+1
   shimmer: ^1.1.1
   razorpay_flutter: ^1.1.4
 dev_dependencies:

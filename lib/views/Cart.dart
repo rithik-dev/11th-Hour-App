@@ -3,6 +3,7 @@ import 'package:eleventh_hour/components/SmallCourseCard.dart';
 import 'package:eleventh_hour/controllers/CourseController.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/models/User.dart';
+import 'package:eleventh_hour/utilities/UiIcons.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
@@ -76,6 +77,23 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.all(20),
+        color: Theme.of(context).primaryColor,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Rs.2000",
+              style: Theme.of(context).textTheme.headline1,
+            ),
+            RaisedButton.icon(
+                onPressed: () {},
+                icon: Icon(UiIcons.money),
+                label: Text("Proceed to pay"))
+          ],
+        ),
+      ),
       appBar: AppBar(
         title: Text("My Cart"),
         centerTitle: true,
@@ -100,21 +118,13 @@ class _CartScreenState extends State<CartScreen> {
             },
             child: (user.cart == null || user.cart.length == 0)
                 ? Card404(title: "CART")
-                : Column(
-                    children: <Widget>[
-                      Expanded(
-                        child: Container(
-                          child: ListView(
-                            children: courses
-                                .getCoursesByIds(user.cart.cast<String>())
-                                .map((course) => SmallCourseCard(
-                                      course: course,
-                                    ))
-                                .toList(),
-                          ),
-                        ),
-                      ),
-                    ],
+                : ListView(
+                    children: courses
+                        .getCoursesByIds(user.cart.cast<String>())
+                        .map((course) => SmallCourseCard(
+                              course: course,
+                            ))
+                        .toList(),
                   ),
           );
         }),

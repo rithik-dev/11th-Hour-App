@@ -18,7 +18,7 @@ class SmallCourseCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
             color: course.blackListed
-                ? Colors.grey
+                ? Colors.grey[800]
                 : Color.fromRGBO(64, 75, 96, .9)),
         child: ListTile(
             contentPadding:
@@ -28,14 +28,28 @@ class SmallCourseCard extends StatelessWidget {
               decoration: BoxDecoration(
                   border: Border(
                       right: BorderSide(width: 1.0, color: Colors.white24))),
-              child: CachedNetworkImage(
-                imageUrl: course.courseThumbnail,
-                errorWidget: (context, i, l) => Icon(Icons.error),
-                placeholder: (c, u) => Shimmer.fromColors(
-                    child: Container(),
-                    baseColor: Colors.white,
-                    highlightColor: Colors.grey),
-              ),
+              child: course.blackListed
+                  ? Container(
+                      color: Colors.black,
+                      height: 90,
+                      width: 96,
+                      child: Text(
+                        "BLACK\nLISTED",
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.subtitle1,
+                      ),
+                    )
+                  : CachedNetworkImage(
+                      imageUrl: course.courseThumbnail,
+                      height: 90,
+                      fit: BoxFit.cover,
+                      width: 96,
+                      errorWidget: (context, i, l) => Icon(Icons.error),
+                      placeholder: (c, u) => Shimmer.fromColors(
+                          child: Container(),
+                          baseColor: Colors.white,
+                          highlightColor: Colors.grey),
+                    ),
             ),
             title: Text(course.title,
                 maxLines: 2,

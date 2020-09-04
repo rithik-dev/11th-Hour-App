@@ -31,7 +31,7 @@ class _CourseCardState extends State<CourseCard> {
           child: Container(
               decoration: BoxDecoration(
                   color: widget.course.blackListed
-                      ? Colors.grey
+                      ? Colors.grey[800]
                       : Colors.grey[300],
                   boxShadow: [
                     BoxShadow(
@@ -51,7 +51,7 @@ class _CourseCardState extends State<CourseCard> {
                               height: 180.0,
                               width: double.infinity,
                               child: Text(
-                                "This was blacklisted",
+                                "\n\nThis was blacklisted",
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context)
                                     .textTheme
