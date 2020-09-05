@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eleventh_hour/models/Course.dart';
-import 'package:eleventh_hour/views/CourseDetail.dart';
+import 'package:eleventh_hour/views/PurchasedCourseDetails.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -67,7 +67,7 @@ class SmallCourseCard extends StatelessWidget {
             ),
             onTap: !course.blackListed
                 ? () {
-                    Navigator.pushNamed(context, CourseDetails.id,
+              Navigator.pushNamed(context, PurchasedCourseDetails.id,
                         arguments: course);
                   }
                 : () {

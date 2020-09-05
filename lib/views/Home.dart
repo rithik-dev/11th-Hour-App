@@ -89,7 +89,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
               CarouselSlider(
                   items: courses
                       .getTrendingCourses()
-                      .map((course) => CourseCard(course: course))
+                      .map((course) => CourseCard(course: course, user: user))
                       .toList(),
                   options: CarouselOptions(
                     height: 345,
@@ -115,7 +115,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
               CarouselSlider(
                   items: courses
                       .getTrendingCourses()
-                      .map((course) => CourseCard(course: course))
+                      .map((course) => CourseCard(course: course, user: user))
                       .toList(),
                   options: CarouselOptions(
                     height: 340,

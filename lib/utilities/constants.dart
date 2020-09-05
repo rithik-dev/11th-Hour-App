@@ -36,6 +36,9 @@ const kTextFieldDecoration = InputDecoration(
 
 //var kDefaultTheme = ThemeData.dark();
 
+const kDefaultProfilePicUrl =
+    "https://firebasestorage.googleapis.com/v0/b/eleventhhour-eb2e0.appspot.com/o/userDefault.jpeg?alt=media&token=ac1366cc-f928-4a08-8bee-1dfd5788db68";
+
 const kButtonTextStyle =
     TextStyle(fontFamily: 'karla', fontSize: 25, fontWeight: FontWeight.bold);
 

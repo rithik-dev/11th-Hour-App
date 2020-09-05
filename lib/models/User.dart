@@ -47,6 +47,26 @@ class User extends ChangeNotifier {
     );
   }
 
+  void addCourseToWishlist(String courseId) {
+    this.wishlist.add(courseId);
+    notifyListeners();
+  }
+
+  void removeCourseFromWishlist(String courseId) {
+    this.wishlist.remove(courseId);
+    notifyListeners();
+  }
+
+  void addCourseToCart(String courseId) {
+    this.cart.add(courseId);
+    notifyListeners();
+  }
+
+  void removeCourseFromCart(String courseId) {
+    this.cart.remove(courseId);
+    notifyListeners();
+  }
+
   Map<String, dynamic> toMap() {
     // ignore: unnecessary_cast
     return {

@@ -2,6 +2,7 @@ import 'package:eleventh_hour/components/404Card.dart';
 import 'package:eleventh_hour/components/SmallCourseCard.dart';
 import 'package:eleventh_hour/controllers/CourseController.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
+import 'package:eleventh_hour/models/Course.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:eleventh_hour/utilities/UiIcons.dart';
 import 'package:flutter/material.dart';
@@ -55,13 +56,13 @@ class _CartScreenState extends State<CartScreen> {
     razorPay.on(Razorpay.EVENT_EXTERNAL_WALLET, handlerExternalWallet);
   }
 
-  void openCheckout(String name, String email) {
+  void openCheckout(String phone, String email) {
     var options = {
       "key": "rzp_test_NwfgCE8CdhXpFT",
       "amount": amount * 100,
       "name": "11th Hour",
       "description": "Start Learning!!!",
-      "prefill": {"contact": name, "email": email},
+      "prefill": {"contact": phone, "email": email},
       "external": {
         "wallets": ["paytm"]
       }
@@ -74,10 +75,24 @@ class _CartScreenState extends State<CartScreen> {
     }
   }
 
+  void _calculateAmount(List<Course> courses) {
+    amount = 0;
+    for (Course course in courses) {
+      if (!course.blackListed) {
+        amount += course.price;
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer2<User, CourseController>(
       builder: (context, user, courses, child) {
+        List<Course> _courses =
+            courses.getCoursesByIds(user.cart.cast<String>());
+
+        _calculateAmount(_courses);
+
         return Scaffold(
             bottomNavigationBar: Container(
               padding: EdgeInsets.all(20),
@@ -93,8 +108,8 @@ class _CartScreenState extends State<CartScreen> {
                       onPressed: amount == 0
                           ? null
                           : () {
-                              openCheckout(user.name, user.email);
-                            },
+                        openCheckout(user.phone, user.email);
+                      },
                       disabledColor: Colors.white30,
                       icon: Icon(UiIcons.money),
                       label: Text("Proceed to pay"))
@@ -118,20 +133,22 @@ class _CartScreenState extends State<CartScreen> {
               child: RefreshIndicator(
                 onRefresh: () async {
                   final User newUser =
-                      await UserController.getUser(user.userId);
+                  await UserController.getUser(user.userId);
                   Provider.of<User>(context, listen: false)
                       .updateUserInProvider(newUser);
+                  await Provider.of<CourseController>(context, listen: false)
+                      .getCourses();
                 },
                 child: (user.cart == null || user.cart.length == 0)
                     ? Card404(title: "CART")
                     : ListView(
-                        children: courses
-                            .getCoursesByIds(user.cart.cast<String>())
-                            .map((course) => SmallCourseCard(
-                                  course: course,
-                                ))
-                            .toList(),
-                      ),
+                  children: _courses
+                      .map((course) =>
+                      SmallCourseCard(
+                        course: course,
+                      ))
+                      .toList(),
+                ),
               ),
             ));
       },

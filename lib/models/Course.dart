@@ -16,11 +16,13 @@ class Course {
   Timestamp date;
   String collegeId;
   List<dynamic> enrolledUsers;
+  String description;
 
   Course(
       {@required this.id,
       @required this.collegeId,
       @required this.blackListed,
+      @required this.description,
       @required this.title,
       @required this.rating,
       @required this.instructorName,
@@ -34,13 +36,14 @@ class Course {
 
   @override
   String toString() {
-    return 'Course{id: $id, title: $title, blackListed: $blackListed,rating $rating, subject: $subject, instructorName: $instructorName, price: $price, instructorId: $instructorId, lectures: $lectures, date: $date, collegeId: $collegeId, enrolledUsers: $enrolledUsers}';
+    return 'Course{id: $id, description : $description ,title: $title, blackListed: $blackListed,rating $rating, subject: $subject, instructorName: $instructorName, price: $price, instructorId: $instructorId, lectures: $lectures, date: $date, collegeId: $collegeId, enrolledUsers: $enrolledUsers}';
   }
 
   factory Course.fromDocumentSnapshot(DocumentSnapshot snapshot) {
     return new Course(
       blackListed: snapshot['blackListed'] as bool,
       id: snapshot.documentID,
+      description: snapshot['description'] as String,
       rating: snapshot['rating'] as double,
       title: snapshot['title'] as String,
       subject: snapshot['subject'] as String,

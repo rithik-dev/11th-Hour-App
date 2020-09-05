@@ -1,13 +1,101 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eleventh_hour/models/Exceptions.dart';
 import 'package:eleventh_hour/models/User.dart';
+import 'package:eleventh_hour/utilities/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class UserController {
   UserController._();
 
   static final FirebaseAuth _auth = FirebaseAuth.instance;
   static final Firestore _fireStore = Firestore.instance;
+
+  static final FirebaseStorage _storage =
+      FirebaseStorage(storageBucket: 'gs://eleventhhour-eb2e0.appspot.com');
+
+  static Future<String> uploadFile(String userId, File image) async {
+    try {
+      StorageUploadTask uploadTask =
+          _storage.ref().child('Profile Pictures/$userId.png').putFile(image);
+      await uploadTask.onComplete;
+      String fileURL = await _storage
+          .ref()
+          .child('Profile Pictures/$userId.png')
+          .getDownloadURL();
+      return fileURL;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  static Future<String> updateProfilePicture(
+      {String userId, String oldImageURL, File newImage}) async {
+    try {
+      if (oldImageURL != kDefaultProfilePicUrl) {
+        StorageReference photoRef =
+            await _storage.getReferenceFromUrl(oldImageURL);
+        await photoRef.delete();
+      }
+
+      String newFileURL = await uploadFile(userId, newImage);
+      await _fireStore.collection("users").document(userId).updateData({
+        'profilePicURL': newFileURL,
+      });
+
+      return newFileURL;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  static Future<String> removeProfilePicture(
+      {String userId, String oldImageURL}) async {
+    try {
+      if (oldImageURL != kDefaultProfilePicUrl) {
+        StorageReference photoRef =
+            await _storage.getReferenceFromUrl(oldImageURL);
+        await photoRef.delete();
+
+        await _fireStore.collection("users").document(userId).updateData({
+          'profilePicURL': kDefaultProfilePicUrl,
+        });
+      }
+      return kDefaultProfilePicUrl;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  static Future<void> addToWishlist({String userId, String courseId}) async {
+    await _fireStore.collection("users").document(userId).updateData({
+      'wishlist': FieldValue.arrayUnion([courseId]),
+    });
+  }
+
+  static Future<void> addToCart({String userId, String courseId}) async {
+    await _fireStore.collection("users").document(userId).updateData({
+      'cart': FieldValue.arrayUnion([courseId]),
+    });
+  }
+
+  static Future<void> removeFromWishlist(
+      {String userId, String courseId}) async {
+    await _fireStore.collection("users").document(userId).updateData({
+      'wishlist': FieldValue.arrayRemove([courseId]),
+    });
+  }
+
+  static Future<void> removeFromCart({String userId, String courseId}) async {
+    await _fireStore.collection("users").document(userId).updateData({
+      'cart': FieldValue.arrayRemove([courseId]),
+    });
+  }
 
   static Future<User> getUser(String userId) async {
     DocumentSnapshot snapshot =
@@ -39,8 +127,7 @@ class UserController {
     }
   }
 
-  static Future<bool> resendEmailVerificationLink(
-      String email, String password) async {
+  static Future<bool> resendEmailVerificationLink(String email, String password) async {
     try {
       final user = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
@@ -55,13 +142,12 @@ class UserController {
     }
   }
 
-  static Future<String> registerUser(
-      {String name,
-      String profilePicURL,
-      String collegeId,
-      String phone,
-      String email,
-      String password}) async {
+  static Future<String> registerUser({String name,
+    String profilePicURL,
+    String collegeId,
+    String phone,
+    String email,
+    String password}) async {
     try {
       final user = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -112,13 +198,12 @@ class UserController {
     }
   }
 
-  static Future<bool> updatePersonalDetails(
-      {String name,
-      String updatedProfileUrl,
-      String uid,
-      String collegeId,
-      String phone,
-      String email}) async {
+  static Future<bool> updatePersonalDetails({String name,
+    String updatedProfileUrl,
+    String uid,
+    String collegeId,
+    String phone,
+    String email}) async {
     try {
       await _fireStore.collection('users').document(uid).updateData({
         'name': name,

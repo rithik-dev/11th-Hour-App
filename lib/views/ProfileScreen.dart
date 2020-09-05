@@ -5,6 +5,7 @@ import 'package:eleventh_hour/components/ProfilePicture.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/models/College.dart';
 import 'package:eleventh_hour/models/User.dart';
+import 'package:eleventh_hour/views/EditProfilePictureScreen.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -97,7 +98,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       children: <Widget>[
                         Stack(
                           children: <Widget>[
-                            ProfilePicture(url: user.profilePicURL),
+                            ProfilePicture(url: user.profilePicURL, radius: 55),
                             Positioned(
                               bottom: 0,
                               right: 0,
@@ -110,7 +111,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   color: Colors.white,
                                   iconSize: 15.0,
                                   onPressed: () {
-                                    //TODO: edit pic
+                                    showModalBottomSheet(
+                                        context: context,
+                                        builder: (context) =>
+                                            EditProfilePictureScreen());
                                   },
                                 ),
                               ),
