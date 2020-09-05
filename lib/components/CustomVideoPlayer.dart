@@ -74,7 +74,7 @@ class CustomVideoPlayer extends StatelessWidget {
         print("video oninit");
       },
       onpop: (value) {
-        print("poppoi");
+        Navigator.pop(context);
       },
       onended: (value) {
         print("video ended");

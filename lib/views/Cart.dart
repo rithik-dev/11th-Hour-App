@@ -22,6 +22,8 @@ class _CartScreenState extends State<CartScreen> {
     Fluttertoast.showToast(msg: "Payment Success");
   }
 
+  int amount = 0;
+
   @override
   void dispose() {
     super.dispose();
@@ -40,6 +42,7 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   Razorpay razorPay;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -52,16 +55,13 @@ class _CartScreenState extends State<CartScreen> {
     razorPay.on(Razorpay.EVENT_EXTERNAL_WALLET, handlerExternalWallet);
   }
 
-  void openCheckout() {
+  void openCheckout(String name, String email) {
     var options = {
       "key": "rzp_test_NwfgCE8CdhXpFT",
-      "amount": num.parse("200") * 100,
+      "amount": amount * 100,
       "name": "11th Hour",
       "description": "Start Learning!!!",
-      "prefill": {
-        "contact": "9953798220",
-        "email": "shivamthegreat.sv@gmail.com"
-      },
+      "prefill": {"contact": name, "email": email},
       "external": {
         "wallets": ["paytm"]
       }
@@ -76,59 +76,65 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: Container(
-        padding: EdgeInsets.all(20),
-        color: Theme.of(context).primaryColor,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Rs.2000",
-              style: Theme.of(context).textTheme.headline1,
-            ),
-            RaisedButton.icon(
-                onPressed: () {},
-                icon: Icon(UiIcons.money),
-                label: Text("Proceed to pay"))
-          ],
-        ),
-      ),
-      appBar: AppBar(
-        title: Text("My Cart"),
-        centerTitle: true,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(15),
-            bottomRight: Radius.circular(15),
-          ),
-        ),
-        backgroundColor: Theme.of(context).primaryColor,
-        elevation: 0,
-        automaticallyImplyLeading: true,
-      ),
-      body: SafeArea(
-        child: Consumer2<User, CourseController>(
-            builder: (context, user, courses, child) {
-          return RefreshIndicator(
-            onRefresh: () async {
-              final User newUser = await UserController.getUser(user.userId);
-              Provider.of<User>(context, listen: false)
-                  .updateUserInProvider(newUser);
-            },
-            child: (user.cart == null || user.cart.length == 0)
-                ? Card404(title: "CART")
-                : ListView(
-                    children: courses
-                        .getCoursesByIds(user.cart.cast<String>())
-                        .map((course) => SmallCourseCard(
-                              course: course,
-                            ))
-                        .toList(),
+    return Consumer2<User, CourseController>(
+      builder: (context, user, courses, child) {
+        return Scaffold(
+            bottomNavigationBar: Container(
+              padding: EdgeInsets.all(20),
+              color: Theme.of(context).primaryColor,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Rs.$amount",
+                    style: Theme.of(context).textTheme.headline1,
                   ),
-          );
-        }),
-      ),
+                  RaisedButton.icon(
+                      onPressed: amount == 0
+                          ? null
+                          : () {
+                              openCheckout(user.name, user.email);
+                            },
+                      disabledColor: Colors.white30,
+                      icon: Icon(UiIcons.money),
+                      label: Text("Proceed to pay"))
+                ],
+              ),
+            ),
+            appBar: AppBar(
+              title: Text("My Cart"),
+              centerTitle: true,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(15),
+                  bottomRight: Radius.circular(15),
+                ),
+              ),
+              backgroundColor: Theme.of(context).primaryColor,
+              elevation: 0,
+              automaticallyImplyLeading: true,
+            ),
+            body: SafeArea(
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  final User newUser =
+                      await UserController.getUser(user.userId);
+                  Provider.of<User>(context, listen: false)
+                      .updateUserInProvider(newUser);
+                },
+                child: (user.cart == null || user.cart.length == 0)
+                    ? Card404(title: "CART")
+                    : ListView(
+                        children: courses
+                            .getCoursesByIds(user.cart.cast<String>())
+                            .map((course) => SmallCourseCard(
+                                  course: course,
+                                ))
+                            .toList(),
+                      ),
+              ),
+            ));
+      },
     );
   }
 }
