@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:eleventh_hour/components/DrawerBoilerPlate.dart';
+import 'package:eleventh_hour/components/EditProfilePictureScreen.dart';
 import 'package:eleventh_hour/components/ProfilePicture.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/models/College.dart';
 import 'package:eleventh_hour/models/User.dart';
-import 'package:eleventh_hour/views/EditProfilePictureScreen.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

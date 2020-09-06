@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:eleventh_hour/components/CartWishlistToggle.dart';
 import 'package:eleventh_hour/models/Course.dart';
 import 'package:eleventh_hour/views/PurchasedCourseDetails.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,6 +22,10 @@ class SmallCourseCard extends StatelessWidget {
                 ? Colors.grey[800]
                 : Color.fromRGBO(64, 75, 96, .9)),
         child: ListTile(
+            onLongPress: () async {
+              showModalBottomSheet(
+                  context: context, builder: (context) => CartWishlistToggle());
+            },
             contentPadding:
                 EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
             leading: Container(
@@ -67,7 +72,7 @@ class SmallCourseCard extends StatelessWidget {
             ),
             onTap: !course.blackListed
                 ? () {
-              Navigator.pushNamed(context, PurchasedCourseDetails.id,
+                    Navigator.pushNamed(context, PurchasedCourseDetails.id,
                         arguments: course);
                   }
                 : () {

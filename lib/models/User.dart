@@ -67,6 +67,14 @@ class User extends ChangeNotifier {
     notifyListeners();
   }
 
+  void handleCheckoutSuccess() {
+    this.cart.forEach((element) {
+      this.myCourses.add(element);
+    });
+    this.cart = [];
+    notifyListeners();
+  }
+
   Map<String, dynamic> toMap() {
     // ignore: unnecessary_cast
     return {
