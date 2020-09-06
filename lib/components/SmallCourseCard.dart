@@ -1,16 +1,24 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eleventh_hour/components/CartWishlistToggle.dart';
 import 'package:eleventh_hour/models/Course.dart';
+import 'package:eleventh_hour/models/User.dart';
+import 'package:eleventh_hour/views/CourseDetails.dart';
 import 'package:eleventh_hour/views/PurchasedCourseDetails.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 class SmallCourseCard extends StatelessWidget {
   final Course course;
   final bool isWishListPage;
-  SmallCourseCard({@required this.course, this.isWishListPage = false});
+
+  SmallCourseCard({
+    @required this.course,
+    this.isWishListPage = false,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -24,7 +32,9 @@ class SmallCourseCard extends StatelessWidget {
         child: ListTile(
             onLongPress: () async {
               showModalBottomSheet(
-                  context: context, builder: (context) => CartWishlistToggle());
+                  context: context,
+                  builder: (context) =>
+                      CartWishlistToggle(courseId: course.id));
             },
             contentPadding:
                 EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
@@ -72,9 +82,14 @@ class SmallCourseCard extends StatelessWidget {
             ),
             onTap: !course.blackListed
                 ? () {
-                    Navigator.pushNamed(context, PurchasedCourseDetails.id,
-                        arguments: course);
-                  }
+              final user = Provider.of<User>(context, listen: false);
+              if (user.myCourses.contains(course.id))
+                Navigator.pushNamed(context, PurchasedCourseDetails.id,
+                    arguments: course);
+              else
+                Navigator.pushNamed(context, CourseDetails.id,
+                    arguments: course);
+            }
                 : () {
                     Fluttertoast.showToast(msg: "BlackListed");
                   },

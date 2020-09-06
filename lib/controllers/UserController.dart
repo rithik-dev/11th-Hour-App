@@ -78,6 +78,25 @@ class UserController {
     });
   }
 
+  static Future<void> addToRecentCourses(
+      {String userId, String courseId}) async {
+    await _fireStore.collection("users").document(userId).updateData({
+      'recentCoursesIds': FieldValue.arrayUnion([courseId]),
+    });
+  }
+
+  static Future<void> handlePaymentSuccess(
+      {String userId, List<String> courseIds}) async {
+    await _fireStore.collection("users").document(userId).updateData(
+        {'myCourses': FieldValue.arrayUnion(courseIds), 'cart': []});
+
+    for (String courseId in courseIds) {
+      await _fireStore.collection("courses").document(courseId).updateData({
+        'enrolledUsers': FieldValue.arrayUnion([userId]),
+      });
+    }
+  }
+
   static Future<void> addToCart({String userId, String courseId}) async {
     await _fireStore.collection("users").document(userId).updateData({
       'cart': FieldValue.arrayUnion([courseId]),
@@ -127,7 +146,8 @@ class UserController {
     }
   }
 
-  static Future<bool> resendEmailVerificationLink(String email, String password) async {
+  static Future<bool> resendEmailVerificationLink(
+      String email, String password) async {
     try {
       final user = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
@@ -142,12 +162,13 @@ class UserController {
     }
   }
 
-  static Future<String> registerUser({String name,
-    String profilePicURL,
-    String collegeId,
-    String phone,
-    String email,
-    String password}) async {
+  static Future<String> registerUser(
+      {String name,
+      String profilePicURL,
+      String collegeId,
+      String phone,
+      String email,
+      String password}) async {
     try {
       final user = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -160,7 +181,13 @@ class UserController {
           "phone": phone,
           "collegeId": collegeId,
           "profilePicURL": profilePicURL,
-          "email": email
+          "email": email,
+          "myCourses": [],
+          "cart": [],
+          "recentCoursesIds": [],
+          "myUploadedCourses": [],
+          "wishlist": [],
+          "transactionIds": [],
         });
         return user.user.uid;
       } else

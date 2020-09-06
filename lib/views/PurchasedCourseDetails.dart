@@ -28,6 +28,7 @@ class _PurchasedCourseDetailsState extends State<PurchasedCourseDetails> {
             return Column(
               children: [
                 CustomVideoPlayer(
+                  courseId: widget.course.id,
                   lectureUrl: widget.course.lectures[videoIndex]['lectureUrl'],
                 ),
                 Container(

@@ -1,9 +1,15 @@
 import 'package:awsome_video_player/awsome_video_player.dart';
+import 'package:eleventh_hour/controllers/UserController.dart';
+import 'package:eleventh_hour/models/User.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CustomVideoPlayer extends StatelessWidget {
   final String lectureUrl;
-  CustomVideoPlayer({this.lectureUrl});
+  final String courseId;
+
+  CustomVideoPlayer({this.lectureUrl, this.courseId});
+
   @override
   Widget build(BuildContext context) {
     return AwsomeVideoPlayer(
@@ -70,8 +76,12 @@ class CustomVideoPlayer extends StatelessWidget {
           ],
         ),
       ),
-      oninit: (controller) {
-        print("video oninit");
+      oninit: (controller) async {
+        await UserController.addToRecentCourses(
+            userId: Provider.of<User>(context, listen: false).userId,
+            courseId: courseId);
+        Provider.of<User>(context, listen: false)
+            .addCourseToRecentCourses(courseId);
       },
       onpop: (value) {
         Navigator.pop(context);

@@ -115,7 +115,9 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                 ),
                 CarouselSlider(
                     items: courses
-                        .getTrendingCourses()
+                        .getCoursesByIds(user.recentCoursesIds.reversed
+                            .cast<String>()
+                            .toList())
                         .map((course) => CourseCard(course: course, user: user))
                         .toList(),
                     options: CarouselOptions(

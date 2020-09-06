@@ -18,6 +18,12 @@ class CourseController extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addUserToCourses({String userId, List<String> courseIds}) {
+    for (String courseId in courseIds)
+      this.getCourseByID(courseId).enrolledUsers.add(userId);
+    notifyListeners();
+  }
+
   Course getCourseByID(String courseId) {
     return this.courses.where((course) => course.id == courseId).first;
   }

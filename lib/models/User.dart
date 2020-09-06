@@ -47,6 +47,11 @@ class User extends ChangeNotifier {
     );
   }
 
+  void addCourseToRecentCourses(String courseId) {
+    this.recentCoursesIds.add(courseId);
+    notifyListeners();
+  }
+
   void addCourseToWishlist(String courseId) {
     this.wishlist.add(courseId);
     notifyListeners();

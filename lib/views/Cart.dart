@@ -18,8 +18,17 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  void handlerPaymentSuccess(PaymentSuccessResponse response) {
+  void handlerPaymentSuccess(PaymentSuccessResponse response) async {
     print("Payment success");
+    print(response.paymentId);
+    await UserController.handlePaymentSuccess(
+      userId: Provider.of<User>(context, listen: false).userId,
+      courseIds: Provider.of<User>(context, listen: false).cart.cast<String>(),
+    );
+    Provider.of<CourseController>(context, listen: false).addUserToCourses(
+      userId: Provider.of<User>(context, listen: false).userId,
+      courseIds: Provider.of<User>(context, listen: false).cart.cast<String>(),
+    );
     Provider.of<User>(context, listen: false).handleCheckoutSuccess();
     Fluttertoast.showToast(msg: "Payment Success");
   }
@@ -35,6 +44,8 @@ class _CartScreenState extends State<CartScreen> {
 //  static const platform = const MethodChannel("razorpay_flutter");
   void handlerErrorFailure(PaymentFailureResponse response) {
     print("Payment error");
+    print(response.toString());
+    print(response.code);
     Fluttertoast.showToast(msg: "Payment Error");
   }
 
@@ -85,19 +96,25 @@ class _CartScreenState extends State<CartScreen> {
     }
   }
 
+  List<Course> _courses;
+
   @override
   Widget build(BuildContext context) {
     return Consumer2<User, CourseController>(
       builder: (context, user, courses, child) {
-        List<Course> _courses =
-            courses.getCoursesByIds(user.cart.cast<String>());
+        if (user.cart == null)
+          _courses = [];
+        else
+          _courses = courses.getCoursesByIds(user.cart.cast<String>());
 
         _calculateAmount(_courses);
 
         return Scaffold(
             bottomNavigationBar: Container(
               padding: EdgeInsets.all(20),
-              color: Theme.of(context).primaryColor,
+              color: Theme
+                  .of(context)
+                  .primaryColor,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
