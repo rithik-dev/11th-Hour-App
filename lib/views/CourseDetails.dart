@@ -11,9 +11,10 @@ import 'package:shimmer/shimmer.dart';
 class CourseDetails extends StatefulWidget {
   static const id = '/course_details';
   final Course course;
-  User user;
 
-  CourseDetails({@required this.course, @required this.user});
+  CourseDetails({
+    @required this.course,
+  });
 
   @override
   _CourseDetailsState createState() => _CourseDetailsState();
@@ -24,7 +25,7 @@ class _CourseDetailsState extends State<CourseDetails> {
 
   @override
   Widget build(BuildContext context) {
-    widget.user = Provider.of<User>(context);
+    User user = Provider.of<User>(context);
 
     return Stack(
       children: [
@@ -92,16 +93,16 @@ class _CourseDetailsState extends State<CourseDetails> {
                     setState(() {
                       isLoading = true;
                     });
-                    if (widget.user.cart.contains(widget.course.id)) {
+                    if (user.cart.contains(widget.course.id)) {
                       await UserController.removeFromCart(
-                        userId: widget.user.userId,
+                        userId: user.userId,
                         courseId: widget.course.id,
                       );
                       Provider.of<User>(context, listen: false)
                           .removeCourseFromCart(widget.course.id);
                     } else {
                       await UserController.addToCart(
-                        userId: widget.user.userId,
+                        userId: user.userId,
                         courseId: widget.course.id,
                       );
                       Provider.of<User>(context, listen: false)
@@ -112,11 +113,11 @@ class _CourseDetailsState extends State<CourseDetails> {
                       isLoading = false;
                     });
                   },
-                  icon: widget.user.cart.contains(widget.course.id)
+                  icon: user.cart.contains(widget.course.id)
                       ? Icon(FontAwesomeIcons.minusCircle)
                       : Icon(FontAwesomeIcons.plusCircle),
                   label: Text(
-                    widget.user.cart.contains(widget.course.id)
+                    user.cart.contains(widget.course.id)
                         ? "Remove from cart"
                         : "Add to cart",
                   ),

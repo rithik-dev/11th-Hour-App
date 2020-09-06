@@ -81,7 +81,6 @@ class User extends ChangeNotifier {
   }
 
   Map<String, dynamic> toMap() {
-    // ignore: unnecessary_cast
     return {
       'name': this.name,
       'email': this.email,
@@ -95,7 +94,7 @@ class User extends ChangeNotifier {
       'cart': this.cart,
       'myUploadedCourses': this.myUploadedCourses,
       'wishlist': this.wishlist,
-    } as Map<String, dynamic>;
+    };
   }
 
   @override

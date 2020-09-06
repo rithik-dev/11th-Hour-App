@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eleventh_hour/components/404Card.dart';
 import 'package:eleventh_hour/components/SmallCourseCard.dart';
 import 'package:eleventh_hour/controllers/CourseController.dart';
+import 'package:eleventh_hour/controllers/TransactionController.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/models/Course.dart';
+import 'package:eleventh_hour/models/Transaction.dart' as T;
 import 'package:eleventh_hour/models/User.dart';
 import 'package:eleventh_hour/utilities/UiIcons.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +28,17 @@ class _CartScreenState extends State<CartScreen> {
       userId: Provider.of<User>(context, listen: false).userId,
       courseIds: Provider.of<User>(context, listen: false).cart.cast<String>(),
     );
+    await TransactionController.addTransactionToUser(
+      transaction: T.Transaction(
+          courseName: "",
+          amount: amount.toDouble(),
+          transactionId: response.paymentId,
+          status: "Success",
+          date: Timestamp.now()),
+      userId: Provider
+          .of<User>(context, listen: false)
+          .userId,
+    );
     Provider.of<CourseController>(context, listen: false).addUserToCourses(
       userId: Provider.of<User>(context, listen: false).userId,
       courseIds: Provider.of<User>(context, listen: false).cart.cast<String>(),
@@ -42,10 +56,18 @@ class _CartScreenState extends State<CartScreen> {
   }
 
 //  static const platform = const MethodChannel("razorpay_flutter");
-  void handlerErrorFailure(PaymentFailureResponse response) {
-    print("Payment error");
-    print(response.toString());
-    print(response.code);
+  void handlerErrorFailure(PaymentFailureResponse response) async {
+    await TransactionController.addTransactionToUser(
+      transaction: T.Transaction(
+          courseName: "",
+          amount: amount.toDouble(),
+          transactionId: response.code.toString(),
+          status: "Failure",
+          date: Timestamp.now()),
+      userId: Provider
+          .of<User>(context, listen: false)
+          .userId,
+    );
     Fluttertoast.showToast(msg: "Payment Error");
   }
 
@@ -126,8 +148,8 @@ class _CartScreenState extends State<CartScreen> {
                       onPressed: amount == 0
                           ? null
                           : () {
-                              openCheckout(user.phone, user.email);
-                            },
+                        openCheckout(user.phone, user.email);
+                      },
                       disabledColor: Colors.white30,
                       icon: Icon(UiIcons.money),
                       label: Text("Proceed to pay"))
@@ -151,7 +173,7 @@ class _CartScreenState extends State<CartScreen> {
               child: RefreshIndicator(
                 onRefresh: () async {
                   final User newUser =
-                      await UserController.getUser(user.userId);
+                  await UserController.getUser(user.userId);
                   Provider.of<User>(context, listen: false)
                       .updateUserInProvider(newUser);
                   await Provider.of<CourseController>(context, listen: false)
@@ -160,12 +182,12 @@ class _CartScreenState extends State<CartScreen> {
                 child: (user.cart == null || user.cart.length == 0)
                     ? Card404(title: "CART")
                     : ListView(
-                        children: _courses
-                            .map((course) => SmallCourseCard(
-                                  course: course,
-                                ))
-                            .toList(),
-                      ),
+                  children: _courses
+                      .map((course) => SmallCourseCard(
+                    course: course,
+                  ))
+                      .toList(),
+                ),
               ),
             ));
       },

@@ -13,7 +13,6 @@ import 'package:eleventh_hour/views/WishlistScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inner_drawer/inner_drawer.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -25,12 +24,18 @@ class HomeBoilerPlate extends StatefulWidget {
 }
 
 class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
-  List homeScreenPages = [
-    Home(),
-    MyCoursesScreen(),
-    WishlistScreen(),
-    SearchPage()
-  ];
+  Widget returnHomePages(int index) {
+    List widgets = [
+      Home(
+        callback: callback,
+      ),
+      MyCoursesScreen(),
+      WishlistScreen(),
+      SearchPage()
+    ];
+    return widgets[index];
+  }
+
   final GlobalKey<InnerDrawerState> _innerDrawerKey =
       GlobalKey<InnerDrawerState>();
 
@@ -39,6 +44,12 @@ class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
   }
 
   int _selectedIndex = 0;
+
+  callback(index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +68,7 @@ class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
                   ),
                 ),
 //              boxShadow: [
-//            BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1)
+//            BoxShadow(blurRadius: 17, color: Colors.black.withOpacity(.1)
 //            ),
 //          ]
               ),
@@ -68,36 +79,36 @@ class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
                     gap: 8,
                     activeColor: Colors.white,
                     iconSize: 24,
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 5),
                     duration: Duration(milliseconds: 600),
                     tabBackgroundColor: Colors.grey[800],
                     tabs: [
                       GButton(
                         icon: UiIcons.home,
                         text: 'Home',
-                        gap: 20,
+                        gap: 17,
                         iconSize: 27,
                         iconColor: Colors.black,
                       ),
                       GButton(
                         icon: UiIcons.video_camera,
                         text: 'Courses',
-                        gap: 20,
+                        gap: 17,
                         iconSize: 27,
                         iconColor: Colors.black,
                       ),
                       GButton(
                         icon: UiIcons.heart,
                         text: 'Wishlist',
-                        gap: 20,
+                        gap: 17,
                         iconSize: 27,
                         iconColor: Colors.black,
                       ),
                       GButton(
-                        icon: FontAwesomeIcons.search,
+                        icon: Icons.search,
                         text: 'Search',
-                        gap: 20,
-                        iconSize: 24,
+                        gap: 17,
+                        iconSize: 27,
                         iconColor: Colors.black,
                       ),
                     ],
@@ -149,7 +160,7 @@ class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
                     Provider.of<College>(context, listen: false)
                         .updateCollegeInProvider(college);
                   },
-                  child: homeScreenPages[_selectedIndex],
+                  child: returnHomePages(_selectedIndex),
                 );
               },
             )),

@@ -10,6 +10,9 @@ import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   static const id = '/home';
+  final Function(int index) callback;
+
+  Home({this.callback});
 
   @override
   _HomeState createState() => _HomeState();
@@ -106,19 +109,60 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                       scrollDirection: Axis.horizontal,
                     )),
                 SizedBox(height: 10),
-                Text(
+                user.recentCoursesIds.length == 0
+                    ? Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal:
+                      MediaQuery
+                          .of(context)
+                          .size
+                          .width * 0.15),
+                  child: RaisedButton.icon(
+                    padding: EdgeInsets.all(10),
+                    elevation: 15,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40)),
+                    onPressed: () {
+                      widget.callback(3);
+                    },
+                    color: Theme
+                        .of(context)
+                        .primaryColor,
+                    icon: Icon(
+                      Icons.search,
+                      size: 35,
+                    ),
+                    label: Text(
+                      "Browse Courses",
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .headline4
+                          .copyWith(color: Colors.white),
+                    ),
+                  ),
+                )
+                    : Text(
                   "  Continue Watching",
-                  style: Theme.of(context).textTheme.headline1,
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .headline1,
                 ),
-                SizedBox(
+                user.recentCoursesIds.length == 0
+                    ? SizedBox.shrink()
+                    : SizedBox(
                   height: 20,
                 ),
-                CarouselSlider(
+                user.recentCoursesIds.length == 0
+                    ? SizedBox.shrink()
+                    : CarouselSlider(
                     items: courses
                         .getCoursesByIds(user.recentCoursesIds.reversed
-                            .cast<String>()
-                            .toList())
-                        .map((course) => CourseCard(course: course, user: user))
+                        .cast<String>()
+                        .toList())
+                        .map((course) =>
+                        CourseCard(course: course, user: user))
                         .toList(),
                     options: CarouselOptions(
                       height: 340,
