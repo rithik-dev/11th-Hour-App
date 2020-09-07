@@ -225,12 +225,13 @@ class UserController {
     }
   }
 
-  static Future<bool> updatePersonalDetails({String name,
-    String updatedProfileUrl,
-    String uid,
-    String collegeId,
-    String phone,
-    String email}) async {
+  static Future<bool> updatePersonalDetails(
+      {String name,
+      String updatedProfileUrl,
+      String uid,
+      String collegeId,
+      String phone,
+      String email}) async {
     try {
       await _fireStore.collection('users').document(uid).updateData({
         'name': name,
