@@ -24,8 +24,10 @@ class HomeBoilerPlate extends StatefulWidget {
 }
 
 class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
-  Widget returnHomePages(int index) {
-    List widgets = [
+  PageController _pageController;
+
+  List<Widget> returnHomePages() {
+    List<Widget> widgets = [
       Home(
         callback: callback,
       ),
@@ -33,7 +35,7 @@ class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
       WishlistScreen(),
       SearchPage()
     ];
-    return widgets[index];
+    return widgets;
   }
 
   final GlobalKey<InnerDrawerState> _innerDrawerKey =
@@ -49,6 +51,18 @@ class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
   }
 
   @override
@@ -117,6 +131,9 @@ class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
                       setState(() {
                         _selectedIndex = index;
                       });
+                      _pageController.animateToPage(index,
+                          duration: Duration(milliseconds: 500),
+                          curve: Curves.easeInSine);
                     }),
               ),
             ),
@@ -160,7 +177,15 @@ class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
                     Provider.of<College>(context, listen: false)
                         .updateCollegeInProvider(college);
                   },
-                  child: returnHomePages(_selectedIndex),
+                  child: SizedBox.expand(
+                    child: PageView(
+                      controller: _pageController,
+                      onPageChanged: (index) {
+                        setState(() => _selectedIndex = index);
+                      },
+                      children: returnHomePages(),
+                    ),
+                  ),
                 );
               },
             )),

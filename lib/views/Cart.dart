@@ -21,7 +21,7 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  String courseNames = "";
+  List courseNames = [];
 
   void handlerPaymentSuccess(PaymentSuccessResponse response) async {
     print(courseNames);
@@ -111,10 +111,10 @@ class _CartScreenState extends State<CartScreen> {
 
   void _calculateAmountAndNames(List<Course> courses) {
     amount = 0;
-    courseNames = "";
+    courseNames = [];
     for (Course course in courses) {
       if (!course.blackListed) {
-        courseNames += "${course.title} ";
+        courseNames.add(course.id);
         amount += course.price;
       }
     }

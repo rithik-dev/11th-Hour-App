@@ -99,8 +99,14 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                           Navigator.pushNamed(context, ViewAll.id,
                               arguments: courses.getTrendingCourses());
                         },
-                        icon: Icon(FontAwesomeIcons.arrowRight),
-                        label: Text("View all"))
+                        icon: Icon(
+                          FontAwesomeIcons.arrowRight,
+                          size: 15,
+                        ),
+                        label: Text(
+                          "View all",
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ))
                   ],
                 ),
                 SizedBox(
@@ -165,8 +171,14 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                                 Navigator.pushNamed(context, ViewAll.id,
                                     arguments: user.recentCoursesIds);
                               },
-                              icon: Icon(FontAwesomeIcons.arrowRight),
-                              label: Text("View all"))
+                              icon: Icon(
+                                FontAwesomeIcons.arrowRight,
+                                size: 15,
+                              ),
+                              label: Text(
+                                "View all",
+                                style: Theme.of(context).textTheme.bodyText1,
+                              ))
                         ],
                       ),
                 user.recentCoursesIds.length == 0

@@ -6,7 +6,7 @@ class Transaction {
   String status;
   String transactionId;
   String docId;
-  String courseNames;
+  List courseNames;
   double amount;
 
   Transaction({
@@ -20,7 +20,7 @@ class Transaction {
 
   factory Transaction.fromDocumentSnapshot(DocumentSnapshot transaction) {
     return new Transaction(
-        courseNames: transaction['courseNames'] as String,
+        courseNames: transaction['courseNames'] as List<dynamic>,
         date: transaction['date'] as Timestamp,
         status: transaction['status'] as String,
         transactionId: transaction['transactionId'] as String,
