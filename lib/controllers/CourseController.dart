@@ -52,7 +52,7 @@ class CourseController extends ChangeNotifier {
     } catch (err) {
       print(err);
     }
-    print("lol $_courses");
+//    print("lol $_courses");
     return _courses;
   }
 }

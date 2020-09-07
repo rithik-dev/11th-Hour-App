@@ -21,16 +21,20 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  String courseNames = "";
+
   void handlerPaymentSuccess(PaymentSuccessResponse response) async {
+    print(courseNames);
     print("Payment success");
     print(response.paymentId);
     await UserController.handlePaymentSuccess(
       userId: Provider.of<User>(context, listen: false).userId,
       courseIds: Provider.of<User>(context, listen: false).cart.cast<String>(),
     );
+
     await TransactionController.addTransactionToUser(
       transaction: T.Transaction(
-          courseName: "",
+          courseNames: courseNames,
           amount: amount.toDouble(),
           transactionId: response.paymentId,
           status: "Success",
@@ -59,7 +63,7 @@ class _CartScreenState extends State<CartScreen> {
   void handlerErrorFailure(PaymentFailureResponse response) async {
     await TransactionController.addTransactionToUser(
       transaction: T.Transaction(
-          courseName: "",
+          courseNames: courseNames,
           amount: amount.toDouble(),
           transactionId: response.code.toString(),
           status: "Failure",
@@ -109,13 +113,16 @@ class _CartScreenState extends State<CartScreen> {
     }
   }
 
-  void _calculateAmount(List<Course> courses) {
+  void _calculateAmountAndNames(List<Course> courses) {
     amount = 0;
+    courseNames = "";
     for (Course course in courses) {
       if (!course.blackListed) {
+        courseNames += "${course.title} ";
         amount += course.price;
       }
     }
+    print(courseNames);
   }
 
   List<Course> _courses;
@@ -129,7 +136,7 @@ class _CartScreenState extends State<CartScreen> {
         else
           _courses = courses.getCoursesByIds(user.cart.cast<String>());
 
-        _calculateAmount(_courses);
+        _calculateAmountAndNames(_courses);
 
         return Scaffold(
             bottomNavigationBar: Container(
@@ -183,9 +190,10 @@ class _CartScreenState extends State<CartScreen> {
                     ? Card404(title: "CART")
                     : ListView(
                   children: _courses
-                      .map((course) => SmallCourseCard(
-                    course: course,
-                  ))
+                      .map((course) =>
+                      SmallCourseCard(
+                        course: course,
+                      ))
                       .toList(),
                 ),
               ),
