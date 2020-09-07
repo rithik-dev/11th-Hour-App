@@ -90,15 +90,10 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                   children: [
                     Text(
                       "  Trending",
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .headline1,
+                      style: Theme.of(context).textTheme.headline1,
                     ),
                     RaisedButton.icon(
-                        color: Theme
-                            .of(context)
-                            .primaryColor,
+                        color: Theme.of(context).primaryColor,
                         shape: StadiumBorder(),
                         onPressed: () {
                           Navigator.pushNamed(context, ViewAll.id,
@@ -132,85 +127,74 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                 SizedBox(height: 10),
                 user.recentCoursesIds.length == 0
                     ? Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal:
-                      MediaQuery
-                          .of(context)
-                          .size
-                          .width * 0.15),
-                  child: RaisedButton.icon(
-                    padding: EdgeInsets.all(10),
-                    elevation: 15,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(40)),
-                    onPressed: () {
-                      widget.callback(3);
-                    },
-                    color: Theme
-                        .of(context)
-                        .primaryColor,
-                    icon: Icon(
-                      Icons.search,
-                      size: 35,
-                    ),
-                    label: Text(
-                      "Browse Courses",
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .headline4
-                          .copyWith(color: Colors.white),
-                    ),
-                  ),
-                )
+                        padding: EdgeInsets.symmetric(
+                            horizontal:
+                                MediaQuery.of(context).size.width * 0.15),
+                        child: RaisedButton.icon(
+                          padding: EdgeInsets.all(10),
+                          elevation: 15,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(40)),
+                          onPressed: () {
+                            widget.callback(3);
+                          },
+                          color: Theme.of(context).primaryColor,
+                          icon: Icon(
+                            Icons.search,
+                            size: 35,
+                          ),
+                          label: Text(
+                            "Browse Courses",
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline4
+                                .copyWith(color: Colors.white),
+                          ),
+                        ),
+                      )
                     : Row(
-                  children: [
-                    Text(
-                      "  Continue Watching",
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .headline1,
-                    ),
-                    RaisedButton.icon(
-                        color: Theme
-                            .of(context)
-                            .primaryColor,
-                        shape: StadiumBorder(),
-                        onPressed: () {
-                          Navigator.pushNamed(context, ViewAll.id,
-                              arguments: user.recentCoursesIds);
-                        },
-                        icon: Icon(FontAwesomeIcons.arrowRight),
-                        label: Text("View all"))
-                  ],
-                ),
+                        children: [
+                          Text(
+                            "  Continue Watching",
+                            style: Theme.of(context).textTheme.headline1,
+                          ),
+                          RaisedButton.icon(
+                              color: Theme.of(context).primaryColor,
+                              shape: StadiumBorder(),
+                              onPressed: () {
+                                Navigator.pushNamed(context, ViewAll.id,
+                                    arguments: user.recentCoursesIds);
+                              },
+                              icon: Icon(FontAwesomeIcons.arrowRight),
+                              label: Text("View all"))
+                        ],
+                      ),
                 user.recentCoursesIds.length == 0
                     ? SizedBox.shrink()
                     : SizedBox(
-                  height: 20,
-                ),
+                        height: 20,
+                      ),
                 user.recentCoursesIds.length == 0
                     ? SizedBox.shrink()
                     : CarouselSlider(
-                    items: courses
-                        .getCoursesByIds(user.recentCoursesIds.reversed
-                        .cast<String>()
-                        .toList())
-                        .map((course) =>
-                        CourseCard(course: course, user: user))
-                        .toList(),
-                    options: CarouselOptions(
-                      height: 340,
-                      scrollPhysics: BouncingScrollPhysics(),
-                      viewportFraction: 0.9,
-                      initialPage: 0,
-                      enableInfiniteScroll: false,
-                      reverse: false,
-                      autoPlay: false,
-                      enlargeCenterPage: false,
-                      scrollDirection: Axis.horizontal,
-                    )),
+                        items: courses
+                            .getCoursesByIds(user.recentCoursesIds.reversed
+                                .cast<String>()
+                                .toList())
+                            .map((course) =>
+                                CourseCard(course: course, user: user))
+                            .toList(),
+                        options: CarouselOptions(
+                          height: 340,
+                          scrollPhysics: BouncingScrollPhysics(),
+                          viewportFraction: 0.9,
+                          initialPage: 0,
+                          enableInfiniteScroll: false,
+                          reverse: false,
+                          autoPlay: false,
+                          enlargeCenterPage: false,
+                          scrollDirection: Axis.horizontal,
+                        )),
               ],
             );
           },

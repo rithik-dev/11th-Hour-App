@@ -39,9 +39,7 @@ class _CartScreenState extends State<CartScreen> {
           transactionId: response.paymentId,
           status: "Success",
           date: Timestamp.now()),
-      userId: Provider
-          .of<User>(context, listen: false)
-          .userId,
+      userId: Provider.of<User>(context, listen: false).userId,
     );
     Provider.of<CourseController>(context, listen: false).addUserToCourses(
       userId: Provider.of<User>(context, listen: false).userId,
@@ -68,9 +66,7 @@ class _CartScreenState extends State<CartScreen> {
           transactionId: response.code.toString(),
           status: "Failure",
           date: Timestamp.now()),
-      userId: Provider
-          .of<User>(context, listen: false)
-          .userId,
+      userId: Provider.of<User>(context, listen: false).userId,
     );
     Fluttertoast.showToast(msg: "Payment Error");
   }
@@ -141,9 +137,7 @@ class _CartScreenState extends State<CartScreen> {
         return Scaffold(
             bottomNavigationBar: Container(
               padding: EdgeInsets.all(20),
-              color: Theme
-                  .of(context)
-                  .primaryColor,
+              color: Theme.of(context).primaryColor,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -155,8 +149,8 @@ class _CartScreenState extends State<CartScreen> {
                       onPressed: amount == 0
                           ? null
                           : () {
-                        openCheckout(user.phone, user.email);
-                      },
+                              openCheckout(user.phone, user.email);
+                            },
                       disabledColor: Colors.white30,
                       icon: Icon(UiIcons.money),
                       label: Text("Proceed to pay"))
@@ -180,7 +174,7 @@ class _CartScreenState extends State<CartScreen> {
               child: RefreshIndicator(
                 onRefresh: () async {
                   final User newUser =
-                  await UserController.getUser(user.userId);
+                      await UserController.getUser(user.userId);
                   Provider.of<User>(context, listen: false)
                       .updateUserInProvider(newUser);
                   await Provider.of<CourseController>(context, listen: false)
@@ -189,13 +183,12 @@ class _CartScreenState extends State<CartScreen> {
                 child: (user.cart == null || user.cart.length == 0)
                     ? Card404(title: "CART")
                     : ListView(
-                  children: _courses
-                      .map((course) =>
-                      SmallCourseCard(
-                        course: course,
-                      ))
-                      .toList(),
-                ),
+                        children: _courses
+                            .map((course) => SmallCourseCard(
+                                  course: course,
+                                ))
+                            .toList(),
+                      ),
               ),
             ));
       },
