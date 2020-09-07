@@ -82,14 +82,14 @@ class SmallCourseCard extends StatelessWidget {
             ),
             onTap: !course.blackListed
                 ? () {
-              final user = Provider.of<User>(context, listen: false);
-              if (user.myCourses.contains(course.id))
-                Navigator.pushNamed(context, LecturesPage.id,
-                    arguments: course);
-              else
-                Navigator.pushNamed(context, CourseDetails.id,
-                    arguments: course);
-            }
+                    final user = Provider.of<User>(context, listen: false);
+                    if (user.myCourses.contains(course.id))
+                      Navigator.pushNamed(context, LecturesPage.id,
+                          arguments: course);
+                    else
+                      Navigator.pushNamed(context, CourseDetails.id,
+                          arguments: course);
+                  }
                 : () {
                     Fluttertoast.showToast(msg: "BlackListed");
                   },
