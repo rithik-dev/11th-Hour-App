@@ -3,7 +3,7 @@ import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/models/Course.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:eleventh_hour/views/CourseDetails.dart';
-import 'package:eleventh_hour/views/PurchasedCourseDetails.dart';
+import 'package:eleventh_hour/views/LecturesPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:provider/provider.dart';
@@ -62,7 +62,7 @@ class _CourseCardState extends State<CourseCard> {
                   ? null
                   : () {
                       if (widget.user.myCourses.contains(widget.course.id))
-                        Navigator.pushNamed(context, PurchasedCourseDetails.id,
+                        Navigator.pushNamed(context, LecturesPage.id,
                             arguments: widget.course);
                       else
                         Navigator.pushNamed(context, CourseDetails.id,

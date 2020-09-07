@@ -5,18 +5,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class PurchasedCourseDetails extends StatefulWidget {
+class LecturesPage extends StatefulWidget {
   final Course course;
 
-  PurchasedCourseDetails({this.course});
+  LecturesPage({this.course});
 
-  static const id = '/purchased_course_details';
+  static const id = '/lectures_page';
 
   @override
-  _PurchasedCourseDetailsState createState() => _PurchasedCourseDetailsState();
+  _LecturesPageState createState() => _LecturesPageState();
 }
 
-class _PurchasedCourseDetailsState extends State<PurchasedCourseDetails> {
+class _LecturesPageState extends State<LecturesPage> {
   int videoIndex = 0;
 
   @override

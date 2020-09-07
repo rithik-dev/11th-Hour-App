@@ -5,15 +5,16 @@ import 'package:eleventh_hour/views/ConnectionLostScreen.dart';
 import 'package:eleventh_hour/views/ContactUs.dart';
 import 'package:eleventh_hour/views/CourseDetails.dart';
 import 'package:eleventh_hour/views/IntroScreen.dart';
+import 'package:eleventh_hour/views/LecturesPage.dart';
 import 'package:eleventh_hour/views/LoginScreen.dart';
 import 'package:eleventh_hour/views/MyUploadedCoursesScreen.dart';
 import 'package:eleventh_hour/views/ProfileScreen.dart';
-import 'package:eleventh_hour/views/PurchasedCourseDetails.dart';
 import 'package:eleventh_hour/views/RegistrationScreen.dart';
 import 'package:eleventh_hour/views/SearchPage.dart';
 import 'package:eleventh_hour/views/SplashScreen.dart';
 import 'package:eleventh_hour/views/SubjectDetails.dart';
 import 'package:eleventh_hour/views/Terms&Condn.dart';
+import 'package:eleventh_hour/views/ViewAll.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -29,6 +30,13 @@ class RouteGenerator {
             subject: args,
           ),
           type: PageTransitionType.downToUp,
+        );
+      case ViewAll.id:
+        return PageTransition(
+          child: ViewAll(
+            courseIds: args,
+          ),
+          type: PageTransitionType.leftToRightWithFade,
         );
       case CourseDetails.id:
         return PageTransition(
@@ -54,9 +62,9 @@ class RouteGenerator {
         return PageTransition(
             child: MyUploadedCoursesScreen(),
             type: PageTransitionType.leftToRightWithFade);
-      case PurchasedCourseDetails.id:
+      case LecturesPage.id:
         return PageTransition(
-            child: PurchasedCourseDetails(
+            child: LecturesPage(
               course: args,
             ),
             type: PageTransitionType.leftToRightWithFade);

@@ -3,7 +3,7 @@ import 'package:eleventh_hour/components/CartWishlistToggle.dart';
 import 'package:eleventh_hour/models/Course.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:eleventh_hour/views/CourseDetails.dart';
-import 'package:eleventh_hour/views/PurchasedCourseDetails.dart';
+import 'package:eleventh_hour/views/LecturesPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -84,7 +84,7 @@ class SmallCourseCard extends StatelessWidget {
                 ? () {
               final user = Provider.of<User>(context, listen: false);
               if (user.myCourses.contains(course.id))
-                Navigator.pushNamed(context, PurchasedCourseDetails.id,
+                Navigator.pushNamed(context, LecturesPage.id,
                     arguments: course);
               else
                 Navigator.pushNamed(context, CourseDetails.id,

@@ -4,8 +4,10 @@ import 'package:eleventh_hour/controllers/CourseController.dart';
 import 'package:eleventh_hour/models/College.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:eleventh_hour/views/SubjectDetails.dart';
+import 'package:eleventh_hour/views/ViewAll.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
@@ -83,9 +85,28 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                   spacing: 20,
                   children: _getChips(),
                 ),
-                Text(
-                  "  Trending",
-                  style: Theme.of(context).textTheme.headline1,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "  Trending",
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .headline1,
+                    ),
+                    RaisedButton.icon(
+                        color: Theme
+                            .of(context)
+                            .primaryColor,
+                        shape: StadiumBorder(),
+                        onPressed: () {
+                          Navigator.pushNamed(context, ViewAll.id,
+                              arguments: courses.getTrendingCourses());
+                        },
+                        icon: Icon(FontAwesomeIcons.arrowRight),
+                        label: Text("View all"))
+                  ],
                 ),
                 SizedBox(
                   height: 20,
@@ -142,12 +163,27 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                     ),
                   ),
                 )
-                    : Text(
-                  "  Continue Watching",
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .headline1,
+                    : Row(
+                  children: [
+                    Text(
+                      "  Continue Watching",
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .headline1,
+                    ),
+                    RaisedButton.icon(
+                        color: Theme
+                            .of(context)
+                            .primaryColor,
+                        shape: StadiumBorder(),
+                        onPressed: () {
+                          Navigator.pushNamed(context, ViewAll.id,
+                              arguments: user.recentCoursesIds);
+                        },
+                        icon: Icon(FontAwesomeIcons.arrowRight),
+                        label: Text("View all"))
+                  ],
                 ),
                 user.recentCoursesIds.length == 0
                     ? SizedBox.shrink()
