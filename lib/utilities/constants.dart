@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:introduction_screen/introduction_screen.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 AlertStyle kAlertStyle = AlertStyle(
@@ -41,7 +42,14 @@ const kDefaultProfilePicUrl =
 
 const kButtonTextStyle =
     TextStyle(fontFamily: 'karla', fontSize: 25, fontWeight: FontWeight.bold);
-
+const bodyStyle = TextStyle(fontSize: 19.0, color: Colors.black);
+const pageDecoration = const PageDecoration(
+  titleTextStyle: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700),
+  bodyTextStyle: bodyStyle,
+  descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+  pageColor: Colors.pink,
+  imagePadding: EdgeInsets.zero,
+);
 var kDefaultTheme = ThemeData.dark().copyWith(
     scaffoldBackgroundColor: Color(0xff3B4254),
     accentColor: Colors.grey[300],

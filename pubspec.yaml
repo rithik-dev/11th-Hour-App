@@ -24,10 +24,10 @@ dependencies:
   firebase_auth: ^0.16.1
   firebase_core: ^0.4.5
   google_nav_bar: ^3.0.0
-  gooey_carousel: ^0.1.2
   firebase_storage: ^3.1.6
   flutter_inner_drawer: ^0.5.6+1
   cloud_firestore: ^0.13.7
+  introduction_screen: ^1.0.7
   cached_network_image: ^2.2.0+1
   lottie: ^0.6.0
   flutter_bounce: ^1.0.8
