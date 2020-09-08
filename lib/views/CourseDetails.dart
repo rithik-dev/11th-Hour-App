@@ -40,6 +40,7 @@ class _CourseDetailsState extends State<CourseDetails> {
                   height: Provider.of<DeviceDimension>(context).height * 0.28,
                   child: CustomVideoPlayer(
                     lectureUrl: widget.course.lectures[0]['lectureUrl'],
+                    addToRecent: false,
                   )),
               Container(
                 width: double.infinity,

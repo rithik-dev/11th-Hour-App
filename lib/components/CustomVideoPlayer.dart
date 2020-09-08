@@ -79,6 +79,7 @@ class CustomVideoPlayer extends StatelessWidget {
       ),
       oninit: addToRecent
           ? (controller) async {
+              print("amdi bandi ");
               await UserController.addToRecentCourses(
                   userId: Provider.of<User>(context, listen: false).userId,
                   courseId: courseId);
