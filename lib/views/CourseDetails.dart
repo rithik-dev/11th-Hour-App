@@ -1,12 +1,14 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:eleventh_hour/components/CachedImage.dart';
+import 'package:eleventh_hour/components/CustomVideoPlayer.dart';
 import 'package:eleventh_hour/components/LoadingScreen.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/models/Course.dart';
+import 'package:eleventh_hour/models/DeviceDimension.dart';
 import 'package:eleventh_hour/models/User.dart';
+import 'package:eleventh_hour/views/LecturesPage.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
 
 class CourseDetails extends StatefulWidget {
   static const id = '/course_details';
@@ -22,11 +24,12 @@ class CourseDetails extends StatefulWidget {
 
 class _CourseDetailsState extends State<CourseDetails> {
   bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     User user = Provider.of<User>(context);
     bool isFavorite = user.wishlist.contains(widget.course.id);
-
+    bool isMyCourse = user.myCourses.contains(widget.course.id);
     return Stack(
       children: [
         Scaffold(
@@ -34,31 +37,35 @@ class _CourseDetailsState extends State<CourseDetails> {
             physics: BouncingScrollPhysics(),
             children: [
               Container(
-                height: 250,
-                child: CachedNetworkImage(
-                  fit: BoxFit.cover,
-                  imageUrl: widget.course.courseThumbnail,
-                  placeholder: (context, _) => Shimmer.fromColors(
-                    child: Container(
-                      width: double.infinity,
-                    ),
-                    baseColor: Colors.grey,
-                    highlightColor: Colors.white,
-                  ),
-                ),
-              ),
+                  height: Provider.of<DeviceDimension>(context).height * 0.28,
+                  child: CustomVideoPlayer(
+                    lectureUrl: widget.course.lectures[0]['lectureUrl'],
+                  )),
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.all(20),
-                height: 100,
+                height: Provider.of<DeviceDimension>(context).height * 0.14,
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor,
                 ),
-                child: Text(
-                  widget.course.title,
-                  style: Theme.of(context).textTheme.headline2,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    CachedImage(
+                      url: widget.course.courseThumbnail,
+                      infinity: false,
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Expanded(
+                      child: Text(
+                        widget.course.title,
+                        style: Theme.of(context).textTheme.headline4,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Padding(
@@ -72,56 +79,72 @@ class _CourseDetailsState extends State<CourseDetails> {
                           .headline5
                           .copyWith(color: Colors.white),
                     ),
-                    ...widget.course.lectures
-                        .map((e) => ListTile(
-                              title: Text(e['name']),
-                            ))
-                        .toList(),
+                    isMyCourse
+                        ? SizedBox.shrink()
+                        : ExpansionTile(
+                            initiallyExpanded: true,
+                            childrenPadding: EdgeInsets.all(5),
+                            title: Text("List Of Lectures"),
+                            children: widget.course.lectures
+                                .map((e) => ListTile(
+                                      title: Text(e['name']),
+                                    ))
+                                .toList(),
+                          ),
                   ],
                 ),
               ),
             ],
           ),
           bottomNavigationBar: Container(
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.all(8),
             color: Theme.of(context).primaryColor,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                RaisedButton.icon(
-                  onPressed: () async {
-                    setState(() {
-                      isLoading = true;
-                    });
-                    if (user.cart.contains(widget.course.id)) {
-                      await UserController.removeFromCart(
-                        userId: user.userId,
-                        courseId: widget.course.id,
-                      );
-                      Provider.of<User>(context, listen: false)
-                          .removeCourseFromCart(widget.course.id);
-                    } else {
-                      await UserController.addToCart(
-                        userId: user.userId,
-                        courseId: widget.course.id,
-                      );
-                      Provider.of<User>(context, listen: false)
-                          .addCourseToCart(widget.course.id);
-                    }
+                isMyCourse
+                    ? RaisedButton.icon(
+                        onPressed: () async {
+                          Navigator.pushNamed(context, LecturesPage.id,
+                              arguments: widget.course);
+                        },
+                        icon: Icon(FontAwesomeIcons.playCircle),
+                        label: Text("Go to course"),
+                      )
+                    : RaisedButton.icon(
+                        onPressed: () async {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          if (user.cart.contains(widget.course.id)) {
+                            await UserController.removeFromCart(
+                              userId: user.userId,
+                              courseId: widget.course.id,
+                            );
+                            Provider.of<User>(context, listen: false)
+                                .removeCourseFromCart(widget.course.id);
+                          } else {
+                            await UserController.addToCart(
+                              userId: user.userId,
+                              courseId: widget.course.id,
+                            );
+                            Provider.of<User>(context, listen: false)
+                                .addCourseToCart(widget.course.id);
+                          }
 
-                    setState(() {
-                      isLoading = false;
-                    });
-                  },
-                  icon: user.cart.contains(widget.course.id)
-                      ? Icon(FontAwesomeIcons.minusCircle)
-                      : Icon(FontAwesomeIcons.plusCircle),
-                  label: Text(
-                    user.cart.contains(widget.course.id)
-                        ? "Remove from cart"
-                        : "Add to cart",
-                  ),
-                ),
+                          setState(() {
+                            isLoading = false;
+                          });
+                        },
+                        icon: user.cart.contains(widget.course.id)
+                            ? Icon(FontAwesomeIcons.minusCircle)
+                            : Icon(FontAwesomeIcons.plusCircle),
+                        label: Text(
+                          user.cart.contains(widget.course.id)
+                              ? "Remove from cart"
+                              : "Add to cart",
+                        ),
+                      ),
                 RaisedButton.icon(
                   onPressed: () async {
                     setState(() {

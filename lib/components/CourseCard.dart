@@ -1,14 +1,12 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:eleventh_hour/components/CachedImage.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/models/Course.dart';
 import 'package:eleventh_hour/models/DeviceDimension.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:eleventh_hour/views/CourseDetails.dart';
-import 'package:eleventh_hour/views/LecturesPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
 
 class CourseCard extends StatefulWidget {
   final Course course;
@@ -62,12 +60,8 @@ class _CourseCardState extends State<CourseCard> {
               onTap: widget.course.blackListed
                   ? null
                   : () {
-                      if (widget.user.myCourses.contains(widget.course.id))
-                        Navigator.pushNamed(context, LecturesPage.id,
-                            arguments: widget.course);
-                      else
-                        Navigator.pushNamed(context, CourseDetails.id,
-                            arguments: widget.course);
+                      Navigator.pushNamed(context, CourseDetails.id,
+                          arguments: widget.course);
                     },
               child: Padding(
                 padding: EdgeInsets.all(10.0),
@@ -110,17 +104,8 @@ class _CourseCardState extends State<CourseCard> {
                                         Provider.of<DeviceDimension>(context)
                                                 .height *
                                             0.22,
-                                    child: CachedNetworkImage(
-                                      width: double.infinity,
-                                      fit: BoxFit.cover,
-                                      imageUrl:
-                                          this.widget.course.courseThumbnail,
-                                      placeholder: (context, url) =>
-                                          Shimmer.fromColors(
-                                        child: Container(color: Colors.grey),
-                                        baseColor: Colors.grey[300],
-                                        highlightColor: Colors.grey,
-                                      ),
+                                    child: CachedImage(
+                                      url: widget.course.courseThumbnail,
                                     ),
                                   ),
                             widget.course.blackListed

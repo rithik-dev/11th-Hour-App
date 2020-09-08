@@ -131,34 +131,42 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                       scrollDirection: Axis.horizontal,
                     )),
                 SizedBox(height: 10),
+                // if no course in recent then check if course if "MyCourse" ,if not then show sized box else show my courses or if data in recent courses show recent courses
                 user.recentCoursesIds.length == 0
-                    ? Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal:
-                                Provider.of<DeviceDimension>(context).width *
-                                    0.15),
-                        child: RaisedButton.icon(
-                          padding: EdgeInsets.all(10),
-                          elevation: 15,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(40)),
-                          onPressed: () {
-                            widget.callback(3);
-                          },
-                          color: Theme.of(context).primaryColor,
-                          icon: Icon(
-                            Icons.search,
-                            size: 35,
-                          ),
-                          label: Text(
-                            "Browse Courses",
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline4
-                                .copyWith(color: Colors.white),
-                          ),
-                        ),
-                      )
+                    ? user.myCourses.length >= 1
+                        ? Text(
+                            "Start Watching",
+                            style: Theme.of(context).textTheme.headline1,
+                            textAlign: TextAlign.center,
+                          )
+                        : Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal:
+                                    Provider.of<DeviceDimension>(context)
+                                            .width *
+                                        0.15),
+                            child: RaisedButton.icon(
+                              padding: EdgeInsets.all(10),
+                              elevation: 15,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40)),
+                              onPressed: () {
+                                widget.callback(3);
+                              },
+                              color: Theme.of(context).primaryColor,
+                              icon: Icon(
+                                Icons.search,
+                                size: 35,
+                              ),
+                              label: Text(
+                                "Browse Courses",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline4
+                                    .copyWith(color: Colors.white),
+                              ),
+                            ),
+                          )
                     : Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -183,13 +191,38 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                               ))
                         ],
                       ),
+
                 user.recentCoursesIds.length == 0
-                    ? SizedBox.shrink()
+                    ? user.myCourses.length >= 1
+                        ? SizedBox(
+                            height: 20,
+                          )
+                        : SizedBox.shrink()
                     : SizedBox(
                         height: 20,
                       ),
                 user.recentCoursesIds.length == 0
-                    ? SizedBox.shrink()
+                    ? user.myCourses.length >= 1
+                        ? CarouselSlider(
+                            items: courses
+                                .getCoursesByIds(user.myCourses.reversed
+                                    .cast<String>()
+                                    .toList())
+                                .map((course) =>
+                                    CourseCard(course: course, user: user))
+                                .toList(),
+                            options: CarouselOptions(
+                              height: 340,
+                              scrollPhysics: BouncingScrollPhysics(),
+                              viewportFraction: 0.9,
+                              initialPage: 0,
+                              enableInfiniteScroll: false,
+                              reverse: false,
+                              autoPlay: false,
+                              enlargeCenterPage: false,
+                              scrollDirection: Axis.horizontal,
+                            ))
+                        : SizedBox.shrink()
                     : CarouselSlider(
                         items: courses
                             .getCoursesByIds(user.recentCoursesIds.reversed
@@ -208,7 +241,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                           autoPlay: false,
                           enlargeCenterPage: false,
                           scrollDirection: Axis.horizontal,
-                        )),
+                        ))
               ],
             );
           },

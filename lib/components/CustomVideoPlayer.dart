@@ -7,8 +7,9 @@ import 'package:provider/provider.dart';
 class CustomVideoPlayer extends StatelessWidget {
   final String lectureUrl;
   final String courseId;
+  final bool addToRecent;
 
-  CustomVideoPlayer({this.lectureUrl, this.courseId});
+  CustomVideoPlayer({this.lectureUrl, this.courseId, this.addToRecent = true});
 
   @override
   Widget build(BuildContext context) {
@@ -76,13 +77,15 @@ class CustomVideoPlayer extends StatelessWidget {
           ],
         ),
       ),
-      oninit: (controller) async {
-        await UserController.addToRecentCourses(
-            userId: Provider.of<User>(context, listen: false).userId,
-            courseId: courseId);
-        Provider.of<User>(context, listen: false)
-            .addCourseToRecentCourses(courseId);
-      },
+      oninit: addToRecent
+          ? (controller) async {
+              await UserController.addToRecentCourses(
+                  userId: Provider.of<User>(context, listen: false).userId,
+                  courseId: courseId);
+              Provider.of<User>(context, listen: false)
+                  .addCourseToRecentCourses(courseId);
+            }
+          : (controller) {},
       onpop: (value) {
         Navigator.pop(context);
       },

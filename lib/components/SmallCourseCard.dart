@@ -2,9 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eleventh_hour/components/CartWishlistToggle.dart';
 import 'package:eleventh_hour/models/Course.dart';
 import 'package:eleventh_hour/models/DeviceDimension.dart';
-import 'package:eleventh_hour/models/User.dart';
 import 'package:eleventh_hour/views/CourseDetails.dart';
-import 'package:eleventh_hour/views/LecturesPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -85,13 +83,8 @@ class SmallCourseCard extends StatelessWidget {
             ),
             onTap: !course.blackListed
                 ? () {
-                    final user = Provider.of<User>(context, listen: false);
-                    if (user.myCourses.contains(course.id))
-                      Navigator.pushNamed(context, LecturesPage.id,
-                          arguments: course);
-                    else
-                      Navigator.pushNamed(context, CourseDetails.id,
-                          arguments: course);
+                    Navigator.pushNamed(context, CourseDetails.id,
+                        arguments: course);
                   }
                 : () {
                     Fluttertoast.showToast(msg: "BlackListed");
