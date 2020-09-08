@@ -91,6 +91,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   title: Text("Profile"),
                 ),
                 body: ListView(
+                  padding: EdgeInsets.symmetric(vertical: 2, horizontal: 7),
                   children: <Widget>[
                     SizedBox(height: 20.0),
                     Row(
@@ -121,22 +122,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             )
                           ],
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              user.name,
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.headline1,
-                            ),
-                            Text(
-                              user.email,
-                              textAlign: TextAlign.center,
-                              maxLines: 2,
-                              softWrap: true,
-                              style: Theme.of(context).textTheme.headline6,
-                            ),
-                          ],
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                user.name,
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.headline1,
+                              ),
+                              Text(
+                                user.email,
+                                textAlign: TextAlign.center,
+                                maxLines: 2,
+                                softWrap: true,
+                                style: Theme.of(context).textTheme.headline6,
+                              ),
+                            ],
+                          ),
                         )
                       ],
                     ),
