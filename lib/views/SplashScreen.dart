@@ -3,6 +3,7 @@ import 'package:eleventh_hour/components/HomeBoilerPlate.dart';
 import 'package:eleventh_hour/components/LoadingScreen.dart';
 import 'package:eleventh_hour/controllers/CourseController.dart';
 import 'package:eleventh_hour/models/College.dart';
+import 'package:eleventh_hour/models/DeviceDimension.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:eleventh_hour/views/IntroScreen.dart';
 import 'package:eleventh_hour/views/LoginScreen.dart';
@@ -50,12 +51,15 @@ class _SplashScreenState extends State<SplashScreen> {
             .collection("colleges")
             .document(userSnapshot['collegeId'])
             .get();
-
         setState(() {
+          device = DeviceDimension(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width);
           user = User.fromDocumentSnapshot(userSnapshot);
           college = College.fromDocumentSnapshot(collegeSnapshot);
         });
-        print(user.toString());
+        Provider.of<DeviceDimension>(context, listen: false)
+            .updateDeviceInProvider(device: device);
         Provider.of<User>(context, listen: false).updateUserInProvider(user);
         Provider.of<College>(context, listen: false)
             .updateCollegeInProvider(college);
@@ -75,6 +79,7 @@ class _SplashScreenState extends State<SplashScreen> {
       userId: "",
       collegeId: "");
   College college = College(name: "", subjectWithCourses: {}, cid: "");
+  DeviceDimension device = DeviceDimension(width: 0.0, height: 0.0);
 
   @override
   void initState() {

@@ -24,9 +24,8 @@ class _CartScreenState extends State<CartScreen> {
   List courseNames = [];
 
   void handlerPaymentSuccess(PaymentSuccessResponse response) async {
-    print(courseNames);
     print("Payment success");
-    print(response.paymentId);
+
     await UserController.handlePaymentSuccess(
       userId: Provider.of<User>(context, listen: false).userId,
       courseIds: Provider.of<User>(context, listen: false).cart.cast<String>(),
@@ -118,7 +117,6 @@ class _CartScreenState extends State<CartScreen> {
         amount += course.price;
       }
     }
-    print(courseNames);
   }
 
   List<Course> _courses;

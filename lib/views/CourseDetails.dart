@@ -22,10 +22,10 @@ class CourseDetails extends StatefulWidget {
 
 class _CourseDetailsState extends State<CourseDetails> {
   bool isLoading = false;
-
   @override
   Widget build(BuildContext context) {
     User user = Provider.of<User>(context);
+    bool isFavorite = user.wishlist.contains(widget.course.id);
 
     return Stack(
       children: [
@@ -86,7 +86,7 @@ class _CourseDetailsState extends State<CourseDetails> {
             padding: EdgeInsets.all(20),
             color: Theme.of(context).primaryColor,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 RaisedButton.icon(
                   onPressed: () async {
@@ -120,6 +120,39 @@ class _CourseDetailsState extends State<CourseDetails> {
                     user.cart.contains(widget.course.id)
                         ? "Remove from cart"
                         : "Add to cart",
+                  ),
+                ),
+                RaisedButton.icon(
+                  onPressed: () async {
+                    setState(() {
+                      isLoading = true;
+                    });
+
+                    if (isFavorite) {
+                      await UserController.removeFromWishlist(
+                        userId: user.userId,
+                        courseId: widget.course.id,
+                      );
+                      Provider.of<User>(context, listen: false)
+                          .removeCourseFromWishlist(widget.course.id);
+                    } else {
+                      await UserController.addToWishlist(
+                        userId: user.userId,
+                        courseId: widget.course.id,
+                      );
+                      Provider.of<User>(context, listen: false)
+                          .addCourseToWishlist(widget.course.id);
+                    }
+
+                    setState(() {
+                      isLoading = false;
+                    });
+                  },
+                  icon: isFavorite
+                      ? Icon(Icons.favorite_border)
+                      : Icon(Icons.favorite),
+                  label: Text(
+                    isFavorite ? "Remove from Fav" : "Add to Fav",
                   ),
                 ),
               ],

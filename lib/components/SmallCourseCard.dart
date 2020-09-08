@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eleventh_hour/components/CartWishlistToggle.dart';
 import 'package:eleventh_hour/models/Course.dart';
+import 'package:eleventh_hour/models/DeviceDimension.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:eleventh_hour/views/CourseDetails.dart';
 import 'package:eleventh_hour/views/LecturesPage.dart';
@@ -46,8 +47,9 @@ class SmallCourseCard extends StatelessWidget {
               child: course.blackListed
                   ? Container(
                       color: Colors.black,
-                      height: 90,
-                      width: 96,
+                      height:
+                          Provider.of<DeviceDimension>(context).height * 0.1,
+                      width: Provider.of<DeviceDimension>(context).width * 0.22,
                       child: Text(
                         "BLACK\nLISTED",
                         textAlign: TextAlign.center,
@@ -56,9 +58,10 @@ class SmallCourseCard extends StatelessWidget {
                     )
                   : CachedNetworkImage(
                       imageUrl: course.courseThumbnail,
-                      height: 90,
+                      height:
+                          Provider.of<DeviceDimension>(context).height * 0.1,
+                      width: Provider.of<DeviceDimension>(context).width * 0.22,
                       fit: BoxFit.cover,
-                      width: 96,
                       errorWidget: (context, i, l) => Icon(Icons.error),
                       placeholder: (c, u) => Shimmer.fromColors(
                           child: Container(),

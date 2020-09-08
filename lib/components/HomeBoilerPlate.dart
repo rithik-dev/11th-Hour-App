@@ -24,9 +24,7 @@ class HomeBoilerPlate extends StatefulWidget {
 }
 
 class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
-  PageController _pageController;
-
-  List<Widget> returnHomePages() {
+  Widget returnHomePages(int index) {
     List<Widget> widgets = [
       Home(
         callback: callback,
@@ -35,7 +33,7 @@ class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
       WishlistScreen(),
       SearchPage()
     ];
-    return widgets;
+    return widgets[index];
   }
 
   final GlobalKey<InnerDrawerState> _innerDrawerKey =
@@ -55,14 +53,12 @@ class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
 
   @override
   void dispose() {
-    _pageController.dispose();
     super.dispose();
   }
 
   @override
   void initState() {
     super.initState();
-    _pageController = PageController();
   }
 
   @override
@@ -131,9 +127,6 @@ class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
                       setState(() {
                         _selectedIndex = index;
                       });
-                      _pageController.animateToPage(index,
-                          duration: Duration(milliseconds: 500),
-                          curve: Curves.easeInSine);
                     }),
               ),
             ),
@@ -177,15 +170,7 @@ class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
                     Provider.of<College>(context, listen: false)
                         .updateCollegeInProvider(college);
                   },
-                  child: SizedBox.expand(
-                    child: PageView(
-                      controller: _pageController,
-                      onPageChanged: (index) {
-                        setState(() => _selectedIndex = index);
-                      },
-                      children: returnHomePages(),
-                    ),
-                  ),
+                  child: returnHomePages(_selectedIndex),
                 );
               },
             )),

@@ -35,9 +35,9 @@ class Course {
       @required this.courseThumbnail});
 
   @override
-  String toString() {
-    return 'Course{id: $id, description : $description ,title: $title, blackListed: $blackListed,rating $rating, subject: $subject, instructorName: $instructorName, price: $price, instructorId: $instructorId, lectures: $lectures, date: $date, collegeId: $collegeId, enrolledUsers: $enrolledUsers}';
-  }
+//  String toString() {
+//    return 'Course{id: $id, description : $description ,title: $title, blackListed: $blackListed,rating $rating, subject: $subject, instructorName: $instructorName, price: $price, instructorId: $instructorId, lectures: $lectures, date: $date, collegeId: $collegeId, enrolledUsers: $enrolledUsers}';
+//  }
 
   factory Course.fromDocumentSnapshot(DocumentSnapshot snapshot) {
     return new Course(

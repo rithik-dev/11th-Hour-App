@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:eleventh_hour/components/CourseCard.dart';
 import 'package:eleventh_hour/controllers/CourseController.dart';
 import 'package:eleventh_hour/models/College.dart';
+import 'package:eleventh_hour/models/DeviceDimension.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:eleventh_hour/views/SubjectDetails.dart';
 import 'package:eleventh_hour/views/ViewAll.dart';
@@ -32,7 +33,6 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
       chips.add(
         GestureDetector(
           onTap: () {
-            print(college.subjectWithCourses[subject]);
             Navigator.pushNamed(context, SubjectDetails.id, arguments: subject);
           },
           child: Chip(
@@ -86,10 +86,10 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                   children: _getChips(),
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
-                      "  Trending",
+                      "Trending",
                       style: Theme.of(context).textTheme.headline1,
                     ),
                     RaisedButton.icon(
@@ -135,7 +135,8 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                     ? Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal:
-                                MediaQuery.of(context).size.width * 0.15),
+                                Provider.of<DeviceDimension>(context).width *
+                                    0.15),
                         child: RaisedButton.icon(
                           padding: EdgeInsets.all(10),
                           elevation: 15,
@@ -159,9 +160,10 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                         ),
                       )
                     : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Text(
-                            "  Continue Watching",
+                            "Resume",
                             style: Theme.of(context).textTheme.headline1,
                           ),
                           RaisedButton.icon(

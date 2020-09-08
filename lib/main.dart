@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import 'models/DeviceDimension.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -57,6 +59,7 @@ class _MyAppState extends State<MyApp> {
       name: "",
       userId: "",
       collegeId: "");
+  DeviceDimension device = DeviceDimension(width: 0.0, height: 0.0);
   College college = College(name: "", subjectWithCourses: {}, cid: "");
   CourseController courseProvider = CourseController(courses: []);
 
@@ -67,6 +70,7 @@ class _MyAppState extends State<MyApp> {
     ));
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<DeviceDimension>.value(value: device),
         ChangeNotifierProvider<College>.value(value: college),
         ChangeNotifierProvider<User>.value(value: user),
         ChangeNotifierProvider<CourseController>.value(value: courseProvider),

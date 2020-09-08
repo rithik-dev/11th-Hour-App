@@ -1,6 +1,8 @@
 import 'package:eleventh_hour/components/ConnectionLostClipper.dart';
+import 'package:eleventh_hour/models/DeviceDimension.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ConnectionLost extends StatelessWidget {
   static const String id = '/connection';
@@ -16,7 +18,7 @@ class ConnectionLost extends StatelessWidget {
                 clipper: CircularClipper(),
                 shadow: Shadow(blurRadius: 20.0),
                 child: Image(
-                  width: MediaQuery.of(context).size.width,
+                  width: Provider.of<DeviceDimension>(context).width,
                   image: AssetImage('assets/images/connection_lost.png'),
                 )),
           ),

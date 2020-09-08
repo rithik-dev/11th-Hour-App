@@ -22,7 +22,7 @@ class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
 // Getting arguments passed in while calling Navigator.pushNamed
     final args = settings.arguments;
-    print(settings.name);
+
     switch (settings.name) {
       case SubjectDetails.id:
         return PageTransition(

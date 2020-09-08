@@ -3,6 +3,7 @@ import 'package:eleventh_hour/components/NoSearchText.dart';
 import 'package:eleventh_hour/components/SmallCourseCard.dart';
 import 'package:eleventh_hour/controllers/CourseController.dart';
 import 'package:eleventh_hour/models/Course.dart';
+import 'package:eleventh_hour/models/DeviceDimension.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -37,7 +38,7 @@ class _SearchPageState extends State<SearchPage> {
                 margin: EdgeInsets.only(top: 20),
                 alignment: Alignment.center,
                 padding: EdgeInsets.all(10),
-                width: MediaQuery.of(context).size.width * 0.9,
+                width: Provider.of<DeviceDimension>(context).width * 0.9,
                 decoration: BoxDecoration(
                     color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(30)),
@@ -50,7 +51,6 @@ class _SearchPageState extends State<SearchPage> {
                               .toLowerCase()
                               .contains(value.toLowerCase()))
                           .toList();
-                      print(searchResults);
                     });
                   },
                   decoration: InputDecoration(

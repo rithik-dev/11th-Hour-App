@@ -109,8 +109,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   User.fromDocumentSnapshot(snapshot);
                               final College college =
                                   College.fromDocumentSnapshot(collegeSnapshot);
-
-                              print(user.toString());
                               Provider.of<User>(context, listen: false)
                                   .updateUserInProvider(user);
                               Provider.of<College>(context, listen: false)

@@ -28,6 +28,7 @@ dependencies:
   flutter_inner_drawer: ^0.5.6+1
   cloud_firestore: ^0.13.7
   introduction_screen: ^1.0.7
+  flutter_rating: ^0.0.2
   cached_network_image: ^2.2.0+1
   lottie: ^0.6.0
   flutter_bounce: ^1.0.8

@@ -132,7 +132,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Text(
                               user.email,
                               textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.headline5,
+                              maxLines: 2,
+                              softWrap: true,
+                              style: Theme.of(context).textTheme.headline6,
                             ),
                           ],
                         )

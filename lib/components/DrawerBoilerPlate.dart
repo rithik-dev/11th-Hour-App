@@ -25,7 +25,7 @@ class CustomDrawer extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-              Colors.amber,
+              Colors.teal,
               Theme.of(context).primaryColor,
             ])),
         colorTransitionScaffold: Theme.of(context).primaryColor,

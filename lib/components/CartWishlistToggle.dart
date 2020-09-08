@@ -1,4 +1,5 @@
 import 'package:eleventh_hour/controllers/UserController.dart';
+import 'package:eleventh_hour/models/DeviceDimension.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ class _CartWishlistToggleState extends State<CartWishlistToggle> {
     return Stack(
       children: [
         Container(
-          height: MediaQuery.of(context).size.height * 0.3,
+          height: Provider.of<DeviceDimension>(context).height * 0.3,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
