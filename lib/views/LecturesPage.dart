@@ -1,5 +1,6 @@
 import 'package:eleventh_hour/components/CustomVideoPlayer.dart';
 import 'package:eleventh_hour/models/Course.dart';
+import 'package:eleventh_hour/models/DeviceDimension.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,14 +26,14 @@ class _LecturesPageState extends State<LecturesPage> {
       child: Scaffold(
         body: Consumer<User>(
           builder: (context, user, child) {
-            return Column(
+            return ListView(
               children: [
                 CustomVideoPlayer(
                   courseId: widget.course.id,
                   lectureUrl: widget.course.lectures[videoIndex]['lectureUrl'],
                 ),
                 Container(
-                  height: 80,
+                  height: Provider.of<DeviceDimension>(context).height * 0.1,
                   color: Theme.of(context).primaryColor,
                   margin: EdgeInsets.all(10),
                   padding: EdgeInsets.all(10),
@@ -47,28 +48,27 @@ class _LecturesPageState extends State<LecturesPage> {
                     ),
                   ),
                 ),
-                Expanded(
-                  child: ListView.builder(
-                      itemCount: widget.course.lectures.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 2.5),
-                          color: Colors.grey[900],
-                          child: ListTile(
-                            title: Text(
-                              widget.course.lectures[index]['name'],
-                              style: Theme.of(context).textTheme.headline3,
-                            ),
-                            onTap: () {
-                              setState(() {
-                                videoIndex = index;
-                              });
-                            },
+                ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: widget.course.lectures.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 2.5),
+                        color: Colors.grey[900],
+                        child: ListTile(
+                          title: Text(
+                            widget.course.lectures[index]['name'],
+                            style: Theme.of(context).textTheme.headline3,
                           ),
-                        );
-                      }),
-                ),
+                          onTap: () {
+                            setState(() {
+                              videoIndex = index;
+                            });
+                          },
+                        ),
+                      );
+                    }),
               ],
             );
           },

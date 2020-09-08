@@ -37,7 +37,7 @@ class CustomVideoPlayer extends StatelessWidget {
               bufferedColor: Colors.green,
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               dragBarColor: Colors.white,
-              height: 4,
+              height: 3,
               progressRadius: 2,
               dragHeight: 5),
           playIcon: Icon(Icons.play_arrow, color: Colors.white, size: 16),
