@@ -22,6 +22,16 @@ class _CourseCardState extends State<CourseCard> {
   bool isLoading = false;
   bool isFavorite;
 
+  String calcRating(List ratings) {
+    double _rating = 0;
+    print(ratings);
+    ratings.forEach((rating) {
+      _rating += rating['userRating'];
+    });
+    _rating = _rating / ratings.length;
+    return _rating.toStringAsFixed(1);
+  }
+
   void _onPressed() async {
     setState(() {
       isLoading = true;
@@ -163,7 +173,7 @@ class _CourseCardState extends State<CourseCard> {
                                 style: Theme.of(context).textTheme.headline5,
                               ),
                               Text(
-                                '⭐ ${this.widget.course.rating.toString()}',
+                                '⭐ ${calcRating(widget.course.ratings)}',
                                 style: Theme.of(context).textTheme.headline5,
                               ),
                             ],

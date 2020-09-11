@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 
 class Course {
   String id;
-  double rating;
+  List ratings;
   String title;
   bool blackListed;
   String subject;
@@ -24,7 +24,7 @@ class Course {
       @required this.blackListed,
       @required this.description,
       @required this.title,
-      @required this.rating,
+      @required this.ratings,
       @required this.instructorName,
       @required this.price,
       @required this.lectures,
@@ -44,7 +44,7 @@ class Course {
       blackListed: snapshot['blackListed'] as bool,
       id: snapshot.documentID,
       description: snapshot['description'] as String,
-      rating: snapshot['rating'] as double,
+      ratings: snapshot['ratings'] as List,
       title: snapshot['title'] as String,
       subject: snapshot['subject'] as String,
       courseThumbnail: snapshot['courseThumbnail'] as String,

@@ -7,6 +7,7 @@ import 'package:eleventh_hour/models/DeviceDimension.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:eleventh_hour/views/LecturesPage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating/flutter_rating.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -24,6 +25,16 @@ class CourseDetails extends StatefulWidget {
 
 class _CourseDetailsState extends State<CourseDetails> {
   bool isLoading = false;
+  double rating = 3.5;
+
+  double calcRating(List ratings) {
+    double _rating = 0;
+    ratings.forEach((rating) {
+      _rating += rating['userRating'];
+    });
+    _rating = _rating / ratings.length;
+    return _rating;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +105,20 @@ class _CourseDetailsState extends State<CourseDetails> {
                           ),
                   ],
                 ),
+              ),
+              StarRating(
+                size: 35.0,
+                rating: calcRating(widget.course.ratings),
+                color: Colors.orange,
+                borderColor: Colors.grey,
+                starCount: 5,
+                onRatingChanged: isMyCourse
+                    ? (rating) => setState(
+                          () {
+                            this.rating = rating;
+                          },
+                        )
+                    : (r) {},
               ),
             ],
           ),

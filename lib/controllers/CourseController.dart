@@ -14,6 +14,7 @@ class CourseController extends ChangeNotifier {
     snapshot.documents.forEach((course) {
       _courses.add(Course.fromDocumentSnapshot(course));
     });
+
     this.courses = _courses;
     notifyListeners();
   }

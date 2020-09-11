@@ -18,6 +18,16 @@ class SmallCourseCard extends StatelessWidget {
     this.isWishListPage = false,
   });
 
+  String calcRating(List ratings) {
+    double _rating = 0;
+
+    ratings.forEach((rating) {
+      _rating += rating['userRating'];
+    });
+    _rating = _rating / ratings.length;
+    return _rating.toStringAsFixed(1);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -75,7 +85,7 @@ class SmallCourseCard extends StatelessWidget {
                     .headline5
                     .copyWith(color: Colors.white)),
             subtitle: Text(
-              'Rs. ${course.price} | ⭐ ${course.rating.toString()}',
+              'Rs. ${course.price} | ⭐ ${calcRating(course.ratings)}',
               style: Theme.of(context)
                   .textTheme
                   .headline5
