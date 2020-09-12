@@ -1,6 +1,7 @@
 import 'package:eleventh_hour/components/CachedImage.dart';
 import 'package:eleventh_hour/components/CustomVideoPlayer.dart';
 import 'package:eleventh_hour/components/LoadingScreen.dart';
+import 'package:eleventh_hour/controllers/CourseController.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/models/Course.dart';
 import 'package:eleventh_hour/models/DeviceDimension.dart';
@@ -25,7 +26,7 @@ class CourseDetails extends StatefulWidget {
 
 class _CourseDetailsState extends State<CourseDetails> {
   bool isLoading = false;
-  double rating = 3.5;
+  double newRating;
 
   double calcRating(List ratings) {
     double _rating = 0;
@@ -40,6 +41,8 @@ class _CourseDetailsState extends State<CourseDetails> {
   Widget build(BuildContext context) {
     User user = Provider.of<User>(context);
     bool isFavorite = user.wishlist.contains(widget.course.id);
+    Iterable haveRated = widget.course.ratings
+        .where((element) => element['userId'] == user.userId);
     bool isMyCourse = user.myCourses.contains(widget.course.id);
     return Stack(
       children: [
@@ -106,20 +109,134 @@ class _CourseDetailsState extends State<CourseDetails> {
                   ],
                 ),
               ),
-              StarRating(
-                size: 35.0,
-                rating: calcRating(widget.course.ratings),
-                color: Colors.orange,
-                borderColor: Colors.grey,
-                starCount: 5,
-                onRatingChanged: isMyCourse
-                    ? (rating) => setState(
-                          () {
-                            this.rating = rating;
-                          },
-                        )
-                    : (r) {},
-              ),
+              isMyCourse
+                  ? Stack(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                            width: 1,
+                          )),
+                          margin: EdgeInsets.all(35),
+                          padding: EdgeInsets.all(10),
+                          child: Column(
+                            children: [
+                              StarRating(
+                                size: 35.0,
+                                rating: calcRating(widget.course.ratings),
+                                color: Colors.amber,
+                                borderColor: Colors.grey,
+                                starCount: 5,
+                                onRatingChanged: (r) {},
+                              ),
+                              haveRated.length != 0
+                                  ? Text(
+                                      "\nYour Rating: ${haveRated.first['userRating']} ⭐",
+                                      style:
+                                          Theme.of(context).textTheme.headline4,
+                                    )
+                                  : SizedBox.shrink()
+                            ],
+                          ),
+                        ),
+                        isMyCourse
+                            ? Positioned(
+                                top: 25,
+                                right: 25,
+                                child: CircleAvatar(
+                                  radius: 15,
+                                  backgroundColor:
+                                      Theme.of(context).primaryColor,
+                                  child: IconButton(
+                                    color: Theme.of(context).accentColor,
+                                    onPressed: () {
+//                                      Alert(context: null, title: null).show();
+                                      showModalBottomSheet(
+                                          context: context,
+                                          builder: (nbm) {
+                                            return StatefulBuilder(
+                                              builder:
+                                                  (context, setModalState) =>
+                                                      Container(
+                                                height:
+                                                    Provider.of<DeviceDimension>(
+                                                                context)
+                                                            .height *
+                                                        0.4,
+                                                width: double.infinity,
+                                                child: Column(
+                                                  children: [
+                                                    Text(
+                                                      "\nEnter Rating\n",
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headline1,
+                                                    ),
+                                                    StarRating(
+                                                      size: 35.0,
+                                                      rating: newRating,
+                                                      color: Colors.amber,
+                                                      borderColor: Colors.grey,
+                                                      starCount: 5,
+                                                      onRatingChanged:
+                                                          (rating) {
+                                                        setModalState(
+                                                          () {
+                                                            newRating = rating;
+                                                          },
+                                                        );
+                                                        setState(() {
+                                                          newRating = rating;
+                                                        });
+                                                      },
+                                                    ),
+                                                    RaisedButton.icon(
+                                                        onPressed: () async {
+                                                          await Provider.of<
+                                                                      CourseController>(
+                                                                  context,
+                                                                  listen: false)
+                                                              .updateCourseRating(
+                                                                  courseId:
+                                                                      widget
+                                                                          .course
+                                                                          .id,
+                                                                  newRating: {
+                                                                "userId":
+                                                                    user.userId,
+                                                                "userRating":
+                                                                    newRating
+                                                              });
+
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                        icon: Icon(Icons.check),
+                                                        label: Text("Submit"))
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          });
+                                    },
+                                    iconSize: 15,
+                                    icon: Icon(
+                                      Icons.edit,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : SizedBox.shrink()
+                      ],
+                    )
+                  : StarRating(
+                      size: 35.0,
+                      rating: calcRating(widget.course.ratings),
+                      color: Colors.amber,
+                      borderColor: Colors.grey,
+                      starCount: 5,
+                      onRatingChanged: (r) {},
+                    ),
             ],
           ),
           bottomNavigationBar: Container(

@@ -19,7 +19,7 @@ class CustomVideoPlayer extends StatelessWidget {
         seekSeconds: 15,
         aspectRatio: 16 / 9,
         loop: false,
-        autoplay: true,
+        autoplay: false,
         allowScrubbing: true,
         startPosition: Duration(seconds: 0),
       ),

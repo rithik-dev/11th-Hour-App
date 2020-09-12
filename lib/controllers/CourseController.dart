@@ -25,6 +25,22 @@ class CourseController extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future updateCourseRating({String courseId, Map newRating}) async {
+    await Firestore.instance
+        .collection("courses")
+        .document(courseId)
+        .updateData({
+      "ratings": FieldValue.arrayUnion([newRating])
+    });
+    for (Course c in this.courses) {
+      if (c.id == courseId) {
+        c.ratings.add(newRating);
+        break;
+      }
+    }
+    notifyListeners();
+  }
+
   Course getCourseByID(String courseId) {
     return this.courses.where((course) => course.id == courseId).first;
   }
