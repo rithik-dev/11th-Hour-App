@@ -28,7 +28,7 @@ class CustomDrawer extends StatelessWidget {
               Colors.teal,
               Theme.of(context).primaryColor,
             ])),
-        colorTransitionScaffold: Theme.of(context).primaryColor,
+        colorTransitionScaffold: Colors.black38,
         leftChild: DrawerContent(
           screenId: screenId,
         ),
