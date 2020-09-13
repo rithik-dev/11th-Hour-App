@@ -32,12 +32,20 @@ class CourseController extends ChangeNotifier {
         .updateData({
       "ratings": FieldValue.arrayUnion([newRating])
     });
-    for (Course c in this.courses) {
-      if (c.id == courseId) {
-        c.ratings.add(newRating);
+    for (int i = 0; i < this.courses.length; i++) {
+      if (this.courses[i].id == courseId) {
+        if (this.courses[i].ratings == null) this.courses[i].ratings = [];
+        this.courses[i].ratings.add(newRating);
         break;
       }
     }
+//    for (Course c in this.courses) {
+//      if (c.id == courseId) {
+//        if (c.ratings == null) c.ratings = [];
+//        c.ratings.add(newRating);
+//        break;
+//      }
+//    }
     notifyListeners();
   }
 

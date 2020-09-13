@@ -26,12 +26,16 @@ class CourseDetails extends StatefulWidget {
 
 class _CourseDetailsState extends State<CourseDetails> {
   bool isLoading = false;
-  double newRating;
+  double newRating = 0;
 
   double calcRating(List ratings) {
+    if (ratings == null) return 0;
     double _rating = 0;
+    print('Dets $ratings');
     ratings.forEach((rating) {
       _rating += rating['userRating'];
+      if (rating['userId'] == Provider.of<User>(context).userId)
+        newRating = rating['userRating'];
     });
     _rating = _rating / ratings.length;
     return _rating;
@@ -41,8 +45,8 @@ class _CourseDetailsState extends State<CourseDetails> {
   Widget build(BuildContext context) {
     User user = Provider.of<User>(context);
     bool isFavorite = user.wishlist.contains(widget.course.id);
-    Iterable haveRated = widget.course.ratings
-        .where((element) => element['userId'] == user.userId);
+    Iterable haveRated = widget.course?.ratings
+        ?.where((element) => element['userId'] == user.userId);
     bool isMyCourse = user.myCourses.contains(widget.course.id);
     return Stack(
       children: [
@@ -129,12 +133,15 @@ class _CourseDetailsState extends State<CourseDetails> {
                                 starCount: 5,
                                 onRatingChanged: (r) {},
                               ),
-                              haveRated.length != 0
-                                  ? Text(
-                                      "\nYour Rating: ${haveRated.first['userRating']} ⭐",
-                                      style:
-                                          Theme.of(context).textTheme.headline4,
-                                    )
+                              widget.course.ratings != null
+                                  ? haveRated.length != 0
+                                      ? Text(
+                                          "\nYour Rating: ${haveRated.first['userRating']} ⭐",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline4,
+                                        )
+                                      : SizedBox.shrink()
                                   : SizedBox.shrink()
                             ],
                           ),
@@ -191,25 +198,9 @@ class _CourseDetailsState extends State<CourseDetails> {
                                                       },
                                                     ),
                                                     RaisedButton.icon(
-                                                        onPressed: () async {
-                                                          await Provider.of<
-                                                                      CourseController>(
-                                                                  context,
-                                                                  listen: false)
-                                                              .updateCourseRating(
-                                                                  courseId:
-                                                                      widget
-                                                                          .course
-                                                                          .id,
-                                                                  newRating: {
-                                                                "userId":
-                                                                    user.userId,
-                                                                "userRating":
-                                                                    newRating
-                                                              });
-
-                                                          Navigator.pop(
-                                                              context);
+                                                        onPressed: () {
+                                                          submitOnTap(
+                                                              user.userId);
                                                         },
                                                         icon: Icon(Icons.check),
                                                         label: Text("Submit"))
@@ -237,6 +228,13 @@ class _CourseDetailsState extends State<CourseDetails> {
                       starCount: 5,
                       onRatingChanged: (r) {},
                     ),
+              widget.course.ratings == null
+                  ? Text(
+                      "No Ratings Yet",
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headline3,
+                    )
+                  : SizedBox.shrink()
             ],
           ),
           bottomNavigationBar: Container(
@@ -328,5 +326,19 @@ class _CourseDetailsState extends State<CourseDetails> {
         isLoading ? LoadingScreen() : SizedBox.shrink(),
       ],
     );
+  }
+
+  void submitOnTap(String userId) async {
+    setState(() {
+      isLoading = true;
+    });
+    await Provider.of<CourseController>(context, listen: false)
+        .updateCourseRating(
+            courseId: widget.course.id,
+            newRating: {"userId": userId, "userRating": newRating});
+    setState(() {
+      isLoading = false;
+    });
+    Navigator.pop(context);
   }
 }
