@@ -25,27 +25,36 @@ class CourseController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future updateCourseRating({String courseId, Map newRating}) async {
+  Future updateCourseRating(
+      {String courseId, Map newRating, String userId}) async {
+    final DocumentSnapshot snapshot =
+        await Firestore.instance.collection("courses").document(courseId).get();
+
+    List ratings = snapshot['ratings'];
+
+    if (ratings == null)
+      ratings = [newRating];
+    else {
+      for (int i = 0; i < ratings.length; i++) {
+        if (ratings[i]['userId'] == userId) {
+          ratings[i]['userRating'] = newRating['userRating'];
+        } else {
+          ratings.add(newRating);
+        }
+      }
+    }
+
     await Firestore.instance
         .collection("courses")
         .document(courseId)
-        .updateData({
-      "ratings": FieldValue.arrayUnion([newRating])
-    });
+        .updateData({"ratings": ratings});
     for (int i = 0; i < this.courses.length; i++) {
       if (this.courses[i].id == courseId) {
-        if (this.courses[i].ratings == null) this.courses[i].ratings = [];
-        this.courses[i].ratings.add(newRating);
+        this.courses[i].ratings = ratings;
+        print("ratingggg ${this.courses[i].ratings}");
         break;
       }
     }
-//    for (Course c in this.courses) {
-//      if (c.id == courseId) {
-//        if (c.ratings == null) c.ratings = [];
-//        c.ratings.add(newRating);
-//        break;
-//      }
-//    }
     notifyListeners();
   }
 

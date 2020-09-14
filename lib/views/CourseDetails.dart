@@ -34,8 +34,6 @@ class _CourseDetailsState extends State<CourseDetails> {
     print('Dets $ratings');
     ratings.forEach((rating) {
       _rating += rating['userRating'];
-      if (rating['userId'] == Provider.of<User>(context).userId)
-        newRating = rating['userRating'];
     });
     _rating = _rating / ratings.length;
     return _rating;
@@ -334,8 +332,10 @@ class _CourseDetailsState extends State<CourseDetails> {
     });
     await Provider.of<CourseController>(context, listen: false)
         .updateCourseRating(
-            courseId: widget.course.id,
-            newRating: {"userId": userId, "userRating": newRating});
+      courseId: widget.course.id,
+      newRating: {"userId": userId, "userRating": newRating},
+      userId: userId,
+    );
     setState(() {
       isLoading = false;
     });
