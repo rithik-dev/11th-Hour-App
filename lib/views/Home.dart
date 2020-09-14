@@ -96,8 +96,10 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                         color: Theme.of(context).primaryColor,
                         shape: StadiumBorder(),
                         onPressed: () {
-                          Navigator.pushNamed(context, ViewAll.id,
-                              arguments: courses.getTrendingCourses());
+                          Navigator.pushNamed(context, ViewAll.id, arguments: {
+                            'courses': courses.getTrendingCourses(),
+                            'title': 'Trending'
+                          });
                         },
                         icon: Icon(
                           FontAwesomeIcons.arrowRight,
@@ -179,7 +181,11 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                               shape: StadiumBorder(),
                               onPressed: () {
                                 Navigator.pushNamed(context, ViewAll.id,
-                                    arguments: user.recentCoursesIds);
+                                    arguments: {
+                                      'courses': courses.getCoursesByIds(
+                                          user.recentCoursesIds.cast<String>()),
+                                      'title': 'Continue Watching'
+                                    });
                               },
                               icon: Icon(
                                 FontAwesomeIcons.arrowRight,
@@ -201,6 +207,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                     : SizedBox(
                         height: 20,
                       ),
+
                 user.recentCoursesIds.length == 0
                     ? user.myCourses.length >= 1
                         ? CarouselSlider(

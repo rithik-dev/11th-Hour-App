@@ -34,7 +34,7 @@ class RouteGenerator {
       case ViewAll.id:
         return PageTransition(
           child: ViewAll(
-            courseIds: args,
+            data: args,
           ),
           type: PageTransitionType.leftToRightWithFade,
         );

@@ -74,6 +74,7 @@ class CourseController extends ChangeNotifier {
   }
 
   List<Course> getCoursesByIds(List<String> courseIds) {
+    print(courseIds);
     List<Course> _courses = [];
 
     try {
