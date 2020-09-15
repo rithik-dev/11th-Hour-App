@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 class ViewAll extends StatelessWidget {
   static const id = '/view_all';
 
-//  final List<Course> courses;
-//  final String title;
   final Map<String, dynamic> data;
 
   ViewAll({@required this.data});

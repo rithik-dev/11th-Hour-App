@@ -5,6 +5,7 @@ import 'package:eleventh_hour/components/LoadingScreen.dart';
 import 'package:eleventh_hour/controllers/CourseController.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/models/College.dart';
+import 'package:eleventh_hour/models/DeviceDimension.dart';
 import 'package:eleventh_hour/models/Exceptions.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:eleventh_hour/views/RegistrationScreen.dart';
@@ -27,6 +28,29 @@ class _LoginScreenState extends State<LoginScreen> {
   String _email;
   bool isLoading = false;
   String _password;
+
+  DeviceDimension device = DeviceDimension(height: 0, width: 0);
+
+  Future<void> whenNotZero() async {
+    Stream<double> source = Stream<double>.periodic(
+      Duration(milliseconds: 50),
+      (x) => MediaQuery.of(context).size.width,
+    );
+
+    await for (double value in source) {
+      print("Width:" + value.toString());
+      if (value > 0) {
+        setState(() {
+          device = DeviceDimension(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+          );
+        });
+        return;
+      }
+    }
+    // stream exited without a true value, maybe return an exception.
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,16 +130,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                   .get();
 
                               final User user =
-                                  User.fromDocumentSnapshot(snapshot);
+                              User.fromDocumentSnapshot(snapshot);
                               final College college =
-                                  College.fromDocumentSnapshot(collegeSnapshot);
+                              College.fromDocumentSnapshot(collegeSnapshot);
                               Provider.of<User>(context, listen: false)
                                   .updateUserInProvider(user);
                               Provider.of<College>(context, listen: false)
                                   .updateCollegeInProvider(college);
                               await Provider.of<CourseController>(context,
-                                      listen: false)
+                                  listen: false)
                                   .getCourses();
+                              await whenNotZero();
+                              Provider.of<DeviceDimension>(
+                                  context, listen: false)
+                                  .updateDeviceInProvider(device: device);
                               Navigator.pushReplacementNamed(
                                   context, HomeBoilerPlate.id);
                             } else

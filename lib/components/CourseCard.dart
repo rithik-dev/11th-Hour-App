@@ -119,9 +119,11 @@ class _CourseCardState extends State<CourseCard> {
                                   height: Provider.of<DeviceDimension>(context)
                                           .height *
                                       0.22,
+//                                  height: 200,
                                   child: CachedImage(
                                     url: widget.course.courseThumbnail,
                                   ),
+//                                  color: Colors.red,
                                 ),
                           widget.course.blackListed
                               ? SizedBox.shrink()

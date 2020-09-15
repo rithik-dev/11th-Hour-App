@@ -71,9 +71,13 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<DeviceDimension>.value(value: device),
+
         ChangeNotifierProvider<College>.value(value: college),
         ChangeNotifierProvider<User>.value(value: user),
         ChangeNotifierProvider<CourseController>.value(value: courseProvider),
+//        StreamProvider<DeviceDimension>(
+//          create: (_) => DeviceDimension(),
+//        )
       ],
       child: MaterialApp(
         navigatorKey: nav,
