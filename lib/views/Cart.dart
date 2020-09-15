@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class CartScreen extends StatefulWidget {
   static const id = '/cart';
@@ -104,6 +105,7 @@ class _CartScreenState extends State<CartScreen> {
     try {
       razorPay.open(options);
     } catch (e) {
+      Alert(title: e.toString(), context: context).show();
       print(e.toString());
     }
   }
