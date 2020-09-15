@@ -70,7 +70,7 @@ class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
         child: Scaffold(
             bottomNavigationBar: Container(
               decoration: ShapeDecoration(
-                color: Theme.of(context).accentColor,
+                color: Colors.white60,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(10),
@@ -84,7 +84,7 @@ class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
               ),
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
+                const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
                 child: GNav(
                     gap: 8,
                     activeColor: Colors.white,
@@ -131,13 +131,7 @@ class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
               ),
             ),
             appBar: AppBar(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(15),
-                  bottomRight: Radius.circular(15),
-                ),
-              ),
-              backgroundColor: Theme.of(context).primaryColor,
+              backgroundColor: Colors.transparent,
               elevation: 0,
               actions: [
                 IconButton(
@@ -159,10 +153,10 @@ class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
                 return RefreshIndicator(
                   onRefresh: () async {
                     final User newUser =
-                        await UserController.getUser(user.userId);
+                    await UserController.getUser(user.userId);
                     final College college =
-                        await CollegeController.getCollegeFromId(
-                            newUser.collegeId);
+                    await CollegeController.getCollegeFromId(
+                        newUser.collegeId);
                     await Provider.of<CourseController>(context, listen: false)
                         .getCourses();
                     Provider.of<User>(context, listen: false)

@@ -40,7 +40,7 @@ class _SearchPageState extends State<SearchPage> {
                 padding: EdgeInsets.all(10),
                 width: Provider.of<DeviceDimension>(context).width * 0.9,
                 decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
+                    color: Colors.black,
                     borderRadius: BorderRadius.circular(30)),
                 child: TextField(
                   controller: _controller,

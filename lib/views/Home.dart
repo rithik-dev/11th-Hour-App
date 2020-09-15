@@ -9,6 +9,7 @@ import 'package:eleventh_hour/views/ViewAll.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:neumorphic/neumorphic.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
@@ -85,31 +86,42 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                   spacing: 20,
                   children: _getChips(),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      "Trending",
-                      style: Theme.of(context).textTheme.headline1,
-                    ),
-                    RaisedButton.icon(
-                        color: Theme.of(context).primaryColor,
-                        shape: StadiumBorder(),
-                        onPressed: () {
-                          Navigator.pushNamed(context, ViewAll.id, arguments: {
-                            'courses': courses.getTrendingCourses(),
-                            'title': 'Trending'
-                          });
-                        },
-                        icon: Icon(
-                          FontAwesomeIcons.arrowRight,
-                          size: 15,
-                        ),
-                        label: Text(
-                          "View all",
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ))
-                  ],
+                NeuCard(
+                  decoration: NeumorphicDecoration(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  bevel: 5,
+                  margin: EdgeInsets.fromLTRB(10, 20, 10, 5),
+                  curveType: CurveType.concave,
+                  padding: EdgeInsets.all(5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        "Trending",
+                        style: Theme.of(context).textTheme.headline1,
+                      ),
+                      RaisedButton.icon(
+                          color: Theme.of(context).primaryColor,
+                          shape: StadiumBorder(),
+                          onPressed: () {
+                            Navigator.pushNamed(context, ViewAll.id,
+                                arguments: {
+                                  'title': "Trending",
+                                  'courses': courses.getTrendingCourses(),
+                                });
+                          },
+                          icon: Icon(
+                            FontAwesomeIcons.arrowRight,
+                            size: 15,
+                          ),
+                          label: Text(
+                            "View all",
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ))
+                    ],
+                  ),
                 ),
                 SizedBox(
                   height: 20,

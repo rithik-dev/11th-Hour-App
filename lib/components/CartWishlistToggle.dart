@@ -51,6 +51,7 @@ class _CartWishlistToggleState extends State<CartWishlistToggle> {
                               );
                               Provider.of<User>(context, listen: false)
                                   .removeCourseFromCart(widget.courseId);
+                              Navigator.pop(context);
                             } else {
                               await UserController.addToCart(
                                 userId: user.userId,
@@ -58,6 +59,7 @@ class _CartWishlistToggleState extends State<CartWishlistToggle> {
                               );
                               Provider.of<User>(context, listen: false)
                                   .addCourseToCart(widget.courseId);
+                              Navigator.pop(context);
                             }
 
                             setState(() {
@@ -87,6 +89,7 @@ class _CartWishlistToggleState extends State<CartWishlistToggle> {
                         );
                         Provider.of<User>(context, listen: false)
                             .removeCourseFromWishlist(widget.courseId);
+                        Navigator.pop(context);
                       } else {
                         await UserController.addToWishlist(
                           userId: user.userId,
@@ -94,6 +97,7 @@ class _CartWishlistToggleState extends State<CartWishlistToggle> {
                         );
                         Provider.of<User>(context, listen: false)
                             .addCourseToWishlist(widget.courseId);
+                        Navigator.pop(context);
                       }
 
                       setState(() {

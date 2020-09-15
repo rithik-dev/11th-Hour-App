@@ -1,6 +1,7 @@
 import 'package:eleventh_hour/components/CachedImage.dart';
 import 'package:eleventh_hour/components/CustomVideoPlayer.dart';
 import 'package:eleventh_hour/components/LoadingScreen.dart';
+import 'package:eleventh_hour/components/ProfilePicture.dart';
 import 'package:eleventh_hour/controllers/CourseController.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/models/Course.dart';
@@ -10,6 +11,7 @@ import 'package:eleventh_hour/views/LecturesPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:neumorphic/neumorphic.dart';
 import 'package:provider/provider.dart';
 
 class CourseDetails extends StatefulWidget {
@@ -39,6 +41,20 @@ class _CourseDetailsState extends State<CourseDetails> {
     return _rating;
   }
 
+  User instructor;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getInstructor();
+  }
+
+  Future<void> getInstructor() async {
+    instructor = await UserController.getUser(widget.course.instructorId);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     User user = Provider.of<User>(context);
@@ -46,6 +62,7 @@ class _CourseDetailsState extends State<CourseDetails> {
     Iterable haveRated = widget.course?.ratings
         ?.where((element) => element['userId'] == user.userId);
     bool isMyCourse = user.myCourses.contains(widget.course.id);
+
     return Stack(
       children: [
         Scaffold(
@@ -115,49 +132,53 @@ class _CourseDetailsState extends State<CourseDetails> {
                   ? Stack(
                       children: [
                         Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                            width: 1,
-                          )),
                           margin: EdgeInsets.all(35),
                           padding: EdgeInsets.all(10),
-                          child: Column(
-                            children: [
-                              StarRating(
-                                size: 35.0,
-                                rating: calcRating(widget.course.ratings),
-                                color: Colors.amber,
-                                borderColor: Colors.grey,
-                                starCount: 5,
-                                onRatingChanged: (r) {},
-                              ),
-                              widget.course.ratings != null
-                                  ? haveRated.length != 0
-                                      ? Text(
-                                          "\nYour Rating: ${haveRated.first['userRating']} ⭐",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline4,
-                                        )
-                                      : SizedBox.shrink()
-                                  : SizedBox.shrink()
-                            ],
+                          child: NeuCard(
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                            padding: EdgeInsets.all(10),
+                            child: Column(
+                              children: [
+                                StarRating(
+                                  size: 35.0,
+                                  rating: calcRating(widget.course.ratings),
+                                  color: Colors.amber,
+                                  borderColor: Colors.grey,
+                                  starCount: 5,
+                                  onRatingChanged: (r) {},
+                                ),
+                                widget.course.ratings != null
+                                    ? haveRated.length != 0
+                                        ? Text(
+                                            "\nYour Rating: ${haveRated.first['userRating']} ⭐",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline4,
+                                          )
+                                        : SizedBox.shrink()
+                                    : SizedBox.shrink()
+                              ],
+                            ),
                           ),
                         ),
                         isMyCourse
                             ? Positioned(
-                                top: 25,
-                                right: 25,
-                                child: CircleAvatar(
-                                  radius: 15,
-                                  backgroundColor:
-                                      Theme.of(context).primaryColor,
-                                  child: IconButton(
-                                    color: Theme.of(context).accentColor,
-                                    onPressed: () {
+                          top: 35,
+                          right: 35,
+                          child: CircleAvatar(
+                            radius: 15,
+                            backgroundColor:
+                            Theme
+                                .of(context)
+                                .primaryColor,
+                            child: IconButton(
+                              color: Theme
+                                  .of(context)
+                                  .accentColor,
+                              onPressed: () {
 //                                      Alert(context: null, title: null).show();
-                                      showModalBottomSheet(
-                                          context: context,
+                                showModalBottomSheet(
+                                    context: context,
                                           builder: (nbm) {
                                             return StatefulBuilder(
                                               builder:
@@ -222,17 +243,57 @@ class _CourseDetailsState extends State<CourseDetails> {
                       size: 35.0,
                       rating: calcRating(widget.course.ratings),
                       color: Colors.amber,
-                      borderColor: Colors.grey,
-                      starCount: 5,
-                      onRatingChanged: (r) {},
-                    ),
+                borderColor: Colors.grey,
+                starCount: 5,
+                onRatingChanged: (r) {},
+              ),
               widget.course.ratings == null
                   ? Text(
-                      "No Ratings Yet",
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline3,
-                    )
-                  : SizedBox.shrink()
+                "No Ratings Yet",
+                textAlign: TextAlign.center,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .headline3,
+              )
+                  : SizedBox.shrink(),
+              instructor == null
+                  ? SizedBox.shrink()
+                  : NeuCard(
+                margin: EdgeInsets.all(10),
+                curveType: CurveType.convex,
+                color: Theme
+                    .of(context)
+                    .scaffoldBackgroundColor,
+                child: Column(
+                  children: [
+                    Text(
+                      "About the instructor\n",
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .headline1,
+                    ),
+                    ProfilePicture(url: instructor.profilePicURL),
+                    SizedBox(height: 10),
+                    Text(
+                      instructor.name,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .headline3,
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      instructor.email + "\n",
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .headline3,
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
           bottomNavigationBar: Container(

@@ -51,53 +51,54 @@ const pageDecoration = const PageDecoration(
   imagePadding: EdgeInsets.zero,
 );
 var kDefaultTheme = ThemeData.dark().copyWith(
-    scaffoldBackgroundColor: Color(0xff3B4254),
-    accentColor: Colors.grey[300],
-    textTheme: TextTheme(
-      button: TextStyle(color: Color(0xFF252525)),
-      headline5:
-          TextStyle(fontSize: 20.0, color: Colors.black, fontFamily: 'karla'),
-      headline4: TextStyle(
-          fontSize: 18.0,
-          fontWeight: FontWeight.w600,
-          color: Colors.grey,
-          fontFamily: 'karla'),
-      headline3: TextStyle(
-          fontSize: 20.0,
-          fontWeight: FontWeight.w600,
-          color: Colors.grey,
-          fontFamily: 'karla'),
-      headline2: TextStyle(
-          fontSize: 22.0,
-          fontWeight: FontWeight.w700,
-          color: Colors.grey,
-          fontFamily: 'karla'),
-      headline1: TextStyle(
-          fontSize: 32.0,
-          fontWeight: FontWeight.w300,
-          color: Colors.grey,
-          fontFamily: 'karla'),
-      subtitle1: TextStyle(
-          fontSize: 14.5,
-          fontWeight: FontWeight.w500,
-          color: Colors.white,
-          fontFamily: 'karla'),
-      headline6: TextStyle(
-          fontSize: 16.0,
-          fontWeight: FontWeight.w600,
-          color: Colors.white,
-          fontFamily: 'karla'),
-      bodyText2:
-          TextStyle(fontSize: 12.0, color: Colors.white, fontFamily: 'karla'),
-      bodyText1: TextStyle(
-          fontSize: 14.0,
-          fontWeight: FontWeight.w600,
-          color: Colors.white,
-          fontFamily: 'karla'),
-      caption:
-          TextStyle(fontSize: 12.0, color: Colors.white, fontFamily: 'karla'),
-    ));
-//primaryColor: Colors.white,
+  scaffoldBackgroundColor: Color(0xFF1a1a2e),
+  accentColor: Color(0xFFe94560),
+  textTheme: TextTheme(
+    button: TextStyle(color: Color(0xFF252525)),
+    headline5:
+        TextStyle(fontSize: 20.0, color: Colors.black, fontFamily: 'karla'),
+    headline4: TextStyle(
+        fontSize: 18.0,
+        fontWeight: FontWeight.w600,
+        color: Colors.grey,
+        fontFamily: 'karla'),
+    headline3: TextStyle(
+        fontSize: 20.0,
+        fontWeight: FontWeight.w600,
+        color: Colors.grey,
+        fontFamily: 'karla'),
+    headline2: TextStyle(
+        fontSize: 22.0,
+        fontWeight: FontWeight.w700,
+        color: Colors.grey,
+        fontFamily: 'karla'),
+    headline1: TextStyle(
+        fontSize: 32.0,
+        fontWeight: FontWeight.w300,
+        color: Colors.grey,
+        fontFamily: 'karla'),
+    subtitle1: TextStyle(
+        fontSize: 14.5,
+        fontWeight: FontWeight.w500,
+        color: Colors.white,
+        fontFamily: 'karla'),
+    headline6: TextStyle(
+        fontSize: 16.0,
+        fontWeight: FontWeight.w600,
+        color: Colors.white,
+        fontFamily: 'karla'),
+    bodyText2:
+        TextStyle(fontSize: 12.0, color: Colors.white, fontFamily: 'karla'),
+    bodyText1: TextStyle(
+        fontSize: 14.0,
+        fontWeight: FontWeight.w600,
+        color: Colors.white,
+        fontFamily: 'karla'),
+    caption:
+        TextStyle(fontSize: 12.0, color: Colors.white, fontFamily: 'karla'),
+  ),
+  primaryColor: Color(0xFF1a1a2e),
+);
 //brightness: Brightness.light,
 //accentColor: Colors.green,
 //focusColor: Colors.purpleAccent,

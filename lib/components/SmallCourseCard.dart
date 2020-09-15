@@ -36,9 +36,7 @@ class SmallCourseCard extends StatelessWidget {
       margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
       child: Container(
         decoration: BoxDecoration(
-            color: course.blackListed
-                ? Colors.grey[800]
-                : Color.fromRGBO(64, 75, 96, .9)),
+            color: course.blackListed ? Colors.grey[800] : Color(0xFF16213e)),
         child: ListTile(
             onLongPress: () async {
               showModalBottomSheet(
