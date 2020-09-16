@@ -4,6 +4,7 @@ import 'package:eleventh_hour/controllers/CourseController.dart';
 import 'package:eleventh_hour/models/College.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
 
 class SubjectDetails extends StatelessWidget {
@@ -21,7 +22,7 @@ class SubjectDetails extends StatelessWidget {
             bottomRight: Radius.circular(15),
           ),
         ),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: NeumorphicTheme.currentTheme(context).baseColor,
         elevation: 0,
         automaticallyImplyLeading: true,
       ),

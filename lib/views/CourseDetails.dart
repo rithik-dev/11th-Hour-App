@@ -1,6 +1,7 @@
 import 'package:eleventh_hour/components/CachedImage.dart';
 import 'package:eleventh_hour/components/CustomVideoPlayer.dart';
 import 'package:eleventh_hour/components/LoadingScreen.dart';
+import 'package:eleventh_hour/components/NeumoCard.dart';
 import 'package:eleventh_hour/components/ProfilePicture.dart';
 import 'package:eleventh_hour/controllers/CourseController.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
@@ -10,10 +11,10 @@ import 'package:eleventh_hour/models/User.dart';
 import 'package:eleventh_hour/utilities/UiIcons.dart';
 import 'package:eleventh_hour/views/LecturesPage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:neumorphic/neumorphic.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -82,7 +83,7 @@ class _CourseDetailsState extends State<CourseDetails> {
                 width: double.infinity,
                 height: Provider.of<DeviceDimension>(context).height * 0.14,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
+                  color: NeumorphicTheme.currentTheme(context).baseColor,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -97,7 +98,9 @@ class _CourseDetailsState extends State<CourseDetails> {
                     Expanded(
                       child: Text(
                         widget.course.title,
-                        style: Theme.of(context).textTheme.headline4,
+                        style: NeumorphicTheme.currentTheme(context)
+                            .textTheme
+                            .headline4,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -111,10 +114,9 @@ class _CourseDetailsState extends State<CourseDetails> {
                   children: [
                     Text(
                       widget.course.description,
-                      style: Theme.of(context)
+                      style: NeumorphicTheme.currentTheme(context)
                           .textTheme
-                          .headline5
-                          .copyWith(color: Colors.white),
+                          .headline5,
                     ),
                     isMyCourse
                         ? SizedBox.shrink()
@@ -137,9 +139,7 @@ class _CourseDetailsState extends State<CourseDetails> {
                         Container(
                           margin: EdgeInsets.all(35),
                           padding: EdgeInsets.all(10),
-                          child: NeuCard(
-                            color: Theme.of(context).scaffoldBackgroundColor,
-                            padding: EdgeInsets.all(10),
+                          child: NeumorphicCard(
                             child: Column(
                               children: [
                                 StarRating(
@@ -153,8 +153,9 @@ class _CourseDetailsState extends State<CourseDetails> {
                                 widget.course.ratings != null
                                     ? haveRated.length != 0
                                         ? Text(
-                                            "\nYour Rating: ${haveRated.first['userRating']} ⭐",
-                                            style: Theme.of(context)
+                                            "\nYour Rating: ${haveRated.first['userRating']} ⭐\n",
+                                            style: NeumorphicTheme.currentTheme(
+                                                    context)
                                                 .textTheme
                                                 .headline4,
                                           )
@@ -171,9 +172,11 @@ class _CourseDetailsState extends State<CourseDetails> {
                                 child: CircleAvatar(
                                   radius: 15,
                                   backgroundColor:
-                                      Theme.of(context).primaryColor,
+                                      NeumorphicTheme.currentTheme(context)
+                                          .baseColor,
                                   child: IconButton(
-                                    color: Theme.of(context).accentColor,
+                                    color: NeumorphicTheme.currentTheme(context)
+                                        .accentColor,
                                     onPressed: () {
 //                                      Alert(context: null, title: null).show();
                                       showModalBottomSheet(
@@ -193,7 +196,9 @@ class _CourseDetailsState extends State<CourseDetails> {
                                                   children: [
                                                     Text(
                                                       "\nEnter Rating\n",
-                                                      style: Theme.of(context)
+                                                      style: NeumorphicTheme
+                                                              .currentTheme(
+                                                                  context)
                                                           .textTheme
                                                           .headline1,
                                                     ),
@@ -232,105 +237,92 @@ class _CourseDetailsState extends State<CourseDetails> {
                                     icon: Icon(
                                       Icons.edit,
                                     ),
-                            ),
-                          ),
-                        )
+                                  ),
+                                ),
+                              )
                             : SizedBox.shrink()
                       ],
-              )
+                    )
                   : StarRating(
-                size: 35.0,
-                rating: calcRating(widget.course.ratings),
-                color: Colors.amber,
-                borderColor: Colors.grey,
-                starCount: 5,
-                onRatingChanged: (r) {},
-              ),
+                      size: 35.0,
+                      rating: calcRating(widget.course.ratings),
+                      color: Colors.amber,
+                      borderColor: Colors.grey,
+                      starCount: 5,
+                      onRatingChanged: (r) {},
+                    ),
               widget.course.ratings == null
                   ? Text(
-                "No Ratings Yet",
-                textAlign: TextAlign.center,
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .headline3,
-              )
+                      "No Ratings Yet",
+                      textAlign: TextAlign.center,
+                      style: NeumorphicTheme.currentTheme(context)
+                          .textTheme
+                          .headline3,
+                    )
                   : SizedBox.shrink(),
               instructor == null
                   ? SpinKitChasingDots(
-                color: Theme
-                    .of(context)
-                    .accentColor,
-              )
-                  : NeuCard(
-                margin: EdgeInsets.all(10),
-                curveType: CurveType.convex,
-                color: Theme
-                    .of(context)
-                    .scaffoldBackgroundColor,
-                child: Column(
-                  children: [
-                    Text(
-                      "About the instructor\n",
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .headline1,
-                    ),
-                    ProfilePicture(url: instructor.profilePicURL),
-                    SizedBox(height: 10),
-                    Text(
-                      instructor.name,
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .headline3,
-                    ),
-                    SizedBox(height: 10),
-                    GestureDetector(
-                      onTap: () async {
-                        if (await canLaunch(
-                            "mailto:${instructor.email}")) {
-                          await launch("mailto:${instructor.email}");
-                        } else {
-                          throw 'Could not launch';
-                        }
-                      },
-                      child: Text(
-                        instructor.email + "\n",
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .headline3
-                            .copyWith(
-                          color: Colors.white,
-                          decoration: TextDecoration.underline,
-                        ),
+                      color: NeumorphicTheme.currentTheme(context).accentColor,
+                    )
+                  : NeumorphicCard(
+                      child: Column(
+                        children: [
+                          Text(
+                            "About the instructor\n",
+                            style: NeumorphicTheme.currentTheme(context)
+                                .textTheme
+                                .headline1,
+                          ),
+                          ProfilePicture(url: instructor.profilePicURL),
+                          SizedBox(height: 10),
+                          Text(
+                            instructor.name,
+                            style: NeumorphicTheme.currentTheme(context)
+                                .textTheme
+                                .headline3,
+                          ),
+                          SizedBox(height: 10),
+                          GestureDetector(
+                            onTap: () async {
+                              if (await canLaunch(
+                                  "mailto:${instructor.email}")) {
+                                await launch("mailto:${instructor.email}");
+                              } else {
+                                throw 'Could not launch';
+                              }
+                            },
+                            child: Text(
+                              instructor.email + "\n",
+                              style: NeumorphicTheme.currentTheme(context)
+                                  .textTheme
+                                  .headline3
+                                  .copyWith(
+                                    decoration: TextDecoration.underline,
+                                  ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
               isMyCourse
                   ? Container(
-                margin:
-                EdgeInsets.symmetric(vertical: 10, horizontal: 50),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20)),
-                child: RaisedButton.icon(
-                  color: Colors.red,
-                  padding: EdgeInsets.all(10),
-                  icon: Icon(UiIcons.money, color: Colors.black),
-                  label: Text(
-                    "Ask for refund",
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .headline2
-                        .copyWith(color: Colors.grey[900]),
-                  ),
-                  onPressed: () async {
-                    if (await canLaunch(
+                      margin:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 50),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20)),
+                      child: RaisedButton.icon(
+                        color: Colors.red,
+                        padding: EdgeInsets.all(10),
+                        icon: Icon(UiIcons.money, color: Colors.black),
+                        label: Text(
+                          "Ask for refund",
+                          style: NeumorphicTheme.currentTheme(context)
+                              .textTheme
+                              .headline2
+                              .copyWith(color: Colors.grey[900]),
+                        ),
+                        onPressed: () async {
+                          if (await canLaunch(
                               "mailto:company.eleventhhour@gmail.com")) {
                             await launch(
                                 "mailto:company.eleventhhour@gmail.com");
@@ -338,14 +330,14 @@ class _CourseDetailsState extends State<CourseDetails> {
                             throw 'Could not launch';
                           }
                         },
-                ),
-              )
+                      ),
+                    )
                   : SizedBox.shrink(),
             ],
           ),
           bottomNavigationBar: Container(
             padding: EdgeInsets.all(8),
-            color: Theme.of(context).primaryColor,
+            color: NeumorphicTheme.currentTheme(context).accentColor,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [

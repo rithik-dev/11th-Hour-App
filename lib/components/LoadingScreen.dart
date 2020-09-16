@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class LoadingScreen extends StatelessWidget {
@@ -8,9 +9,9 @@ class LoadingScreen extends StatelessWidget {
       child: Container(
         height: double.infinity,
         width: double.infinity,
-        color: Colors.black.withOpacity(0.4),
+        color: Color(0xffEEEEEE),
         child: SpinKitChasingDots(
-          color: Theme.of(context).accentColor,
+          color: NeumorphicTheme.currentTheme(context).accentColor,
         ),
       ),
     );

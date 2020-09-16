@@ -10,6 +10,7 @@ import 'package:eleventh_hour/models/Exceptions.dart';
 import 'package:eleventh_hour/views/LoginScreen.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
@@ -145,8 +146,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       Text(
                         "Choose a pic/ \n Go Professor",
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline4.copyWith(
-                            fontSize: 14, fontWeight: FontWeight.w700),
+                        style: NeumorphicTheme.currentTheme(context)
+                            .textTheme
+                            .headline4
+                            .copyWith(
+                                fontSize: 14, fontWeight: FontWeight.w700),
                       ),
                     ],
                   ),

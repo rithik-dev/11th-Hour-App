@@ -2,6 +2,7 @@ import 'package:awsome_video_player/awsome_video_player.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
 
 class CustomVideoPlayer extends StatelessWidget {
@@ -35,7 +36,7 @@ class CustomVideoPlayer extends StatelessWidget {
               // padding: EdgeInsets.all(0),
               playedColor: Colors.red,
               bufferedColor: Colors.green,
-              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              backgroundColor: NeumorphicTheme.currentTheme(context).baseColor,
               dragBarColor: Colors.white,
               height: 3,
               progressRadius: 2,

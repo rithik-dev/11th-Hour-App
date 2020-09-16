@@ -5,6 +5,7 @@ import 'package:eleventh_hour/controllers/CourseController.dart';
 import 'package:eleventh_hour/models/Course.dart';
 import 'package:eleventh_hour/models/DeviceDimension.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
@@ -72,7 +73,7 @@ class _SearchPageState extends State<SearchPage> {
                       border: InputBorder.none,
                       hintText: "Search",
                       hintStyle:
-                      TextStyle(color: Colors.grey[600], fontSize: 18)),
+                          TextStyle(color: Colors.grey[600], fontSize: 18)),
                 ),
               ),
             ),

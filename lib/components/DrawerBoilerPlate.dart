@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inner_drawer/inner_drawer.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 import 'DrawerContent.dart';
 
@@ -25,8 +26,9 @@ class CustomDrawer extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-              Color(0xFF16213e),
-              Theme.of(context).accentColor,
+              Colors.amber,
+//              NeumorphicTheme.currentTheme(context).variantColor,
+              NeumorphicTheme.currentTheme(context).accentColor,
             ])),
         colorTransitionScaffold: Colors.black38,
         leftChild: DrawerContent(

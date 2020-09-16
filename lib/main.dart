@@ -10,6 +10,7 @@ import 'package:eleventh_hour/views/ConnectionLostScreen.dart';
 import 'package:eleventh_hour/views/SplashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
 
 import 'models/DeviceDimension.dart';
@@ -79,7 +80,7 @@ class _MyAppState extends State<MyApp> {
 //          create: (_) => DeviceDimension(),
 //        )
       ],
-      child: MaterialApp(
+      child: NeumorphicApp(
         navigatorKey: nav,
         theme: kDefaultTheme,
         debugShowCheckedModeBanner: false,

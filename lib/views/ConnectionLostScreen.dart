@@ -2,6 +2,7 @@ import 'package:eleventh_hour/components/ConnectionLostClipper.dart';
 import 'package:eleventh_hour/models/DeviceDimension.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
 
 class ConnectionLost extends StatelessWidget {
@@ -24,7 +25,7 @@ class ConnectionLost extends StatelessWidget {
           ),
           Text(
             "Connection Lost",
-            style: Theme.of(context)
+            style: NeumorphicTheme.currentTheme(context)
                 .textTheme
                 .headline3
                 .copyWith(fontFamily: "pacifico"),
@@ -39,7 +40,7 @@ class ConnectionLost extends StatelessWidget {
             padding: EdgeInsets.all(10),
             child: Text(
               "Hey,\nIt looks like you are not connected to internet.\n\n Try Again Later!!!",
-              style: Theme.of(context).textTheme.headline1,
+              style: NeumorphicTheme.currentTheme(context).textTheme.headline1,
               softWrap: true,
               textAlign: TextAlign.center,
             ),

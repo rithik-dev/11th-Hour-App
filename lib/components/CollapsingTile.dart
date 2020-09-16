@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CollapsingTile extends StatelessWidget {
@@ -25,7 +26,10 @@ class CollapsingTile extends StatelessWidget {
             ),
             Expanded(
               child: Text(question,
-                  softWrap: true, style: Theme.of(context).textTheme.headline5),
+                  softWrap: true,
+                  style: NeumorphicTheme.currentTheme(context)
+                      .textTheme
+                      .headline5),
             )
           ],
         ),
@@ -43,7 +47,7 @@ class CollapsingTile extends StatelessWidget {
                 child: Text(
                   answer,
                   softWrap: true,
-                  style: Theme.of(context)
+                  style: NeumorphicTheme.currentTheme(context)
                       .textTheme
                       .headline5
                       .copyWith(color: Colors.grey[900]),

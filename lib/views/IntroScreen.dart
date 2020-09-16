@@ -89,7 +89,7 @@ class IntroScreen extends StatelessWidget {
         done: const Text('Done', style: TextStyle(fontWeight: FontWeight.w600)),
         dotsDecorator: const DotsDecorator(
           size: Size(10.0, 10.0),
-          color: Color(0xFFBDBDBD),
+          color: Colors.black,
           activeSize: Size(22.0, 10.0),
           activeShape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(25.0)),

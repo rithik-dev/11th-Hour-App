@@ -13,6 +13,7 @@ import 'package:eleventh_hour/views/WishlistScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inner_drawer/inner_drawer.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -84,7 +85,7 @@ class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
               ),
               child: Padding(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
+                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
                 child: GNav(
                     gap: 8,
                     activeColor: Colors.white,
@@ -130,19 +131,22 @@ class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
                     }),
               ),
             ),
-            appBar: AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
+            appBar: NeumorphicAppBar(
+              buttonStyle: NeumorphicTheme.currentTheme(context).buttonStyle,
+              centerTitle: true,
               actions: [
-                IconButton(
-                  icon: Icon(Icons.shopping_cart),
+                NeumorphicButton(
+                  drawSurfaceAboveChild: false,
+                  style: NeumorphicTheme.currentTheme(context).buttonStyle,
+                  child: Icon(Icons.shopping_cart),
                   onPressed: () {
                     Navigator.pushNamed(context, CartScreen.id);
                   },
                 ),
               ],
-              leading: IconButton(
-                icon: Icon(Icons.filter_list),
+              leading: NeumorphicButton(
+                style: NeumorphicTheme.currentTheme(context).buttonStyle,
+                child: Icon(Icons.filter_list),
                 onPressed: () {
                   toggle();
                 },
@@ -153,10 +157,10 @@ class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
                 return RefreshIndicator(
                   onRefresh: () async {
                     final User newUser =
-                    await UserController.getUser(user.userId);
+                        await UserController.getUser(user.userId);
                     final College college =
-                    await CollegeController.getCollegeFromId(
-                        newUser.collegeId);
+                        await CollegeController.getCollegeFromId(
+                            newUser.collegeId);
                     await Provider.of<CourseController>(context, listen: false)
                         .getCourses();
                     Provider.of<User>(context, listen: false)

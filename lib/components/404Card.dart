@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:lottie/lottie.dart';
 
 class Card404 extends StatelessWidget {
@@ -15,7 +16,7 @@ class Card404 extends StatelessWidget {
           title != "UPLOADED COURSES"
               ? "\nTheir are no courses in your ${title.toLowerCase()}."
               : "\nTo Add a Course\nplease login from website.",
-          style: Theme.of(context).textTheme.headline1,
+          style: NeumorphicTheme.currentTheme(context).textTheme.headline1,
           textAlign: TextAlign.center,
         ),
       ],

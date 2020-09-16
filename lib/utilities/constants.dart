@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -47,12 +48,40 @@ const pageDecoration = const PageDecoration(
   titleTextStyle: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700),
   bodyTextStyle: bodyStyle,
   descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
-  pageColor: Colors.pink,
+  pageColor: Color(0xffEEEEEE),
   imagePadding: EdgeInsets.zero,
 );
-var kDefaultTheme = ThemeData.dark().copyWith(
-  scaffoldBackgroundColor: Color(0xFF1a1a2e),
-  accentColor: Color(0xFFe94560),
+var kDefaultTheme = NeumorphicThemeData.dark().copyWith(
+  baseColor: Color(0xffEEEEEE),
+  accentColor: Colors.pink,
+  variantColor: Colors.pink[700],
+  lightSource: LightSource.topLeft,
+  depth: 6,
+  intensity: 0.5,
+
+  defaultStyle: NeumorphicStyle(
+    intensity: 0.5,
+    shape: NeumorphicShape.convex,
+    boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
+    depth: 7,
+    surfaceIntensity: 0,
+    shadowLightColor: Color(0xFFe94560),
+//    shadowDarkColor: Colors.pink,
+    lightSource: LightSource.top,
+//    color: Color(0xFF1a1a2e),
+  ),
+  buttonStyle: NeumorphicStyle(
+    intensity: 0.5,
+    shape: NeumorphicShape.convex,
+    boxShape: NeumorphicBoxShape.circle(),
+    depth: 13,
+    surfaceIntensity: 0,
+//    shadowLightColor: Color(0xFFe94560),
+//    shadowDarkColor: Colors.pink,
+    lightSource: LightSource.top,
+//    color: Color(0xFF1a1a2e),
+  ),
+//  accentColor: Color(0xFFe94560),
   textTheme: TextTheme(
     button: TextStyle(color: Color(0xFF252525)),
     headline5:
@@ -60,44 +89,44 @@ var kDefaultTheme = ThemeData.dark().copyWith(
     headline4: TextStyle(
         fontSize: 18.0,
         fontWeight: FontWeight.w600,
-        color: Colors.grey,
+        color: Colors.black54,
         fontFamily: 'karla'),
     headline3: TextStyle(
         fontSize: 20.0,
         fontWeight: FontWeight.w600,
-        color: Colors.grey,
+        color: Colors.black54,
         fontFamily: 'karla'),
     headline2: TextStyle(
         fontSize: 22.0,
         fontWeight: FontWeight.w700,
-        color: Colors.grey,
+        color: Colors.black,
         fontFamily: 'karla'),
     headline1: TextStyle(
         fontSize: 32.0,
         fontWeight: FontWeight.w300,
-        color: Colors.grey,
+        color: Colors.black,
         fontFamily: 'karla'),
     subtitle1: TextStyle(
         fontSize: 14.5,
         fontWeight: FontWeight.w500,
-        color: Colors.white,
+        color: Colors.black54,
         fontFamily: 'karla'),
     headline6: TextStyle(
         fontSize: 16.0,
         fontWeight: FontWeight.w600,
-        color: Colors.white,
+        color: Colors.black45,
         fontFamily: 'karla'),
     bodyText2:
-        TextStyle(fontSize: 12.0, color: Colors.white, fontFamily: 'karla'),
+        TextStyle(fontSize: 12.0, color: Colors.black54, fontFamily: 'karla'),
     bodyText1: TextStyle(
         fontSize: 14.0,
         fontWeight: FontWeight.w600,
-        color: Colors.white,
+        color: Colors.black54,
         fontFamily: 'karla'),
     caption:
-        TextStyle(fontSize: 12.0, color: Colors.white, fontFamily: 'karla'),
+        TextStyle(fontSize: 12.0, color: Colors.black38, fontFamily: 'karla'),
   ),
-  primaryColor: Color(0xFF1a1a2e),
+//  primaryColor: Color(0xFF1a1a2e),
 );
 //brightness: Brightness.light,
 //accentColor: Colors.green,

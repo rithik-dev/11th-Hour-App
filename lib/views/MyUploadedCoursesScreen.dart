@@ -6,6 +6,7 @@ import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inner_drawer/inner_drawer.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
 
 class MyUploadedCoursesScreen extends StatelessWidget {
@@ -23,12 +24,12 @@ class MyUploadedCoursesScreen extends StatelessWidget {
       screenId: MyUploadedCoursesScreen.id,
       innerDrawerKey: _innerDrawerKey,
       scaffold: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
+        appBar: NeumorphicAppBar(
+          leading: NeumorphicButton(
             onPressed: () {
               toggle();
             },
-            icon: Icon(Icons.filter_list),
+            child: Icon(Icons.filter_list),
           ),
           title: Text("MY UPLOADED COURSES"),
         ),

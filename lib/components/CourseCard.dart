@@ -1,4 +1,5 @@
 import 'package:eleventh_hour/components/CachedImage.dart';
+import 'package:eleventh_hour/components/NeumoCard.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/models/Course.dart';
 import 'package:eleventh_hour/models/DeviceDimension.dart';
@@ -6,6 +7,7 @@ import 'package:eleventh_hour/models/User.dart';
 import 'package:eleventh_hour/views/CourseDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
 
 class CourseCard extends StatefulWidget {
@@ -82,18 +84,20 @@ class _CourseCardState extends State<CourseCard> {
                   },
             child: Padding(
               padding: EdgeInsets.all(10.0),
-              child: Container(
-                  decoration: BoxDecoration(
-                      color: widget.course.blackListed
-                          ? Colors.grey[800]
-                          : Colors.grey[300],
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.5),
-                          spreadRadius: 5.0,
-                          blurRadius: 5.0,
-                        )
-                      ]),
+              child: NeumorphicCard(
+                  margin: EdgeInsets.all(0),
+//                  decoration: BoxDecoration(
+//                    color: widget.course.blackListed
+//                        ? Colors.grey[800]
+//                        : NeumorphicTheme.baseColor(context),
+//                  ),
+//                      boxShadow: [
+//                        BoxShadow(
+////                          color: Colors.black.withOpacity(0.5),
+//                          spreadRadius: 5.0,
+//                          blurRadius: 5.0,
+//                        )
+//                      ]),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -109,10 +113,10 @@ class _CourseCardState extends State<CourseCard> {
                                   child: Text(
                                     "\n\nThis was blacklisted",
                                     textAlign: TextAlign.center,
-                                    style: Theme.of(context)
+                                    style: NeumorphicTheme.currentTheme(context)
                                         .textTheme
                                         .headline5
-                                        .copyWith(color: Colors.white),
+                                        .copyWith(color: Colors.black),
                                   ),
                                 )
                               : Container(
@@ -154,7 +158,7 @@ class _CourseCardState extends State<CourseCard> {
                         child: Text(this.widget.course.title,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
-                            style: Theme.of(context)
+                            style: NeumorphicTheme.currentTheme(context)
                                 .textTheme
                                 .headline2
                                 .copyWith(color: Colors.black)),
@@ -164,7 +168,7 @@ class _CourseCardState extends State<CourseCard> {
                         padding: EdgeInsets.only(left: 10.0),
                         child: Text(
                           this.widget.course.instructorName,
-                          style: Theme.of(context)
+                          style: NeumorphicTheme.currentTheme(context)
                               .textTheme
                               .headline4
                               .copyWith(color: Colors.black54),
@@ -177,11 +181,15 @@ class _CourseCardState extends State<CourseCard> {
                           children: <Widget>[
                             Text(
                               "Rs ${this.widget.course.price}/- ",
-                              style: Theme.of(context).textTheme.headline5,
+                              style: NeumorphicTheme.currentTheme(context)
+                                  .textTheme
+                                  .headline5,
                             ),
                             Text(
                               '⭐ ${calcRating(widget.course.ratings)}',
-                              style: Theme.of(context).textTheme.headline5,
+                              style: NeumorphicTheme.currentTheme(context)
+                                  .textTheme
+                                  .headline5,
                             ),
                           ],
                         ),
@@ -197,7 +205,8 @@ class _CourseCardState extends State<CourseCard> {
         isLoading
             ? Center(
                 child: CircularProgressIndicator(
-                backgroundColor: Theme.of(context).primaryColor,
+                backgroundColor:
+                    NeumorphicTheme.currentTheme(context).accentColor,
               ))
             : SizedBox.shrink(),
       ],

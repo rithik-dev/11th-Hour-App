@@ -4,6 +4,7 @@ import 'package:eleventh_hour/models/DeviceDimension.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
 
 class LecturesPage extends StatefulWidget {
@@ -34,7 +35,7 @@ class _LecturesPageState extends State<LecturesPage> {
                 ),
                 Container(
                   height: Provider.of<DeviceDimension>(context).height * 0.1,
-                  color: Theme.of(context).primaryColor,
+                  color: NeumorphicTheme.currentTheme(context).baseColor,
                   margin: EdgeInsets.all(10),
                   padding: EdgeInsets.all(10),
                   alignment: Alignment.center,
@@ -44,7 +45,9 @@ class _LecturesPageState extends State<LecturesPage> {
                     ),
                     title: Text(
                       widget.course.lectures[videoIndex]['name'],
-                      style: Theme.of(context).textTheme.headline1,
+                      style: NeumorphicTheme.currentTheme(context)
+                          .textTheme
+                          .headline1,
                     ),
                   ),
                 ),
@@ -59,7 +62,9 @@ class _LecturesPageState extends State<LecturesPage> {
                         child: ListTile(
                           title: Text(
                             widget.course.lectures[index]['name'],
-                            style: Theme.of(context).textTheme.headline3,
+                            style: NeumorphicTheme.currentTheme(context)
+                                .textTheme
+                                .headline3,
                           ),
                           onTap: () {
                             setState(() {

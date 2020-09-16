@@ -10,6 +10,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inner_drawer/inner_drawer.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -81,14 +82,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     .updateUserInProvider(newUser);
               },
               child: Scaffold(
-                appBar: AppBar(
-                  leading: IconButton(
+                appBar: NeumorphicAppBar(
+                  leading: NeumorphicButton(
                     onPressed: () {
                       toggle();
                     },
-                    icon: Icon(Icons.filter_list),
+                    child: Icon(Icons.filter_list),
                   ),
-                  title: Text("Profile"),
+                  title: NeumorphicText(
+                    "Profile",
+                    style: NeumorphicStyle(color: Colors.black),
+                    textStyle: NeumorphicTextStyle(fontSize: 20),
+                  ),
                 ),
                 body: ListView(
                   padding: EdgeInsets.symmetric(vertical: 2, horizontal: 7),
@@ -132,14 +137,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Text(
                                 user.name,
                                 textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.headline1,
+                                style: NeumorphicTheme.currentTheme(context)
+                                    .textTheme
+                                    .headline1,
                               ),
                               Text(
                                 user.email,
                                 textAlign: TextAlign.center,
                                 maxLines: 2,
                                 softWrap: true,
-                                style: Theme.of(context).textTheme.headline6,
+                                style: NeumorphicTheme.currentTheme(context)
+                                    .textTheme
+                                    .headline6,
                               ),
                             ],
                           ),

@@ -9,6 +9,7 @@ import 'package:eleventh_hour/models/Transaction.dart' as T;
 import 'package:eleventh_hour/models/User.dart';
 import 'package:eleventh_hour/utilities/UiIcons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
@@ -137,13 +138,15 @@ class _CartScreenState extends State<CartScreen> {
         return Scaffold(
             bottomNavigationBar: Container(
               padding: EdgeInsets.all(20),
-              color: Theme.of(context).primaryColor,
+              color: NeumorphicTheme.currentTheme(context).accentColor,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     "Rs.$amount",
-                    style: Theme.of(context).textTheme.headline1,
+                    style: NeumorphicTheme.currentTheme(context)
+                        .textTheme
+                        .headline1,
                   ),
                   RaisedButton.icon(
                       onPressed: amount == 0
@@ -157,17 +160,9 @@ class _CartScreenState extends State<CartScreen> {
                 ],
               ),
             ),
-            appBar: AppBar(
+            appBar: NeumorphicAppBar(
               title: Text("My Cart"),
               centerTitle: true,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(15),
-                  bottomRight: Radius.circular(15),
-                ),
-              ),
-              backgroundColor: Theme.of(context).primaryColor,
-              elevation: 0,
               automaticallyImplyLeading: true,
             ),
             body: SafeArea(

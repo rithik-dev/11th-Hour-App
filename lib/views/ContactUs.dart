@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -48,7 +49,7 @@ class ContactUs extends StatelessWidget {
                               },
                               title: Text(
                                 "9897699041",
-                                style: Theme.of(context)
+                                style: NeumorphicTheme.currentTheme(context)
                                     .textTheme
                                     .headline4
                                     .copyWith(fontWeight: FontWeight.w600),
@@ -56,13 +57,14 @@ class ContactUs extends StatelessWidget {
                               leading: Icon(
                                 FontAwesomeIcons.phoneAlt,
                                 size: 20,
-                                color: Theme.of(context).accentColor,
+                                color: NeumorphicTheme.currentTheme(context)
+                                    .accentColor,
                               ),
                             ),
                             ListTile(
                               title: Text(
                                 "9958869248",
-                                style: Theme.of(context)
+                                style: NeumorphicTheme.currentTheme(context)
                                     .textTheme
                                     .headline4
                                     .copyWith(fontWeight: FontWeight.w600),
@@ -73,13 +75,14 @@ class ContactUs extends StatelessWidget {
                               leading: Icon(
                                 FontAwesomeIcons.phoneAlt,
                                 size: 20,
-                                color: Theme.of(context).accentColor,
+                                color: NeumorphicTheme.currentTheme(context)
+                                    .accentColor,
                               ),
                             ),
                             ListTile(
                               title: Text(
                                 "9953798220",
-                                style: Theme.of(context)
+                                style: NeumorphicTheme.currentTheme(context)
                                     .textTheme
                                     .headline4
                                     .copyWith(fontWeight: FontWeight.w600),
@@ -90,7 +93,8 @@ class ContactUs extends StatelessWidget {
                               leading: Icon(
                                 FontAwesomeIcons.phoneAlt,
                                 size: 20,
-                                color: Theme.of(context).accentColor,
+                                color: NeumorphicTheme.currentTheme(context)
+                                    .accentColor,
                               ),
                             ),
                           ],
@@ -98,10 +102,12 @@ class ContactUs extends StatelessWidget {
                   );
                 });
           },
-          color: Theme.of(context).accentColor.withOpacity(0.9),
+          color: NeumorphicTheme.currentTheme(context)
+              .accentColor
+              .withOpacity(0.9),
           child: Text(
             "Contact Us",
-            style: Theme.of(context).textTheme.headline4,
+            style: NeumorphicTheme.currentTheme(context).textTheme.headline4,
           )),
     );
   }

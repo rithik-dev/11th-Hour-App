@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:lottie/lottie.dart';
 
 class NoSearchText extends StatelessWidget {
@@ -11,7 +12,7 @@ class NoSearchText extends StatelessWidget {
           Lottie.asset('assets/lottie/no-search-text.json'),
           Text(
             "\n\nSearch for new courses",
-            style: Theme.of(context).textTheme.headline1,
+            style: NeumorphicTheme.currentTheme(context).textTheme.headline1,
             textAlign: TextAlign.center,
           ),
         ],

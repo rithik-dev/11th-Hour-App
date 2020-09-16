@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:eleventh_hour/components/CourseCard.dart';
+import 'package:eleventh_hour/components/NeumoCard.dart';
 import 'package:eleventh_hour/controllers/CourseController.dart';
 import 'package:eleventh_hour/models/College.dart';
 import 'package:eleventh_hour/models/DeviceDimension.dart';
@@ -8,8 +9,8 @@ import 'package:eleventh_hour/views/SubjectDetails.dart';
 import 'package:eleventh_hour/views/ViewAll.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:neumorphic/neumorphic.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
@@ -38,10 +39,10 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
           },
           child: Chip(
             padding: EdgeInsets.all(10),
-            backgroundColor: Theme.of(context).accentColor,
+            backgroundColor: NeumorphicTheme.currentTheme(context).accentColor,
             label: Text(
               subject,
-              style: Theme.of(context)
+              style: NeumorphicTheme.currentTheme(context)
                   .textTheme
                   .headline4
                   .copyWith(color: Colors.black),
@@ -76,7 +77,8 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                 Text(
                   "${college.name}'s Subjects",
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline2,
+                  style:
+                      NeumorphicTheme.currentTheme(context).textTheme.headline2,
                 ),
                 SizedBox(
                   height: 10,
@@ -86,24 +88,21 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                   spacing: 20,
                   children: _getChips(),
                 ),
-                NeuCard(
-                  decoration: NeumorphicDecoration(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  bevel: 5,
+                NeumorphicCard(
                   margin: EdgeInsets.fromLTRB(10, 20, 10, 5),
-                  curveType: CurveType.concave,
                   padding: EdgeInsets.all(5),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Text(
                         "Trending",
-                        style: Theme.of(context).textTheme.headline1,
+                        style: NeumorphicTheme.currentTheme(context)
+                            .textTheme
+                            .headline1,
                       ),
                       RaisedButton.icon(
-                          color: Theme.of(context).scaffoldBackgroundColor,
+                          color:
+                              NeumorphicTheme.currentTheme(context).baseColor,
                           shape: StadiumBorder(),
                           onPressed: () {
                             Navigator.pushNamed(context, ViewAll.id,
@@ -118,7 +117,9 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                           ),
                           label: Text(
                             "View all",
-                            style: Theme.of(context).textTheme.bodyText1,
+                            style: NeumorphicTheme.currentTheme(context)
+                                .textTheme
+                                .bodyText1,
                           ))
                     ],
                   ),
@@ -150,7 +151,9 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                     ? user.myCourses.length >= 1
                         ? Text(
                             "Start Watching",
-                            style: Theme.of(context).textTheme.headline1,
+                            style: NeumorphicTheme.currentTheme(context)
+                                .textTheme
+                                .headline1,
                             textAlign: TextAlign.center,
                           )
                         : Padding(
@@ -167,14 +170,15 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                               onPressed: () {
                                 widget.callback(3);
                               },
-                              color: Theme.of(context).primaryColor,
+                              color: NeumorphicTheme.currentTheme(context)
+                                  .variantColor,
                               icon: Icon(
                                 Icons.search,
                                 size: 35,
                               ),
                               label: Text(
                                 "Browse Courses",
-                                style: Theme.of(context)
+                                style: NeumorphicTheme.currentTheme(context)
                                     .textTheme
                                     .headline4
                                     .copyWith(color: Colors.white),
@@ -186,10 +190,13 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                         children: [
                           Text(
                             "Resume",
-                            style: Theme.of(context).textTheme.headline1,
+                            style: NeumorphicTheme.currentTheme(context)
+                                .textTheme
+                                .headline1,
                           ),
                           RaisedButton.icon(
-                              color: Theme.of(context).primaryColor,
+                              color: NeumorphicTheme.currentTheme(context)
+                                  .baseColor,
                               shape: StadiumBorder(),
                               onPressed: () {
                                 Navigator.pushNamed(context, ViewAll.id,
@@ -205,7 +212,9 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                               ),
                               label: Text(
                                 "View all",
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: NeumorphicTheme.currentTheme(context)
+                                    .textTheme
+                                    .bodyText1,
                               ))
                         ],
                       ),

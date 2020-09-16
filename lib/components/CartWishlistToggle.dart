@@ -3,6 +3,7 @@ import 'package:eleventh_hour/models/DeviceDimension.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
 
 class CartWishlistToggle extends StatefulWidget {
@@ -70,7 +71,7 @@ class _CartWishlistToggleState extends State<CartWishlistToggle> {
                             user.cart.contains(widget.courseId)
                                 ? "Remove from cart"
                                 : "Add to cart",
-                            style: Theme.of(context)
+                            style: NeumorphicTheme.currentTheme(context)
                                 .textTheme
                                 .headline4
                                 .copyWith(color: Colors.white),
@@ -106,7 +107,7 @@ class _CartWishlistToggleState extends State<CartWishlistToggle> {
                     },
                     child: Text(
                       isFavorite ? "Remove from wishlist" : "Add to Wishlist",
-                      style: Theme.of(context)
+                      style: NeumorphicTheme.currentTheme(context)
                           .textTheme
                           .headline4
                           .copyWith(color: Colors.white),
