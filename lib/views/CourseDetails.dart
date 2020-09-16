@@ -7,12 +7,15 @@ import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/models/Course.dart';
 import 'package:eleventh_hour/models/DeviceDimension.dart';
 import 'package:eleventh_hour/models/User.dart';
+import 'package:eleventh_hour/utilities/UiIcons.dart';
 import 'package:eleventh_hour/views/LecturesPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating/flutter_rating.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:neumorphic/neumorphic.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CourseDetails extends StatefulWidget {
   static const id = '/course_details';
@@ -163,22 +166,18 @@ class _CourseDetailsState extends State<CourseDetails> {
                         ),
                         isMyCourse
                             ? Positioned(
-                          top: 35,
-                          right: 35,
-                          child: CircleAvatar(
-                            radius: 15,
-                            backgroundColor:
-                            Theme
-                                .of(context)
-                                .primaryColor,
-                            child: IconButton(
-                              color: Theme
-                                  .of(context)
-                                  .accentColor,
-                              onPressed: () {
+                                top: 35,
+                                right: 35,
+                                child: CircleAvatar(
+                                  radius: 15,
+                                  backgroundColor:
+                                      Theme.of(context).primaryColor,
+                                  child: IconButton(
+                                    color: Theme.of(context).accentColor,
+                                    onPressed: () {
 //                                      Alert(context: null, title: null).show();
-                                showModalBottomSheet(
-                                    context: context,
+                                      showModalBottomSheet(
+                                          context: context,
                                           builder: (nbm) {
                                             return StatefulBuilder(
                                               builder:
@@ -233,16 +232,16 @@ class _CourseDetailsState extends State<CourseDetails> {
                                     icon: Icon(
                                       Icons.edit,
                                     ),
-                                  ),
-                                ),
-                              )
+                            ),
+                          ),
+                        )
                             : SizedBox.shrink()
                       ],
-                    )
+              )
                   : StarRating(
-                      size: 35.0,
-                      rating: calcRating(widget.course.ratings),
-                      color: Colors.amber,
+                size: 35.0,
+                rating: calcRating(widget.course.ratings),
+                color: Colors.amber,
                 borderColor: Colors.grey,
                 starCount: 5,
                 onRatingChanged: (r) {},
@@ -258,7 +257,11 @@ class _CourseDetailsState extends State<CourseDetails> {
               )
                   : SizedBox.shrink(),
               instructor == null
-                  ? SizedBox.shrink()
+                  ? SpinKitChasingDots(
+                color: Theme
+                    .of(context)
+                    .accentColor,
+              )
                   : NeuCard(
                 margin: EdgeInsets.all(10),
                 curveType: CurveType.convex,
@@ -284,16 +287,59 @@ class _CourseDetailsState extends State<CourseDetails> {
                           .headline3,
                     ),
                     SizedBox(height: 10),
-                    Text(
-                      instructor.email + "\n",
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .headline3,
+                    GestureDetector(
+                      onTap: () async {
+                        if (await canLaunch(
+                            "mailto:${instructor.email}")) {
+                          await launch("mailto:${instructor.email}");
+                        } else {
+                          throw 'Could not launch';
+                        }
+                      },
+                      child: Text(
+                        instructor.email + "\n",
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .headline3
+                            .copyWith(
+                          color: Colors.white,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
                     ),
                   ],
                 ),
               ),
+              isMyCourse
+                  ? Container(
+                margin:
+                EdgeInsets.symmetric(vertical: 10, horizontal: 50),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20)),
+                child: RaisedButton.icon(
+                  color: Colors.red,
+                  padding: EdgeInsets.all(10),
+                  icon: Icon(UiIcons.money, color: Colors.black),
+                  label: Text(
+                    "Ask for refund",
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .headline2
+                        .copyWith(color: Colors.grey[900]),
+                  ),
+                  onPressed: () async {
+                    if (await canLaunch(
+                        "mailto:shivamthegreat.sv@gmail.com")) {
+                      await launch("mailto:shivamthegreat.sv@gmail.com");
+                    } else {
+                      throw 'Could not launch';
+                    }
+                  },
+                ),
+              )
+                  : SizedBox.shrink(),
             ],
           ),
           bottomNavigationBar: Container(

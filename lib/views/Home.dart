@@ -103,7 +103,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                         style: Theme.of(context).textTheme.headline1,
                       ),
                       RaisedButton.icon(
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).scaffoldBackgroundColor,
                           shape: StadiumBorder(),
                           onPressed: () {
                             Navigator.pushNamed(context, ViewAll.id,

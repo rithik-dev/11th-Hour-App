@@ -72,7 +72,7 @@ class _SearchPageState extends State<SearchPage> {
                       border: InputBorder.none,
                       hintText: "Search",
                       hintStyle:
-                          TextStyle(color: Colors.grey[600], fontSize: 20)),
+                      TextStyle(color: Colors.grey[600], fontSize: 18)),
                 ),
               ),
             ),
