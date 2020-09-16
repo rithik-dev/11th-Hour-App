@@ -331,12 +331,13 @@ class _CourseDetailsState extends State<CourseDetails> {
                   ),
                   onPressed: () async {
                     if (await canLaunch(
-                        "mailto:shivamthegreat.sv@gmail.com")) {
-                      await launch("mailto:shivamthegreat.sv@gmail.com");
-                    } else {
-                      throw 'Could not launch';
-                    }
-                  },
+                              "mailto:company.eleventhhour@gmail.com")) {
+                            await launch(
+                                "mailto:company.eleventhhour@gmail.com");
+                          } else {
+                            throw 'Could not launch';
+                          }
+                        },
                 ),
               )
                   : SizedBox.shrink(),
