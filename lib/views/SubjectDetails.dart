@@ -13,17 +13,12 @@ class SubjectDetails extends StatelessWidget {
   SubjectDetails({this.subject});
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(subject),
-        centerTitle: true,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(15),
-            bottomRight: Radius.circular(15),
-          ),
+      appBar: NeumorphicAppBar(
+        title: Text(
+          subject,
+          style: Theme.of(context).textTheme.headline4,
         ),
-        backgroundColor: NeumorphicTheme.currentTheme(context).baseColor,
-        elevation: 0,
+        centerTitle: true,
         automaticallyImplyLeading: true,
       ),
       body: SafeArea(

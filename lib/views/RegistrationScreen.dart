@@ -74,16 +74,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   List<DropdownMenuItem<College>> get _dropDownItems {
     List<DropdownMenuItem<College>> items = [];
-
+    College otherCollege;
     for (int index = 0; index < colleges.length; index++) {
-      items.add(
-        DropdownMenuItem<College>(
-          child: Text(colleges[index].name),
-          value: colleges[index],
-        ),
-      );
+      if (colleges[index].name != "Other")
+        items.add(
+          DropdownMenuItem<College>(
+            child: Text(colleges[index].name),
+            value: colleges[index],
+          ),
+        );
+      else
+        otherCollege = colleges[index];
     }
-
+    items.add(DropdownMenuItem<College>(
+      child: Text("Other"),
+      value: otherCollege,
+    ));
     return items;
   }
 

@@ -74,20 +74,41 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
               shrinkWrap: true,
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
               children: [
-                Text(
-                  "${college.name}'s Subjects",
-                  textAlign: TextAlign.center,
-                  style:
-                      NeumorphicTheme.currentTheme(context).textTheme.headline2,
-                ),
+                college.name != "Other"
+                    ? Text(
+                        "${college.name}'s Subjects",
+                        textAlign: TextAlign.center,
+                        style: NeumorphicTheme.currentTheme(context)
+                            .textTheme
+                            .headline2,
+                      )
+                    : Text(
+                        "Didn't Find your college?",
+                        textAlign: TextAlign.center,
+                        style: NeumorphicTheme.currentTheme(context)
+                            .textTheme
+                            .headline2,
+                      ),
                 SizedBox(
                   height: 10,
                 ),
-                Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 20,
-                  children: _getChips(),
-                ),
+                college.name != "Other"
+                    ? Wrap(
+                        alignment: WrapAlignment.center,
+                        spacing: 20,
+                        children: _getChips(),
+                      )
+                    : NeumorphicButton(
+                        style:
+                            NeumorphicTheme.currentTheme(context).buttonStyle,
+                        child: Text(
+                          "Sochna h abhi",
+                          style: NeumorphicTheme.currentTheme(context)
+                              .textTheme
+                              .headline4,
+                        ),
+                        onPressed: () {},
+                      ),
                 NeumorphicCard(
                   margin: EdgeInsets.fromLTRB(10, 20, 10, 5),
                   padding: EdgeInsets.all(5),

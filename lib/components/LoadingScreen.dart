@@ -9,7 +9,7 @@ class LoadingScreen extends StatelessWidget {
       child: Container(
         height: double.infinity,
         width: double.infinity,
-        color: Color(0xffEEEEEE),
+        color: Color(0xffEEEEEE).withOpacity(0.5),
         child: SpinKitChasingDots(
           color: NeumorphicTheme.currentTheme(context).accentColor,
         ),
