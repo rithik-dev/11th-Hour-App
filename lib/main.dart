@@ -72,17 +72,14 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<DeviceDimension>.value(value: device),
-
         ChangeNotifierProvider<College>.value(value: college),
         ChangeNotifierProvider<User>.value(value: user),
         ChangeNotifierProvider<CourseController>.value(value: courseProvider),
-//        StreamProvider<DeviceDimension>(
-//          create: (_) => DeviceDimension(),
-//        )
       ],
       child: NeumorphicApp(
         navigatorKey: nav,
         theme: kDefaultTheme,
+        darkTheme: kDefaultTheme,
         debugShowCheckedModeBanner: false,
         onGenerateRoute: RouteGenerator.generateRoute,
         initialRoute: SplashScreen.id,
