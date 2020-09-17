@@ -28,7 +28,7 @@ class CustomVideoPlayer extends StatelessWidget {
         playIcon: Icon(
           Icons.play_circle_outline,
           size: 70,
-          color: Colors.white,
+          color: Colors.black,
         ),
         showPlayIcon: true,
         videoControlBarStyle: VideoControlBarStyle(
@@ -37,11 +37,11 @@ class CustomVideoPlayer extends StatelessWidget {
               playedColor: Colors.red,
               bufferedColor: Colors.green,
               backgroundColor: NeumorphicTheme.currentTheme(context).baseColor,
-              dragBarColor: Colors.white,
+              dragBarColor: Colors.black,
               height: 3,
               progressRadius: 2,
               dragHeight: 5),
-          playIcon: Icon(Icons.play_arrow, color: Colors.white, size: 16),
+          playIcon: Icon(Icons.play_arrow, color: Colors.black, size: 16),
           pauseIcon: Icon(
             Icons.pause,
             color: Colors.red,
@@ -50,17 +50,17 @@ class CustomVideoPlayer extends StatelessWidget {
           rewindIcon: Icon(
             Icons.replay_30,
             size: 20,
-            color: Colors.white,
+            color: Colors.black,
           ),
           forwardIcon: Icon(
             Icons.forward_30,
             size: 20,
-            color: Colors.white,
+            color: Colors.black,
           ),
           fullscreenIcon: Icon(
             Icons.fullscreen,
             size: 20,
-            color: Colors.white,
+            color: Colors.black,
           ),
           fullscreenExitIcon: Icon(
             Icons.fullscreen_exit,
@@ -78,7 +78,6 @@ class CustomVideoPlayer extends StatelessWidget {
           ],
         ),
       ),
-      //Todo: Fix init
       oninit: addToRecent
           ? (controller) async {
               await UserController.addToRecentCourses(

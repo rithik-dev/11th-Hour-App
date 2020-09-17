@@ -167,16 +167,16 @@ class _CourseDetailsState extends State<CourseDetails> {
                         ),
                         isMyCourse
                             ? Positioned(
-                                top: 35,
-                                right: 35,
+                                top: 45,
+                                right: 45,
                                 child: CircleAvatar(
                                   radius: 15,
                                   backgroundColor:
                                       NeumorphicTheme.currentTheme(context)
-                                          .baseColor,
+                                          .accentColor,
                                   child: IconButton(
                                     color: NeumorphicTheme.currentTheme(context)
-                                        .accentColor,
+                                        .baseColor,
                                     onPressed: () {
 //                                      Alert(context: null, title: null).show();
                                       showModalBottomSheet(
@@ -233,7 +233,8 @@ class _CourseDetailsState extends State<CourseDetails> {
                                             );
                                           });
                                     },
-                                    iconSize: 15,
+                                    padding: EdgeInsets.all(0),
+                                    iconSize: 20,
                                     icon: Icon(
                                       Icons.edit,
                                     ),
@@ -305,21 +306,25 @@ class _CourseDetailsState extends State<CourseDetails> {
                       ),
                     ),
               isMyCourse
-                  ? Container(
+                  ? NeumorphicCard(
+//                      color: Colors.red,
                       margin:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 50),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20)),
+                          EdgeInsets.symmetric(vertical: 20, horizontal: 60),
                       child: RaisedButton.icon(
-                        color: Colors.red,
+                        color: NeumorphicTheme.currentTheme(context).baseColor,
                         padding: EdgeInsets.all(10),
                         icon: Icon(UiIcons.money, color: Colors.black),
-                        label: Text(
-                          "Ask for refund",
-                          style: NeumorphicTheme.currentTheme(context)
-                              .textTheme
-                              .headline2
-                              .copyWith(color: Colors.grey[900]),
+                        label: Expanded(
+                          child: Text(
+                            "Ask for refund",
+                            maxLines: 2,
+                            textAlign: TextAlign.center,
+                            softWrap: true,
+                            style: NeumorphicTheme.currentTheme(context)
+                                .textTheme
+                                .headline2
+                                .copyWith(color: Colors.grey[900]),
+                          ),
                         ),
                         onPressed: () async {
                           if (await canLaunch(

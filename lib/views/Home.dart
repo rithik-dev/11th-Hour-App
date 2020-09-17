@@ -5,6 +5,7 @@ import 'package:eleventh_hour/controllers/CourseController.dart';
 import 'package:eleventh_hour/models/College.dart';
 import 'package:eleventh_hour/models/DeviceDimension.dart';
 import 'package:eleventh_hour/models/User.dart';
+import 'package:eleventh_hour/views/NoCollegeScreen.dart';
 import 'package:eleventh_hour/views/SubjectDetails.dart';
 import 'package:eleventh_hour/views/ViewAll.dart';
 import 'package:flutter/cupertino.dart';
@@ -98,16 +99,28 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                         spacing: 20,
                         children: _getChips(),
                       )
-                    : NeumorphicButton(
-                        style:
-                            NeumorphicTheme.currentTheme(context).buttonStyle,
-                        child: Text(
-                          "Sochna h abhi",
-                          style: NeumorphicTheme.currentTheme(context)
-                              .textTheme
-                              .headline4,
+                    : NeumorphicCard(
+                        margin: EdgeInsets.symmetric(
+                            vertical: 10,
+                            horizontal:
+                                Provider.of<DeviceDimension>(context).width *
+                                    0.28),
+                        child: RaisedButton.icon(
+                          elevation: 0,
+                          color:
+                              NeumorphicTheme.currentTheme(context).baseColor,
+                          label: Expanded(
+                            child: Text(
+                              "Help us to add it",
+                              softWrap: true,
+                              maxLines: 3,
+                            ),
+                          ),
+                          icon: Icon(Icons.add),
+                          onPressed: () {
+                            Navigator.pushNamed(context, NoCollegeScreen.id);
+                          },
                         ),
-                        onPressed: () {},
                       ),
                 NeumorphicCard(
                   margin: EdgeInsets.fromLTRB(10, 20, 10, 5),

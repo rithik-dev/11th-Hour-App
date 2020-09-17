@@ -8,6 +8,7 @@ import 'package:eleventh_hour/views/IntroScreen.dart';
 import 'package:eleventh_hour/views/LecturesPage.dart';
 import 'package:eleventh_hour/views/LoginScreen.dart';
 import 'package:eleventh_hour/views/MyUploadedCoursesScreen.dart';
+import 'package:eleventh_hour/views/NoCollegeScreen.dart';
 import 'package:eleventh_hour/views/ProfileScreen.dart';
 import 'package:eleventh_hour/views/RegistrationScreen.dart';
 import 'package:eleventh_hour/views/SearchPage.dart';
@@ -36,6 +37,11 @@ class RouteGenerator {
           child: ViewAll(
             data: args,
           ),
+          type: PageTransitionType.leftToRightWithFade,
+        );
+      case NoCollegeScreen.id:
+        return PageTransition(
+          child: NoCollegeScreen(),
           type: PageTransitionType.leftToRightWithFade,
         );
       case CourseDetails.id:

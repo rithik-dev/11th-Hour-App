@@ -1,6 +1,6 @@
 import 'package:eleventh_hour/components/CustomVideoPlayer.dart';
+import 'package:eleventh_hour/components/NeumoCard.dart';
 import 'package:eleventh_hour/models/Course.dart';
-import 'package:eleventh_hour/models/DeviceDimension.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,27 +28,34 @@ class _LecturesPageState extends State<LecturesPage> {
         body: Consumer<User>(
           builder: (context, user, child) {
             return ListView(
+              physics: BouncingScrollPhysics(),
               children: [
                 CustomVideoPlayer(
                   courseId: widget.course.id,
                   lectureUrl: widget.course.lectures[videoIndex]['lectureUrl'],
                 ),
-                Container(
-                  height: Provider.of<DeviceDimension>(context).height * 0.1,
-                  color: NeumorphicTheme.currentTheme(context).baseColor,
-                  margin: EdgeInsets.all(10),
+                NeumorphicCard(
                   padding: EdgeInsets.all(10),
-                  alignment: Alignment.center,
-                  child: ListTile(
-                    leading: Image(
-                      image: NetworkImage(widget.course.courseThumbnail),
-                    ),
-                    title: Text(
-                      widget.course.lectures[videoIndex]['name'],
-                      style: NeumorphicTheme.currentTheme(context)
-                          .textTheme
-                          .headline1,
-                    ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.play_circle_outline,
+                        size: 30,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Text(
+                          "${widget.course.lectures[videoIndex]['name']}",
+                          style: NeumorphicTheme.currentTheme(context)
+                              .textTheme
+                              .headline3,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 ListView.builder(
@@ -58,10 +65,19 @@ class _LecturesPageState extends State<LecturesPage> {
                       return Container(
                         margin:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 2.5),
-                        color: Colors.grey[900],
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color:
+                                NeumorphicTheme.currentTheme(context).baseColor,
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black.withOpacity(0.3),
+                                  offset: Offset(1, 1),
+                                  blurRadius: 10)
+                            ]),
                         child: ListTile(
                           title: Text(
-                            widget.course.lectures[index]['name'],
+                            "${widget.course.lectures[index]['name']}",
                             style: NeumorphicTheme.currentTheme(context)
                                 .textTheme
                                 .headline3,
