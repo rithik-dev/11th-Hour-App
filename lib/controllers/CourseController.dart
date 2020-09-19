@@ -32,7 +32,7 @@ class CourseController extends ChangeNotifier {
 
     List ratings = snapshot['ratings'];
 
-    if (ratings == null)
+    if (ratings == null || ratings.length == 0)
       ratings = [newRating];
     else {
       for (int i = 0; i < ratings.length; i++) {
@@ -74,11 +74,9 @@ class CourseController extends ChangeNotifier {
   }
 
   List<Course> getCoursesByIds(List<String> courseIds) {
-    print(courseIds);
     List<Course> _courses = [];
 
     try {
-      print(courseIds);
       for (String courseId in courseIds) {
         var cid = getCourseByID(courseId.trim());
         _courses.add(cid);

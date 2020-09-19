@@ -1,9 +1,9 @@
+import 'package:eleventh_hour/components/NeumoCard.dart';
 import 'package:eleventh_hour/components/NoSearchResults.dart';
 import 'package:eleventh_hour/components/NoSearchText.dart';
 import 'package:eleventh_hour/components/SmallCourseCard.dart';
 import 'package:eleventh_hour/controllers/CourseController.dart';
 import 'package:eleventh_hour/models/Course.dart';
-import 'package:eleventh_hour/models/DeviceDimension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
@@ -35,14 +35,7 @@ class _SearchPageState extends State<SearchPage> {
         body: Column(
           children: [
             Center(
-              child: Container(
-                margin: EdgeInsets.only(top: 20),
-                alignment: Alignment.center,
-                padding: EdgeInsets.all(10),
-                width: Provider.of<DeviceDimension>(context).width * 0.9,
-                decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(30)),
+              child: NeumorphicCard(
                 child: TextField(
                   controller: _controller,
                   onChanged: (String value) {

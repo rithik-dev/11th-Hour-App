@@ -20,9 +20,9 @@ class SmallCourseCard extends StatelessWidget {
   });
 
   String calcRating(List ratings) {
-    if (ratings == null) return 'N/A';
+    if (ratings == null || ratings.length == 0) return "N/A";
     double _rating = 0;
-    print('Small $ratings');
+
     ratings.forEach((rating) {
       _rating += rating['userRating'];
     });

@@ -1,8 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:eleventh_hour/utilities/UiIcons.dart';
+import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:share/share.dart';
 
 class NoCollegeScreen extends StatelessWidget {
   static const id = '/noCollegeScreen';
@@ -21,15 +24,11 @@ class NoCollegeScreen extends StatelessWidget {
         child: Icon(UiIcons.share),
         style: NeumorphicTheme.currentTheme(context).buttonStyle,
         onPressed: () async {
-//          Directory appDocDir = await getApplicationDocumentsDirectory();
-//          String appDocPath = appDocDir.path;
-//          Directory tempDir = await getExternalStorageDirectory();
-//          String tempPath = tempDir.path;
-//          String path = "$tempPath/images/marketting.jpeg";
-//          print(path);
-          Share.share(
-              "Yeh image hi share hogi,baad me abhi ni hogi frnads...dont share please");
-//          Share.shareFiles(['$path'], text: "Hey checkout this app 11th Hour");
+          final ByteData bytes =
+              await rootBundle.load('assets/images/marketing.jpeg');
+          await Share.file(
+              '11Hour', '11Hour', bytes.buffer.asUint8List(), 'image/jpeg',
+              text: 'Hey Checkout this app.');
         },
         tooltip: "Spread!!",
       ),
@@ -46,7 +45,7 @@ class NoCollegeScreen extends StatelessWidget {
             ),
             Expanded(
               child: Image.asset(
-                'assets/images/marketting.jpeg',
+                'assets/images/marketing.jpeg',
               ),
             ),
 //          NeumorphicCard(

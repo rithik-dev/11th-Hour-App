@@ -38,7 +38,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     await for (double value in source) {
-      print("Width:" + value.toString());
       if (value > 0) {
         setState(() {
           device = DeviceDimension(
@@ -130,19 +129,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                   .get();
 
                               final User user =
-                              User.fromDocumentSnapshot(snapshot);
+                                  User.fromDocumentSnapshot(snapshot);
                               final College college =
-                              College.fromDocumentSnapshot(collegeSnapshot);
+                                  College.fromDocumentSnapshot(collegeSnapshot);
                               Provider.of<User>(context, listen: false)
                                   .updateUserInProvider(user);
                               Provider.of<College>(context, listen: false)
                                   .updateCollegeInProvider(college);
                               await Provider.of<CourseController>(context,
-                                  listen: false)
+                                      listen: false)
                                   .getCourses();
                               await whenNotZero();
-                              Provider.of<DeviceDimension>(
-                                  context, listen: false)
+                              Provider.of<DeviceDimension>(context,
+                                      listen: false)
                                   .updateDeviceInProvider(device: device);
                               Navigator.pushReplacementNamed(
                                   context, HomeBoilerPlate.id);

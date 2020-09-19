@@ -25,9 +25,8 @@ class _CourseCardState extends State<CourseCard> {
   bool isFavorite;
 
   String calcRating(List ratings) {
-    if (ratings == null) return "N/A";
+    if (ratings == null || ratings.length == 0) return "N/A";
     double _rating = 0;
-    print('Card $ratings');
     ratings.forEach((rating) {
       _rating += rating['userRating'];
     });

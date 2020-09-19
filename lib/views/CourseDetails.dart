@@ -37,7 +37,7 @@ class _CourseDetailsState extends State<CourseDetails> {
   double calcRating(List ratings) {
     if (ratings == null) return 0;
     double _rating = 0;
-    print('Dets $ratings');
+
     ratings.forEach((rating) {
       _rating += rating['userRating'];
     });
@@ -133,134 +133,127 @@ class _CourseDetailsState extends State<CourseDetails> {
                   ],
                 ),
               ),
-              isMyCourse
-                  ? Stack(
+              Stack(
+                children: [
+                  NeumorphicCard(
+                    margin: EdgeInsets.all(35),
+                    padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
+                    child: Column(
                       children: [
-                        Container(
-                          margin: EdgeInsets.all(35),
-                          padding: EdgeInsets.all(10),
-                          child: NeumorphicCard(
-                            child: Column(
-                              children: [
-                                StarRating(
-                                  size: 35.0,
-                                  rating: calcRating(widget.course.ratings),
-                                  color: Colors.amber,
-                                  borderColor: Colors.grey,
-                                  starCount: 5,
-                                  onRatingChanged: (r) {},
-                                ),
-                                widget.course.ratings != null
-                                    ? haveRated.length != 0
-                                        ? Text(
-                                            "\nYour Rating: ${haveRated.first['userRating']} ⭐\n",
-                                            style: NeumorphicTheme.currentTheme(
-                                                    context)
-                                                .textTheme
-                                                .headline4,
-                                          )
-                                        : SizedBox.shrink()
-                                    : SizedBox.shrink()
-                              ],
-                            ),
-                          ),
+                        StarRating(
+                          size: 35.0,
+                          rating: widget.course.ratings.length == 0
+                              ? 0
+                              : calcRating(widget.course.ratings),
+                          color: Colors.amber,
+                          borderColor: Colors.grey,
+                          starCount: 5,
+                          onRatingChanged: (r) {},
                         ),
-                        isMyCourse
-                            ? Positioned(
-                                top: 45,
-                                right: 45,
-                                child: CircleAvatar(
-                                  radius: 15,
-                                  backgroundColor:
-                                      NeumorphicTheme.currentTheme(context)
-                                          .accentColor,
-                                  child: IconButton(
-                                    color: NeumorphicTheme.currentTheme(context)
-                                        .baseColor,
-                                    onPressed: () {
-//                                      Alert(context: null, title: null).show();
-                                      showModalBottomSheet(
-                                          context: context,
-                                          builder: (nbm) {
-                                            return StatefulBuilder(
-                                              builder:
-                                                  (context, setModalState) =>
-                                                      Container(
-                                                height:
-                                                    Provider.of<DeviceDimension>(
-                                                                context)
-                                                            .height *
-                                                        0.4,
-                                                width: double.infinity,
-                                                child: Column(
-                                                  children: [
-                                                    Text(
-                                                      "\nEnter Rating\n",
-                                                      style: NeumorphicTheme
-                                                              .currentTheme(
-                                                                  context)
-                                                          .textTheme
-                                                          .headline1,
-                                                    ),
-                                                    StarRating(
-                                                      size: 35.0,
-                                                      rating: newRating,
-                                                      color: Colors.amber,
-                                                      borderColor: Colors.grey,
-                                                      starCount: 5,
-                                                      onRatingChanged:
-                                                          (rating) {
-                                                        setModalState(
-                                                          () {
-                                                            newRating = rating;
-                                                          },
-                                                        );
-                                                        setState(() {
-                                                          newRating = rating;
-                                                        });
-                                                      },
-                                                    ),
-                                                    RaisedButton.icon(
-                                                        onPressed: () {
-                                                          submitOnTap(
-                                                              user.userId);
-                                                        },
-                                                        icon: Icon(Icons.check),
-                                                        label: Text("Submit"))
-                                                  ],
-                                                ),
-                                              ),
-                                            );
-                                          });
-                                    },
-                                    padding: EdgeInsets.all(0),
-                                    iconSize: 20,
-                                    icon: Icon(
-                                      Icons.edit,
-                                    ),
-                                  ),
-                                ),
-                              )
+                        Text(
+                          "Total Ratings: ${widget.course.ratings.length}",
+                          style: NeumorphicTheme.currentTheme(context)
+                              .textTheme
+                              .subtitle1,
+                        ),
+                        widget.course.ratings != null
+                            ? haveRated.length != 0
+                                ? Text(
+                                    "\nYour Rating: ${haveRated.first['userRating']} ⭐\n",
+                                    style: NeumorphicTheme.currentTheme(context)
+                                        .textTheme
+                                        .headline4,
+                                  )
+                                : SizedBox.shrink()
                             : SizedBox.shrink()
                       ],
-                    )
-                  : StarRating(
-                      size: 35.0,
-                      rating: calcRating(widget.course.ratings),
-                      color: Colors.amber,
-                      borderColor: Colors.grey,
-                      starCount: 5,
-                      onRatingChanged: (r) {},
                     ),
-              widget.course.ratings == null
-                  ? Text(
-                      "No Ratings Yet",
-                      textAlign: TextAlign.center,
-                      style: NeumorphicTheme.currentTheme(context)
-                          .textTheme
-                          .headline3,
-                    )
-                  : SizedBox.shrink(),
+                  ),
+                  isMyCourse
+                      ? Positioned(
+                          top: 45,
+                          right: 45,
+                          child: CircleAvatar(
+                            radius: 15,
+                            backgroundColor:
+                                NeumorphicTheme.currentTheme(context)
+                                    .accentColor,
+                            child: IconButton(
+                              color: NeumorphicTheme.currentTheme(context)
+                                  .baseColor,
+                              onPressed: () {
+//                                      Alert(context: null, title: null).show();
+                                showModalBottomSheet(
+                                    context: context,
+                                    builder: (nbm) {
+                                      return StatefulBuilder(
+                                        builder: (context, setModalState) =>
+                                            Container(
+                                          height: Provider.of<DeviceDimension>(
+                                                      context)
+                                                  .height *
+                                              0.4,
+                                          width: double.infinity,
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                "\nEnter Rating\n",
+                                                style: NeumorphicTheme
+                                                        .currentTheme(context)
+                                                    .textTheme
+                                                    .headline1,
+                                              ),
+                                              StarRating(
+                                                size: 35.0,
+                                                rating: newRating,
+                                                color: Colors.amber,
+                                                borderColor: Colors.grey,
+                                                starCount: 5,
+                                                onRatingChanged: (rating) {
+                                                  setModalState(
+                                                    () {
+                                                      newRating = rating;
+                                                    },
+                                                  );
+                                                  setState(() {
+                                                    newRating = rating;
+                                                  });
+                                                },
+                                              ),
+                                              NeumorphicButton(
+                                                onPressed: () {
+                                                  submitOnTap(user.userId);
+                                                },
+                                                style: NeumorphicTheme
+                                                        .currentTheme(context)
+                                                    .buttonStyle
+                                                    .copyWith(
+                                                        color: NeumorphicTheme
+                                                                .currentTheme(
+                                                                    context)
+                                                            .accentColor),
+                                                child: Icon(
+                                                  Icons.check,
+                                                  color: Colors.white,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    });
+                              },
+                              padding: EdgeInsets.all(0),
+                              iconSize: 20,
+                              icon: Icon(
+                                Icons.edit,
+                              ),
+                            ),
+                          ),
+                        )
+                      : SizedBox.shrink()
+                ],
+              ),
               instructor == null
                   ? SpinKitChasingDots(
                       color: NeumorphicTheme.currentTheme(context).accentColor,
