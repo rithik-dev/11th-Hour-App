@@ -136,9 +136,34 @@ class _HomeBoilerPlateState extends State<HomeBoilerPlate> {
               centerTitle: true,
               actions: [
                 NeumorphicButton(
+                  padding: EdgeInsets.all(0),
                   drawSurfaceAboveChild: false,
                   style: NeumorphicTheme.currentTheme(context).buttonStyle,
-                  child: Icon(Icons.shopping_cart),
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        child: Icon(
+                          Icons.shopping_cart,
+                          size: 25,
+                        ),
+                        right: 0,
+                        left: 0,
+                        bottom: 0,
+                        top: 0,
+                      ),
+                      Positioned(
+                        top: 8.5,
+                        right: 7.9,
+                        child: CircleAvatar(
+                          radius: 8,
+                          child: Text(
+                            "${Provider.of<User>(context).cart.length}",
+                            style: TextStyle(fontSize: 10),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                   onPressed: () {
                     Navigator.pushNamed(context, CartScreen.id);
                   },
