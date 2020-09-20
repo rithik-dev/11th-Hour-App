@@ -1,6 +1,7 @@
 import 'package:eleventh_hour/components/HomeBoilerPlate.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/utilities/UiIcons.dart';
+import 'package:eleventh_hour/views/InfoAndSupport.dart';
 import 'package:eleventh_hour/views/LoginScreen.dart';
 import 'package:eleventh_hour/views/MyUploadedCoursesScreen.dart';
 import 'package:eleventh_hour/views/ProfileScreen.dart';
@@ -58,6 +59,24 @@ class DrawerContent extends StatelessWidget {
                     Navigator.popAndPushNamed(context, HomeBoilerPlate.id);
                   },
                 ),
+          screenId != InfoAndSupport.id
+              ? DrawerItem(
+                  title: "Info and Support",
+                  icon: FontAwesomeIcons.infoCircle,
+                  onTap: () {
+                    if (screenId != HomeBoilerPlate.id) Navigator.pop(context);
+                    Navigator.popAndPushNamed(context, InfoAndSupport.id);
+                  },
+                )
+              : DrawerItem(
+                  title: "Home",
+                  icon: UiIcons.home,
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    Navigator.popAndPushNamed(context, HomeBoilerPlate.id);
+                  },
+                ),
           DrawerItem(
               title: "Sign Out",
               icon: FontAwesomeIcons.signOutAlt,
@@ -102,7 +121,13 @@ class DrawerItem extends StatelessWidget {
         contentPadding: EdgeInsets.all(20),
         leading: FaIcon(icon),
         onTap: onTap,
-        title: Text(title),
+        title: Text(
+          title,
+          style: Theme
+              .of(context)
+              .textTheme
+              .headline3,
+        ),
       ),
     );
   }

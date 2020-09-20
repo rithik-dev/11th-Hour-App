@@ -6,12 +6,12 @@ class Transaction {
   String status;
   String transactionId;
   String docId;
-  List courseNames;
+  List courseIds;
   double amount;
 
   Transaction({
     @required this.date,
-    @required this.courseNames,
+    @required this.courseIds,
     @required this.status,
     @required this.transactionId,
     @required this.amount,
@@ -20,7 +20,7 @@ class Transaction {
 
   factory Transaction.fromDocumentSnapshot(DocumentSnapshot transaction) {
     return new Transaction(
-        courseNames: transaction['courseNames'] as List<dynamic>,
+        courseIds: transaction['courseNames'] as List<dynamic>,
         date: transaction['date'] as Timestamp,
         status: transaction['status'] as String,
         transactionId: transaction['transactionId'] as String,
@@ -31,10 +31,15 @@ class Transaction {
   Map<String, dynamic> toMap() {
     return {
       "date": this.date,
-      "courseNames": this.courseNames,
+      "courseNames": this.courseIds,
       "status": this.status,
       "transactionId": this.transactionId,
       "amount": this.amount,
     };
+  }
+
+  @override
+  String toString() {
+    return 'Transaction{date: $date, status: $status, transactionId: $transactionId, docId: $docId, courseNames: $courseIds, amount: $amount}';
   }
 }

@@ -6,6 +6,7 @@ import 'package:eleventh_hour/components/ProfilePicture.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/models/College.dart';
 import 'package:eleventh_hour/models/User.dart';
+import 'package:eleventh_hour/views/MyTransactionsHistory.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -159,6 +160,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ListTile(
                       title: Text(college.name),
                       subtitle: Text(college.subjectWithCourses.toString()),
+                    ),
+                    RaisedButton.icon(
+                      onPressed: () {
+                        Navigator.pushNamed(context, MyTransactionsHistory.id);
+                      },
+                      icon: Icon(Icons.attach_money),
+                      label: Text('My Transactions History'),
                     )
                   ],
                 ),

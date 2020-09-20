@@ -4,13 +4,18 @@ import 'package:eleventh_hour/models/Transaction.dart';
 class TransactionController {
   static final Fire.Firestore _fireStore = Fire.Firestore.instance;
 
-  static Future getTransactionsById() async {
+  static Future<List<Transaction>> getTransactionsById(
+      List transactionIds) async {
     List<Transaction> transactions = [];
     var transactionQuery =
         await _fireStore.collection('transactions').getDocuments();
-    transactionQuery.documents.forEach((element) {
-      transactions.add((Transaction.fromDocumentSnapshot(element)));
-    });
+
+    for (Fire.DocumentSnapshot transaction in transactionQuery.documents) {
+      if (transactionIds.contains(transaction.documentID)) {
+        transactions.add(Transaction.fromDocumentSnapshot(transaction));
+      }
+    }
+    return transactions;
   }
 
   static Future addTransactionToUser(

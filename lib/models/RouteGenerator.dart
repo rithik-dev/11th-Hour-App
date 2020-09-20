@@ -2,11 +2,12 @@ import 'package:eleventh_hour/components/HomeBoilerPlate.dart';
 import 'package:eleventh_hour/views/AboutUs.dart';
 import 'package:eleventh_hour/views/Cart.dart';
 import 'package:eleventh_hour/views/ConnectionLostScreen.dart';
-import 'package:eleventh_hour/views/ContactUs.dart';
 import 'package:eleventh_hour/views/CourseDetails.dart';
+import 'package:eleventh_hour/views/InfoAndSupport.dart';
 import 'package:eleventh_hour/views/IntroScreen.dart';
 import 'package:eleventh_hour/views/LecturesPage.dart';
 import 'package:eleventh_hour/views/LoginScreen.dart';
+import 'package:eleventh_hour/views/MyTransactionsHistory.dart';
 import 'package:eleventh_hour/views/MyUploadedCoursesScreen.dart';
 import 'package:eleventh_hour/views/NoCollegeScreen.dart';
 import 'package:eleventh_hour/views/ProfileScreen.dart';
@@ -68,6 +69,14 @@ class RouteGenerator {
         return PageTransition(
             child: MyUploadedCoursesScreen(),
             type: PageTransitionType.leftToRightWithFade);
+      case MyTransactionsHistory.id:
+        return PageTransition(
+            child: MyTransactionsHistory(),
+            type: PageTransitionType.leftToRightWithFade);
+      case InfoAndSupport.id:
+        return PageTransition(
+            child: InfoAndSupport(),
+            type: PageTransitionType.leftToRightWithFade);
       case LecturesPage.id:
         return PageTransition(
             child: LecturesPage(
@@ -77,9 +86,6 @@ class RouteGenerator {
       case AboutUs.id:
         return PageTransition(
             child: AboutUs(), type: PageTransitionType.leftToRightWithFade);
-      case ContactUs.id:
-        return PageTransition(
-            child: ContactUs(), type: PageTransitionType.leftToRightWithFade);
       case TermsAndCondition.id:
         return PageTransition(
             child: TermsAndCondition(),

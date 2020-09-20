@@ -35,7 +35,7 @@ class _CartScreenState extends State<CartScreen> {
 
     await TransactionController.addTransactionToUser(
       transaction: T.Transaction(
-          courseNames: courseNames,
+          courseIds: courseNames,
           amount: amount.toDouble(),
           transactionId: response.paymentId,
           status: "Success",
@@ -62,7 +62,7 @@ class _CartScreenState extends State<CartScreen> {
   void handlerErrorFailure(PaymentFailureResponse response) async {
     await TransactionController.addTransactionToUser(
       transaction: T.Transaction(
-          courseNames: courseNames,
+          courseIds: courseNames,
           amount: amount.toDouble(),
           transactionId: response.code.toString(),
           status: "Failure",
