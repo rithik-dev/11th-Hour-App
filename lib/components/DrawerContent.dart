@@ -123,10 +123,10 @@ class DrawerItem extends StatelessWidget {
         onTap: onTap,
         title: Text(
           title,
-          style: Theme
-              .of(context)
+          style: Theme.of(context)
               .textTheme
-              .headline3,
+              .headline3
+              .copyWith(color: Colors.black),
         ),
       ),
     );

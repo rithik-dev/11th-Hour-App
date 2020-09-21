@@ -40,13 +40,13 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
           },
           child: Chip(
             padding: EdgeInsets.all(10),
-            backgroundColor: NeumorphicTheme.currentTheme(context).accentColor,
+            backgroundColor: Colors.grey[800],
             label: Text(
               subject,
               style: NeumorphicTheme.currentTheme(context)
                   .textTheme
                   .headline4
-                  .copyWith(color: Colors.black),
+                  .copyWith(color: Colors.white),
             ),
           ),
         ),
