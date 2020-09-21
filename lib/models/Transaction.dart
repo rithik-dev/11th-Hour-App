@@ -20,12 +20,13 @@ class Transaction {
 
   factory Transaction.fromDocumentSnapshot(DocumentSnapshot transaction) {
     return new Transaction(
-        courseIds: transaction['courseNames'] as List<dynamic>,
-        date: transaction['date'] as Timestamp,
-        status: transaction['status'] as String,
-        transactionId: transaction['transactionId'] as String,
-        amount: transaction['amount'] as double,
-        docId: transaction['docId'] as String);
+      courseIds: transaction['courseNames'] as List<dynamic>,
+      date: transaction['date'] as Timestamp,
+      status: transaction['status'] as String,
+      transactionId: transaction['transactionId'] as String,
+      amount: transaction['amount'] as double,
+      docId: transaction.documentID,
+    );
   }
 
   Map<String, dynamic> toMap() {

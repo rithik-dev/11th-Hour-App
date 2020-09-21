@@ -26,10 +26,9 @@ class MyTransactionsHistory extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return ListView.builder(
+              physics: BouncingScrollPhysics(),
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(snapshot.data[index].courseIds.toString()),
-                );
+                return TransactionCard(transaction: snapshot.data[index]);
               },
               itemCount: snapshot.data.length,
             );
@@ -38,14 +37,16 @@ class MyTransactionsHistory extends StatelessWidget {
               child: ListView.builder(
                 itemBuilder: (context, index) {
                   return Container(
+                    height: 100,
+                    width: 300,
                     margin: EdgeInsets.all(10),
-                    child: TransactionCard(isShimmer: true),
+                    color: Colors.white,
                   );
                 },
                 itemCount: user.transactionIds.length,
               ),
-              baseColor: Colors.grey[800],
-              highlightColor: Colors.white,
+              baseColor: Colors.white,
+              highlightColor: Colors.grey[400],
             );
           }
         },
