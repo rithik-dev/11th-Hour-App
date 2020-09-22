@@ -57,8 +57,9 @@ class TransactionCard extends StatelessWidget {
                     color: NeumorphicTheme.currentTheme(context).baseColor,
                     onPressed: () async {
                       if (await canLaunch(
-                          "mailto:company.eleventhhour@gmail.com")) {
-                        await launch("mailto:company.eleventhhour@gmail.com");
+                          "mailto:company.eleventhhour@gmail.com?subject=Help with transaction&body=\n\nTransaction ID : ${transaction.docId}")) {
+                        await launch(
+                            "mailto:company.eleventhhour@gmail.com?subject=Help with transaction&body=\n\nTransaction ID : ${transaction.docId}");
                       } else {
                         throw 'Could not launch';
                       }

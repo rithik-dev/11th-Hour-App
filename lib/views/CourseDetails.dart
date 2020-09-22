@@ -321,9 +321,9 @@ class _CourseDetailsState extends State<CourseDetails> {
                         ),
                         onPressed: () async {
                           if (await canLaunch(
-                              "mailto:company.eleventhhour@gmail.com")) {
+                              "mailto:company.eleventhhour@gmail.com?subject=Requesting refund !&body=\n\n Course : ${widget.course.title}\nID : ${widget.course.id}")) {
                             await launch(
-                                "mailto:company.eleventhhour@gmail.com");
+                                "mailto:company.eleventhhour@gmail.com?subject=Requesting refund !&body=\n\n Course : ${widget.course.title}\nID : ${widget.course.id}");
                           } else {
                             throw 'Could not launch';
                           }
