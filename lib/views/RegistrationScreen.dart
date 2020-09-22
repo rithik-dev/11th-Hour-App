@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eleventh_hour/components/CollegeDropdown.dart';
 import 'package:eleventh_hour/components/CustomTextFormField.dart';
 import 'package:eleventh_hour/components/LoadingScreen.dart';
 import 'package:eleventh_hour/controllers/CollegeController.dart';
@@ -103,14 +104,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: NeumorphicAppBar(
         title: Text("REGISTER"),
         centerTitle: true,
         leading: Container(),
       ),
       body: Stack(
         children: [
-          ListView(children: [
+          ListView(physics: BouncingScrollPhysics(), children: [
             Container(
               padding: EdgeInsets.all(18),
               margin: EdgeInsets.all(10),
@@ -209,28 +210,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       future: _future,
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
-                          return DropdownButtonFormField<College>(
-                            decoration: InputDecoration(
-                              contentPadding:
-                                  EdgeInsets.fromLTRB(10, 20, 10, 20),
-                              hintStyle: TextStyle(
-                                  color: Colors.black, fontFamily: 'karla'),
-                            ),
-                            hint: Text("Select College"),
-                            validator: (College newCollege) {
-                              if (newCollege == null)
-                                return "Please Select College";
-                              return null;
-                            },
-                            items: _dropDownItems,
-                            onChanged: (College newCollege) {
+                          return CollegeDropdown(
+                            dropDownItems: _dropDownItems,
+                            onChanged: (College clg) {
                               setState(() {
-                                _selectedCollege = newCollege;
+                                _selectedCollege = clg;
                               });
                             },
                           );
                         } else
-                          return LinearProgressIndicator();
+                          return NeumorphicProgressIndeterminate();
                       },
                     ),
                   ),

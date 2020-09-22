@@ -7,8 +7,10 @@ class TransactionController {
   static Future<List<Transaction>> getTransactionsById(
       List transactionIds) async {
     List<Transaction> transactions = [];
-    var transactionQuery =
-        await _fireStore.collection('transactions').getDocuments();
+    var transactionQuery = await _fireStore
+        .collection('transactions')
+        .orderBy('date', descending: true)
+        .getDocuments();
 
     for (Fire.DocumentSnapshot transaction in transactionQuery.documents) {
       if (transactionIds.contains(transaction.documentID)) {

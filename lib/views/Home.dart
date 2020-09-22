@@ -32,6 +32,8 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
 
     final College college = Provider.of<College>(context);
 
+    print(college);
+
     for (String subject in college.subjectWithCourses.keys) {
       chips.add(
         GestureDetector(

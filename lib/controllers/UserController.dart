@@ -103,6 +103,12 @@ class UserController {
     });
   }
 
+  static Future<void> updateCollege({String userId, String collegeId}) async {
+    await _fireStore.collection("users").document(userId).updateData({
+      'collegeId': collegeId,
+    });
+  }
+
   static Future<void> removeFromWishlist(
       {String userId, String courseId}) async {
     await _fireStore.collection("users").document(userId).updateData({

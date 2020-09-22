@@ -10,6 +10,7 @@ import 'package:eleventh_hour/models/Exceptions.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:eleventh_hour/views/RegistrationScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -54,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: NeumorphicAppBar(
         title: Text("LOGIN"),
         centerTitle: true,
         leading: Container(),

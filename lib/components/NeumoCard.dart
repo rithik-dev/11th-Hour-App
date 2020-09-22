@@ -18,7 +18,7 @@ class NeumorphicCard extends StatelessWidget {
         intensity: 0.5,
         shape: NeumorphicShape.convex,
         boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
-        depth: 7,
+        depth: 4,
         surfaceIntensity: 0,
         shadowLightColor: NeumorphicTheme.currentTheme(context).accentColor,
 //          shadowDarkColor: NeumorphicTheme.currentTheme(context).accentColor,
