@@ -85,13 +85,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
   College _selectedCollege;
   Future _future;
 
-  final _alertFormKey = GlobalKey<FormState>();
+  final _changePasswordFormKey = GlobalKey<FormState>();
+  final _changeEmailFormKey = GlobalKey<FormState>();
+  final _changeNameAndPhoneFormKey = GlobalKey<FormState>();
 
   final TextEditingController alertPasswordController = TextEditingController();
   final TextEditingController alertNewPasswordController =
       TextEditingController();
   final TextEditingController alertConfirmPasswordController =
       TextEditingController();
+
+  final TextEditingController oldPasswordController = TextEditingController();
+  final TextEditingController newEmailController = TextEditingController();
+
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
   College _currentCollege;
 
   List<DropdownMenuItem<College>> get _dropDownItems {
@@ -121,6 +129,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return SafeArea(
       child: Consumer2<User, College>(
         builder: (context, user, college, child) {
+          nameController.text = user.name;
+          phoneController.text = user.phone;
           return CustomDrawer(
             screenId: ProfileScreen.id,
             innerDrawerKey: _innerDrawerKey,
@@ -128,7 +138,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               onRefresh: () async {
                 final User newUser = await UserController.getUser(user.userId);
                 final College college =
-                    await CollegeController.getCollegeFromId(newUser.collegeId);
+                await CollegeController.getCollegeFromId(newUser.collegeId);
                 Provider.of<User>(context, listen: false)
                     .updateUserInProvider(newUser);
                 Provider.of<College>(context, listen: false)
@@ -195,216 +205,458 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 )
                               ],
                             ),
-                            ListTile(
-                              onTap: () {},
-                              dense: true,
-                              title: Text(
-                                'Name',
-                                style: Theme
-                                    .of(context)
-                                    .textTheme
-                                    .headline6,
-                              ),
-                              trailing: Text(
-                                user.name,
-                                style: Theme
-                                    .of(context)
-                                    .textTheme
-                                    .subtitle1,
-                              ),
+                            Stack(
+                              children: [
+                                NeumorphicCard(
+                                  margin: EdgeInsets.all(15),
+                                  child: Column(
+                                    children: [
+                                      ListTile(
+                                        onTap: () {},
+                                        dense: true,
+                                        title: Text(
+                                          'Name',
+                                          style: Theme
+                                              .of(context)
+                                              .textTheme
+                                              .headline6,
+                                        ),
+                                        trailing: Text(
+                                          user.name,
+                                          style: Theme
+                                              .of(context)
+                                              .textTheme
+                                              .subtitle1,
+                                        ),
+                                      ),
+                                      ListTile(
+                                        onTap: () {},
+                                        dense: true,
+                                        title: Text(
+                                          ('Phone Number'),
+                                          style: Theme
+                                              .of(context)
+                                              .textTheme
+                                              .headline6,
+                                        ),
+                                        trailing: Text(
+                                          (user.phone),
+                                          style: Theme
+                                              .of(context)
+                                              .textTheme
+                                              .subtitle1,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 8,
+                                  right: 8,
+                                  child: CircleAvatar(
+                                    radius: 12,
+                                    backgroundColor: Colors.black,
+                                    child: IconButton(
+                                      padding: EdgeInsets.all(0),
+                                      icon: Icon(Icons.edit),
+                                      onPressed: () async {
+                                        showAlert(
+                                          content: Column(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 6, bottom: 20.0),
+                                                child: Form(
+                                                  key:
+                                                  _changeNameAndPhoneFormKey,
+                                                  child: Column(
+                                                    children: [
+                                                      TextFormField(
+                                                          controller:
+                                                          nameController,
+                                                          decoration: kTextFieldDecoration
+                                                              .copyWith(
+                                                              prefixIcon:
+                                                              Icon(UiIcons
+                                                                  .message_1),
+                                                              hintText:
+                                                              "Enter name",
+                                                              labelText:
+                                                              "Name"),
+                                                          onChanged: (value) {},
+                                                          validator: (value) {
+                                                            if (value.isEmpty) {
+                                                              return 'Please enter your name';
+                                                            }
+                                                            return null;
+                                                          }),
+                                                      SizedBox(
+                                                        height: 15,
+                                                      ),
+                                                      TextFormField(
+                                                          controller:
+                                                          phoneController,
+                                                          decoration: kTextFieldDecoration
+                                                              .copyWith(
+                                                              prefixIcon: Icon(
+                                                                  UiIcons
+                                                                      .phone_call),
+                                                              hintText:
+                                                              "Enter phone",
+                                                              labelText:
+                                                              "Phone"),
+                                                          onChanged: (value) {},
+                                                          validator: (value) {
+                                                            if (value.isEmpty) {
+                                                              return 'Please enter your phone number';
+                                                            }
+                                                            return null;
+                                                          }),
+                                                      SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          context: context,
+                                          onPressed: () async {
+                                            if (_changeNameAndPhoneFormKey
+                                                .currentState
+                                                .validate()) {
+                                              Fluttertoast.showToast(
+                                                  msg: "Changing...",
+                                                  backgroundColor: Colors.black,
+                                                  textColor: Colors.white);
+
+                                              try {
+                                                await UserController
+                                                    .updateNameAndPhone(
+                                                  name: nameController.text,
+                                                  phone: phoneController.text,
+                                                  userId: user.userId,
+                                                );
+
+                                                user.name = nameController.text;
+                                                user.phone =
+                                                    phoneController.text;
+                                                user.updateUserInProvider(user);
+                                                Navigator.pop(context);
+                                                Fluttertoast.showToast(
+                                                    msg:
+                                                    "Details updated successfully");
+                                              } catch (e) {
+                                                Fluttertoast.showToast(
+                                                  msg: e.message,
+                                                  backgroundColor: Colors.black,
+                                                  textColor: Colors.white,
+                                                );
+                                              }
+                                            }
+                                          },
+                                          heading: "Change Name or Phone",
+                                          buttonText: "Change",
+                                        );
+                                      },
+                                      iconSize: 15,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                            ListTile(
-                              onTap: () {},
-                              dense: true,
-                              title: Text(
-                                ('Email'),
-                                style: Theme
-                                    .of(context)
-                                    .textTheme
-                                    .headline6,
-                              ),
-                              trailing: Text(
-//                  "s",
-                                (user.email),
-                                style: Theme
-                                    .of(context)
-                                    .textTheme
-                                    .subtitle1,
-                              ),
-                            ),
-                            ListTile(
-                              onTap: () {},
-                              dense: true,
-                              title: Text(
-                                ('Phone Number'),
-                                style: Theme
-                                    .of(context)
-                                    .textTheme
-                                    .headline6,
-                              ),
-                              trailing: Text(
-                                (user.phone),
-                                style: Theme
-                                    .of(context)
-                                    .textTheme
-                                    .subtitle1,
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 5, horizontal: 20),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment
+                                    .spaceBetween,
+                                children: [
+                                  Text("Email", style: NeumorphicTheme
+                                      .currentTheme(context)
+                                      .textTheme
+                                      .headline6,),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        (user.email),
+                                        style: Theme
+                                            .of(context)
+                                            .textTheme
+                                            .subtitle1,
+                                      ),
+                                      IconButton(
+                                        icon: Icon(Icons.edit),
+                                        color: Colors.black,
+                                        onPressed: () {
+                                          showAlert(
+                                            content: Column(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsets
+                                                      .only(
+                                                      top: 6, bottom: 20.0),
+                                                  child: Form(
+                                                    key: _changeEmailFormKey,
+                                                    child: Column(
+                                                      children: [
+                                                        TextFormField(
+                                                            controller:
+                                                            newEmailController,
+                                                            decoration: kTextFieldDecoration
+                                                                .copyWith(
+                                                                prefixIcon: Icon(
+                                                                    UiIcons
+                                                                        .message_1),
+                                                                hintText:
+                                                                "Enter new email",
+                                                                labelText:
+                                                                "New Email"),
+                                                            onChanged: (
+                                                                value) {},
+                                                            validator: (value) {
+                                                              if (value
+                                                                  .isEmpty) {
+                                                                return 'Please enter your email';
+                                                              }
+                                                              return null;
+                                                            }),
+                                                        SizedBox(
+                                                          height: 15,
+                                                        ),
+                                                        TextFormField(
+                                                            obscureText: true,
+                                                            controller:
+                                                            oldPasswordController,
+                                                            keyboardType: TextInputType
+                                                                .visiblePassword,
+                                                            decoration: kTextFieldDecoration
+                                                                .copyWith(
+                                                                prefixIcon: Icon(
+                                                                    UiIcons
+                                                                        .padlock_1),
+                                                                hintText:
+                                                                "Enter password",
+                                                                labelText:
+                                                                "Password"),
+                                                            onChanged: (
+                                                                value) {},
+                                                            validator: (value) {
+                                                              if (value
+                                                                  .isEmpty) {
+                                                                return 'Please enter your password';
+                                                              } else
+                                                              if (value.length <
+                                                                  6) {
+                                                                return 'Min Length should be 6';
+                                                              }
+                                                              return null;
+                                                            }),
+                                                        SizedBox(
+                                                          height: 5,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            context: context,
+                                            onPressed: () async {
+                                              if (_changeEmailFormKey
+                                                  .currentState
+                                                  .validate()) {
+                                                Fluttertoast.showToast(
+                                                    msg: "Changing...",
+                                                    backgroundColor: Colors
+                                                        .black,
+                                                    textColor: Colors.white);
+
+                                                try {
+                                                  await UserController
+                                                      .changeCurrentUserEmail(
+                                                    oldPassword:
+                                                    oldPasswordController.text,
+                                                    newEmail:
+                                                    newEmailController.text
+                                                        .trim(),
+                                                  );
+                                                  user.email =
+                                                      newEmailController.text
+                                                          .trim();
+                                                  user.updateUserInProvider(
+                                                      user);
+                                                  newEmailController.clear();
+                                                  oldPasswordController.clear();
+                                                  Fluttertoast.showToast(
+                                                      msg:
+                                                      "Email changed successfully . Please verify new email..");
+                                                  Navigator.pop(context);
+                                                } catch (e) {
+                                                  Fluttertoast.showToast(
+                                                    msg: e.message,
+                                                    backgroundColor: Colors
+                                                        .black,
+                                                    textColor: Colors.white,
+                                                  );
+                                                }
+                                              }
+                                            },
+                                            heading: "Change Email",
+                                            buttonText: "Change",
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
                             ),
                             ListTile(
                               onTap: () {
-                                Alert(
-                                    context: context,
-                                    buttons: [
-                                      DialogButton(
-                                        child: Text(
-                                          "Change It",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 20),
-                                        ),
-                                        onPressed: () async {
-                                          if (_alertFormKey.currentState
-                                              .validate()) {
-                                            Fluttertoast.showToast(
-                                                msg: "Changing...",
-                                                backgroundColor: Colors.black,
-                                                textColor: Colors.white);
-                                            String responseChange;
-//                                            responseChange = await UserController
-//                                                .changeUserPassword(
-//                                                    newPassword:
-//                                                        alertNewPasswordController
-//                                                            .text,
-//                                                    currentPassword:
-//                                                        alertPasswordController
-//                                                            .text);
-                                            if (responseChange == "nani") {
-                                              Fluttertoast.showToast(
-                                                  msg: "Server Error",
-                                                  backgroundColor: Colors.black,
-                                                  textColor: Colors.white);
-                                            } else {
-                                              Fluttertoast.showToast(
-                                                  msg: responseChange,
-                                                  backgroundColor: Colors.black,
-                                                  textColor: Colors.white);
-                                            }
-                                            alertNewPasswordController.clear();
-                                            alertPasswordController.clear();
-                                            alertConfirmPasswordController
-                                                .clear();
-                                            Navigator.pop(context);
-                                          }
-                                        },
-                                        color: Color.fromRGBO(0, 179, 134, 1.0),
-                                        radius: BorderRadius.circular(0.0),
-                                      ),
-                                    ],
-                                    title: "Change Password",
-                                    content: Column(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 6, bottom: 20.0),
-                                          child: Form(
-                                            key: _alertFormKey,
-                                            child: Column(
-                                              children: [
-                                                TextFormField(
-                                                    obscureText: true,
-                                                    controller:
-                                                    alertPasswordController,
-                                                    keyboardType: TextInputType
-                                                        .visiblePassword,
-                                                    decoration: kTextFieldDecoration
-                                                        .copyWith(
-                                                        prefixIcon: Icon(
-                                                            UiIcons
-                                                                .padlock),
-                                                        hintText:
-                                                        "Enter old password",
-                                                        labelText:
-                                                        "Old Password"),
-                                                    onChanged: (value) {},
-                                                    validator: (value) {
-                                                      if (value.isEmpty) {
-                                                        return 'Please enter your old password';
-                                                      } else if (value.length <
-                                                          6) {
-                                                        return 'Min Length should be 6';
-                                                      }
-                                                      return null;
-                                                    }),
-                                                SizedBox(
-                                                  height: 15,
-                                                ),
-                                                TextFormField(
-                                                    obscureText: true,
-                                                    controller:
-                                                    alertNewPasswordController,
-                                                    keyboardType: TextInputType
-                                                        .visiblePassword,
-                                                    decoration: kTextFieldDecoration
-                                                        .copyWith(
-                                                        prefixIcon: Icon(
-                                                            UiIcons
-                                                                .padlock_1),
-                                                        hintText:
-                                                        "Enter new password",
-                                                        labelText:
-                                                        "New Password"),
-                                                    onChanged: (value) {},
-                                                    validator: (value) {
-                                                      if (value.isEmpty) {
-                                                        return 'Please enter your new password';
-                                                      } else if (value.length <
-                                                          6) {
-                                                        return 'Min Length should be 6';
-                                                      }
-                                                      return null;
-                                                    }),
-                                                SizedBox(
-                                                  height: 5,
-                                                ),
-                                                TextFormField(
-                                                    obscureText: true,
-                                                    controller:
-                                                    alertConfirmPasswordController,
-                                                    keyboardType: TextInputType
-                                                        .visiblePassword,
-                                                    decoration: kTextFieldDecoration
-                                                        .copyWith(
-                                                        prefixIcon: Icon(
-                                                            UiIcons
-                                                                .padlock_1),
-                                                        hintText:
-                                                        "Re-enter new password",
-                                                        labelText:
-                                                        "Confirm Password"),
-                                                    onChanged: (value) {},
-                                                    validator: (value) {
-                                                      if (value.isEmpty) {
-                                                        return 'Please enter your old password';
-                                                      } else if (value.length <
-                                                          6) {
-                                                        return 'Min Length should be 6';
-                                                      } else if (value !=
-                                                          alertNewPasswordController
-                                                              .text) {
-                                                        return "New password doesn't match to it";
-                                                      }
-                                                      return null;
-                                                    })
-                                              ],
-                                            ),
+                                showAlert(
+                                  content: Column(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 6, bottom: 20.0),
+                                        child: Form(
+                                          key: _changePasswordFormKey,
+                                          child: Column(
+                                            children: [
+                                              TextFormField(
+                                                  obscureText: true,
+                                                  controller:
+                                                  alertPasswordController,
+                                                  keyboardType: TextInputType
+                                                      .visiblePassword,
+                                                  decoration: kTextFieldDecoration
+                                                      .copyWith(
+                                                      prefixIcon: Icon(
+                                                          UiIcons.padlock),
+                                                      hintText:
+                                                      "Enter old password",
+                                                      labelText:
+                                                      "Old Password"),
+                                                  onChanged: (value) {},
+                                                  validator: (value) {
+                                                    if (value.isEmpty) {
+                                                      return 'Please enter your old password';
+                                                    } else if (value.length <
+                                                        6) {
+                                                      return 'Min Length should be 6';
+                                                    }
+                                                    return null;
+                                                  }),
+                                              SizedBox(
+                                                height: 15,
+                                              ),
+                                              TextFormField(
+                                                  obscureText: true,
+                                                  controller:
+                                                  alertNewPasswordController,
+                                                  keyboardType: TextInputType
+                                                      .visiblePassword,
+                                                  decoration: kTextFieldDecoration
+                                                      .copyWith(
+                                                      prefixIcon: Icon(
+                                                          UiIcons
+                                                              .padlock_1),
+                                                      hintText:
+                                                      "Enter new password",
+                                                      labelText:
+                                                      "New Password"),
+                                                  onChanged: (value) {},
+                                                  validator: (value) {
+                                                    if (value.isEmpty) {
+                                                      return 'Please enter your new password';
+                                                    } else if (value.length <
+                                                        6) {
+                                                      return 'Min Length should be 6';
+                                                    }
+                                                    return null;
+                                                  }),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              TextFormField(
+                                                  obscureText: true,
+                                                  controller:
+                                                  alertConfirmPasswordController,
+                                                  keyboardType: TextInputType
+                                                      .visiblePassword,
+                                                  decoration: kTextFieldDecoration
+                                                      .copyWith(
+                                                      prefixIcon: Icon(
+                                                          UiIcons
+                                                              .padlock_1),
+                                                      hintText:
+                                                      "Re-enter new password",
+                                                      labelText:
+                                                      "Confirm Password"),
+                                                  onChanged: (value) {},
+                                                  validator: (value) {
+                                                    if (value.isEmpty) {
+                                                      return 'Please enter your old password';
+                                                    } else if (value.length <
+                                                        6) {
+                                                      return 'Min Length should be 6';
+                                                    } else if (value !=
+                                                        alertNewPasswordController
+                                                            .text) {
+                                                      return "New password doesn't match to it";
+                                                    }
+                                                    return null;
+                                                  })
+                                            ],
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                    style: kAlertStyle)
-                                    .show();
+                                      ),
+                                    ],
+                                  ),
+                                  context: context,
+                                  onPressed: () async {
+                                    if (_changePasswordFormKey.currentState
+                                        .validate()) {
+                                      Fluttertoast.showToast(
+                                          msg: "Changing...",
+                                          backgroundColor: Colors.black,
+                                          textColor: Colors.white);
+
+                                      try {
+                                        await UserController
+                                            .changeCurrentUserPassword(
+                                          oldPassword:
+                                          alertPasswordController.text,
+                                          newPassword:
+                                          alertNewPasswordController.text,
+                                        );
+                                        alertNewPasswordController.clear();
+                                        alertPasswordController.clear();
+                                        alertConfirmPasswordController.clear();
+                                        Fluttertoast.showToast(
+                                            msg:
+                                            "Password changed successfully");
+                                        Navigator.pop(context);
+                                      } catch (e) {
+                                        Fluttertoast.showToast(
+                                          msg: e.message,
+                                          backgroundColor: Colors.black,
+                                          textColor: Colors.white,
+                                        );
+                                      }
+                                    }
+                                  },
+                                  heading: "Change Password",
+                                  buttonText: "Change it",
+                                );
                               },
                               dense: true,
                               title: Text(
@@ -432,9 +684,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(''),
                                 Text(
-                                  "Change your college",
+                                  college.name,
                                   style: NeumorphicTheme
                                       .currentTheme(context)
                                       .textTheme
@@ -463,6 +714,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       ConnectionState.done) {
                                     return CollegeDropdown(
                                       dropDownItems: _dropDownItems,
+                                      hintText: "Change your college",
                                       onChanged: (College clg) {
                                         setState(() {
                                           _selectedCollege = clg;
@@ -481,7 +733,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: RaisedButton.icon(
                           elevation: 0,
                           padding: EdgeInsets.all(10),
-                          color: NeumorphicTheme
+                          color:
+                          NeumorphicTheme
                               .currentTheme(context)
                               .baseColor,
                           onPressed: () {
@@ -501,5 +754,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
         },
       ),
     );
+  }
+
+  showAlert({BuildContext context,
+    Widget content,
+    String heading,
+    String buttonText,
+    VoidCallback onPressed}) {
+    Alert(
+      context: context,
+      buttons: [
+        DialogButton(
+          child: Text(
+            buttonText,
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: onPressed,
+          color: NeumorphicTheme
+              .currentTheme(context)
+              .accentColor,
+          radius: BorderRadius.circular(20.0),
+        ),
+      ],
+      title: heading,
+      content: content,
+      style: kAlertStyle,
+    ).show();
   }
 }

@@ -129,6 +129,44 @@ class UserController {
     return user;
   }
 
+  static Future<void> changeCurrentUserPassword(
+      {String oldPassword, String newPassword}) async {
+    final FirebaseUser user = await getCurrentUser();
+
+    AuthCredential credential = EmailAuthProvider.getCredential(
+      email: user.email,
+      password: oldPassword,
+    );
+    await user.reauthenticateWithCredential(credential);
+
+    await user.updatePassword(newPassword);
+    return true;
+  }
+
+  static Future<void> changeCurrentUserEmail(
+      {String oldPassword, String newEmail}) async {
+    final FirebaseUser user = await getCurrentUser();
+
+    AuthCredential credential = EmailAuthProvider.getCredential(
+      email: user.email,
+      password: oldPassword,
+    );
+    await user.reauthenticateWithCredential(credential);
+
+    await user.updateEmail(newEmail);
+    await user.sendEmailVerification();
+    return true;
+  }
+
+  static Future<void> updateNameAndPhone(
+      {String userId, String name, String phone}) async {
+    await _fireStore.collection("users").document(userId).updateData({
+      'name': name,
+      'phone': phone,
+    });
+    return true;
+  }
+
   static Future<FirebaseUser> getCurrentUser() async {
     try {
       final FirebaseUser currentUser = await _auth.currentUser();
