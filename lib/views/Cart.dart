@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eleventh_hour/components/404Card.dart';
+import 'package:eleventh_hour/components/HomeBoilerPlate.dart';
 import 'package:eleventh_hour/components/SmallCourseCard.dart';
 import 'package:eleventh_hour/controllers/CourseController.dart';
 import 'package:eleventh_hour/controllers/TransactionController.dart';
@@ -33,7 +34,7 @@ class _CartScreenState extends State<CartScreen> {
       courseIds: Provider.of<User>(context, listen: false).cart.cast<String>(),
     );
 
-    await TransactionController.addTransactionToUser(
+    String docId = await TransactionController.addTransactionToUser(
       transaction: T.Transaction(
           courseIds: courseNames,
           amount: amount.toDouble(),
@@ -46,7 +47,8 @@ class _CartScreenState extends State<CartScreen> {
       userId: Provider.of<User>(context, listen: false).userId,
       courseIds: Provider.of<User>(context, listen: false).cart.cast<String>(),
     );
-    Provider.of<User>(context, listen: false).handleCheckoutSuccess();
+    Provider.of<User>(context, listen: false)
+        .handleCheckoutSuccess(docId: docId);
     Fluttertoast.showToast(msg: "Payment Success");
   }
 
@@ -162,6 +164,15 @@ class _CartScreenState extends State<CartScreen> {
             ),
             appBar: NeumorphicAppBar(
               title: Text("My Cart"),
+              actions: [
+                NeumorphicButton(
+                  onPressed: () {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, HomeBoilerPlate.id, (route) => false);
+                  },
+                  child: Icon(UiIcons.home),
+                )
+              ],
               centerTitle: true,
               automaticallyImplyLeading: true,
             ),

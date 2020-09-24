@@ -3,6 +3,7 @@ import 'package:eleventh_hour/components/CourseCard.dart';
 import 'package:eleventh_hour/components/NeumoCard.dart';
 import 'package:eleventh_hour/controllers/CourseController.dart';
 import 'package:eleventh_hour/models/College.dart';
+import 'package:eleventh_hour/models/Course.dart';
 import 'package:eleventh_hour/models/DeviceDimension.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:eleventh_hour/views/NoCollegeScreen.dart';
@@ -58,11 +59,13 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
     return chips;
   }
 
+  List<Course> trendingCourses;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-//    future = Firestore.instance.collection("courses").getDocuments();
+    trendingCourses = Provider.of<CourseController>(context, listen: false)
+        .getTrendingCourses();
   }
 
   @override
@@ -143,8 +146,8 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                           onPressed: () {
                             Navigator.pushNamed(context, ViewAll.id,
                                 arguments: {
-                                  'title': "Trending",
-                                  'courses': courses.getTrendingCourses(),
+                                  'title': "All Courses",
+                                  'courses': trendingCourses,
                                 });
                           },
                           icon: Icon(
@@ -164,8 +167,8 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                   height: 20,
                 ),
                 CarouselSlider(
-                    items: courses
-                        .getTrendingCourses()
+                    items: trendingCourses
+                        .sublist(0, 5)
                         .map((course) => CourseCard(course: course, user: user))
                         .toList(),
                     options: CarouselOptions(

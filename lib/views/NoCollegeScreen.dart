@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:eleventh_hour/components/HomeBoilerPlate.dart';
 import 'package:eleventh_hour/utilities/UiIcons.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,6 +15,15 @@ class NoCollegeScreen extends StatelessWidget {
     return Scaffold(
       appBar: NeumorphicAppBar(
         automaticallyImplyLeading: true,
+        actions: [
+          NeumorphicButton(
+            onPressed: () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, HomeBoilerPlate.id, (route) => false);
+            },
+            child: Icon(UiIcons.home),
+          )
+        ],
         title: NeumorphicText(
           "Spread the trend",
           style: NeumorphicStyle(color: Colors.black),

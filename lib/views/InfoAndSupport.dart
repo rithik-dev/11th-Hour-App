@@ -1,5 +1,7 @@
 import 'package:eleventh_hour/components/DrawerBoilerPlate.dart';
+import 'package:eleventh_hour/components/HomeBoilerPlate.dart';
 import 'package:eleventh_hour/components/NeumoCard.dart';
+import 'package:eleventh_hour/utilities/UiIcons.dart';
 import 'package:eleventh_hour/views/AboutUs.dart';
 import 'package:eleventh_hour/views/RefundPolicy.dart';
 import 'package:eleventh_hour/views/Terms&Condn.dart';
@@ -25,6 +27,15 @@ class InfoAndSupport extends StatelessWidget {
       innerDrawerKey: _innerDrawerKey,
       scaffold: Scaffold(
         appBar: NeumorphicAppBar(
+          actions: [
+            NeumorphicButton(
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, HomeBoilerPlate.id, (route) => false);
+              },
+              child: Icon(UiIcons.home),
+            )
+          ],
           leading: NeumorphicButton(
             onPressed: () {
               toggle();

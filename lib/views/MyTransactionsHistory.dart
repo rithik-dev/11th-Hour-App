@@ -1,7 +1,9 @@
+import 'package:eleventh_hour/components/HomeBoilerPlate.dart';
 import 'package:eleventh_hour/components/TransactionCard.dart';
 import 'package:eleventh_hour/controllers/TransactionController.dart';
 import 'package:eleventh_hour/models/Transaction.dart';
 import 'package:eleventh_hour/models/User.dart';
+import 'package:eleventh_hour/utilities/UiIcons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +17,15 @@ class MyTransactionsHistory extends StatelessWidget {
     User user = Provider.of<User>(context);
     return Scaffold(
       appBar: NeumorphicAppBar(
+        actions: [
+          NeumorphicButton(
+            onPressed: () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, HomeBoilerPlate.id, (route) => false);
+            },
+            child: Icon(UiIcons.home),
+          )
+        ],
         title: NeumorphicText(
           "Transactions History ",
           style: NeumorphicStyle(color: Colors.black),

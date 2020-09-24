@@ -67,10 +67,8 @@ class CourseController extends ChangeNotifier {
     _courses.sort((a, b) {
       return b.enrolledUsers.length.compareTo(a.enrolledUsers.length);
     });
-    if (_courses.length > 5)
-      return _courses.sublist(0, 5);
-    else
-      return _courses;
+
+    return _courses;
   }
 
   List<Course> getCoursesByIds(List<String> courseIds) {

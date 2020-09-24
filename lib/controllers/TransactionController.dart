@@ -20,12 +20,13 @@ class TransactionController {
     return transactions;
   }
 
-  static Future addTransactionToUser(
+  static Future<String> addTransactionToUser(
       {Transaction transaction, String userId}) async {
-    Fire.DocumentReference docId =
+    Fire.DocumentReference docRef =
         await _fireStore.collection('transactions').add(transaction.toMap());
     await _fireStore.collection('users').document(userId).updateData({
-      "transactionIds": Fire.FieldValue.arrayUnion([docId.documentID])
+      "transactionIds": Fire.FieldValue.arrayUnion([docRef.documentID])
     });
+    return docRef.documentID;
   }
 }

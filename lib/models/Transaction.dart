@@ -5,7 +5,7 @@ class Transaction {
   Timestamp date;
   String status;
   String transactionId;
-  String docId;
+  String id;
   List courseIds;
   double amount;
 
@@ -15,7 +15,7 @@ class Transaction {
     @required this.status,
     @required this.transactionId,
     @required this.amount,
-    this.docId,
+    this.id,
   });
 
   factory Transaction.fromDocumentSnapshot(DocumentSnapshot transaction) {
@@ -25,7 +25,7 @@ class Transaction {
       status: transaction['status'] as String,
       transactionId: transaction['transactionId'] as String,
       amount: transaction['amount'] as double,
-      docId: transaction.documentID,
+      id: transaction.documentID,
     );
   }
 
@@ -41,6 +41,6 @@ class Transaction {
 
   @override
   String toString() {
-    return 'Transaction{date: $date, status: $status, transactionId: $transactionId, docId: $docId, courseNames: $courseIds, amount: $amount}';
+    return 'Transaction{date: $date, status: $status, transactionId: $transactionId, docId: $id, courseNames: $courseIds, amount: $amount}';
   }
 }
