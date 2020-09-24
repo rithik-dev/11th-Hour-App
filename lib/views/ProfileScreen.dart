@@ -124,13 +124,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    oldPasswordController.dispose();
+    alertConfirmPasswordController.dispose();
+    alertPasswordController.dispose();
+    alertNewPasswordController.dispose();
+    phoneController.dispose();
+    nameController.dispose();
+    newEmailController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     _currentCollege = Provider.of<College>(context);
     return SafeArea(
       child: Consumer2<User, College>(
         builder: (context, user, college, child) {
-          nameController.text = user.name;
-          phoneController.text = user.phone;
+//          nameController.text = user.name;
+//          phoneController.text = user.phone;
           return CustomDrawer(
             screenId: ProfileScreen.id,
             innerDrawerKey: _innerDrawerKey,
@@ -138,7 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               onRefresh: () async {
                 final User newUser = await UserController.getUser(user.userId);
                 final College college =
-                await CollegeController.getCollegeFromId(newUser.collegeId);
+                    await CollegeController.getCollegeFromId(newUser.collegeId);
                 Provider.of<User>(context, listen: false)
                     .updateUserInProvider(newUser);
                 Provider.of<College>(context, listen: false)
@@ -173,10 +186,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               leading: Icon(UiIcons.user_1),
                               title: Text(
                                 'Profile Settings',
-                                style: Theme
-                                    .of(context)
-                                    .textTheme
-                                    .headline5,
+                                style: Theme.of(context).textTheme.headline5,
                               ),
                             ),
                             Stack(
@@ -216,15 +226,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         dense: true,
                                         title: Text(
                                           'Name',
-                                          style: Theme
-                                              .of(context)
+                                          style: Theme.of(context)
                                               .textTheme
                                               .headline6,
                                         ),
                                         trailing: Text(
                                           user.name,
-                                          style: Theme
-                                              .of(context)
+                                          style: Theme.of(context)
                                               .textTheme
                                               .subtitle1,
                                         ),
@@ -234,15 +242,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         dense: true,
                                         title: Text(
                                           ('Phone Number'),
-                                          style: Theme
-                                              .of(context)
+                                          style: Theme.of(context)
                                               .textTheme
                                               .headline6,
                                         ),
                                         trailing: Text(
                                           (user.phone),
-                                          style: Theme
-                                              .of(context)
+                                          style: Theme.of(context)
                                               .textTheme
                                               .subtitle1,
                                         ),
@@ -263,28 +269,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         showAlert(
                                           content: Column(
                                             mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
+                                                MainAxisAlignment.spaceEvenly,
                                             children: [
                                               Padding(
                                                 padding: const EdgeInsets.only(
                                                     top: 6, bottom: 20.0),
                                                 child: Form(
                                                   key:
-                                                  _changeNameAndPhoneFormKey,
+                                                      _changeNameAndPhoneFormKey,
                                                   child: Column(
                                                     children: [
                                                       TextFormField(
                                                           controller:
-                                                          nameController,
+                                                              nameController,
                                                           decoration: kTextFieldDecoration
                                                               .copyWith(
-                                                              prefixIcon:
-                                                              Icon(UiIcons
-                                                                  .message_1),
-                                                              hintText:
-                                                              "Enter name",
-                                                              labelText:
-                                                              "Name"),
+                                                                  prefixIcon:
+                                                                      Icon(UiIcons
+                                                                          .message_1),
+                                                                  hintText:
+                                                                      "Enter name",
+                                                                  labelText:
+                                                                      "Name"),
                                                           onChanged: (value) {},
                                                           validator: (value) {
                                                             if (value.isEmpty) {
@@ -297,16 +303,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                       ),
                                                       TextFormField(
                                                           controller:
-                                                          phoneController,
-                                                          decoration: kTextFieldDecoration
-                                                              .copyWith(
+                                                              phoneController,
+                                                          decoration: kTextFieldDecoration.copyWith(
                                                               prefixIcon: Icon(
                                                                   UiIcons
                                                                       .phone_call),
                                                               hintText:
-                                                              "Enter phone",
+                                                                  "Enter phone",
                                                               labelText:
-                                                              "Phone"),
+                                                                  "Phone"),
                                                           onChanged: (value) {},
                                                           validator: (value) {
                                                             if (value.isEmpty) {
@@ -348,7 +353,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 Navigator.pop(context);
                                                 Fluttertoast.showToast(
                                                     msg:
-                                                    "Details updated successfully");
+                                                        "Details updated successfully");
                                               } catch (e) {
                                                 Fluttertoast.showToast(
                                                   msg: e.message,
@@ -372,19 +377,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               padding: const EdgeInsets.symmetric(
                                   vertical: 5, horizontal: 20),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment
-                                    .spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text("Email", style: NeumorphicTheme
-                                      .currentTheme(context)
-                                      .textTheme
-                                      .headline6,),
+                                  Text(
+                                    "Email",
+                                    style: NeumorphicTheme.currentTheme(context)
+                                        .textTheme
+                                        .headline6,
+                                  ),
                                   Row(
                                     children: [
                                       Text(
                                         (user.email),
-                                        style: Theme
-                                            .of(context)
+                                        style: Theme.of(context)
                                             .textTheme
                                             .subtitle1,
                                       ),
@@ -395,30 +401,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           showAlert(
                                             content: Column(
                                               mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
+                                                  MainAxisAlignment.spaceEvenly,
                                               children: [
                                                 Padding(
-                                                  padding: const EdgeInsets
-                                                      .only(
-                                                      top: 6, bottom: 20.0),
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 6, bottom: 20.0),
                                                   child: Form(
                                                     key: _changeEmailFormKey,
                                                     child: Column(
                                                       children: [
                                                         TextFormField(
                                                             controller:
-                                                            newEmailController,
-                                                            decoration: kTextFieldDecoration
-                                                                .copyWith(
-                                                                prefixIcon: Icon(
-                                                                    UiIcons
+                                                                newEmailController,
+                                                            decoration: kTextFieldDecoration.copyWith(
+                                                                prefixIcon:
+                                                                    Icon(UiIcons
                                                                         .message_1),
                                                                 hintText:
-                                                                "Enter new email",
+                                                                    "Enter new email",
                                                                 labelText:
-                                                                "New Email"),
-                                                            onChanged: (
-                                                                value) {},
+                                                                    "New Email"),
+                                                            onChanged:
+                                                                (value) {},
                                                             validator: (value) {
                                                               if (value
                                                                   .isEmpty) {
@@ -432,26 +437,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                         TextFormField(
                                                             obscureText: true,
                                                             controller:
-                                                            oldPasswordController,
-                                                            keyboardType: TextInputType
-                                                                .visiblePassword,
-                                                            decoration: kTextFieldDecoration
-                                                                .copyWith(
-                                                                prefixIcon: Icon(
-                                                                    UiIcons
+                                                                oldPasswordController,
+                                                            keyboardType:
+                                                                TextInputType
+                                                                    .visiblePassword,
+                                                            decoration: kTextFieldDecoration.copyWith(
+                                                                prefixIcon:
+                                                                    Icon(UiIcons
                                                                         .padlock_1),
                                                                 hintText:
-                                                                "Enter password",
+                                                                    "Enter password",
                                                                 labelText:
-                                                                "Password"),
-                                                            onChanged: (
-                                                                value) {},
+                                                                    "Password"),
+                                                            onChanged:
+                                                                (value) {},
                                                             validator: (value) {
                                                               if (value
                                                                   .isEmpty) {
                                                                 return 'Please enter your password';
-                                                              } else
-                                                              if (value.length <
+                                                              } else if (value
+                                                                      .length <
                                                                   6) {
                                                                 return 'Min Length should be 6';
                                                               }
@@ -473,17 +478,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   .validate()) {
                                                 Fluttertoast.showToast(
                                                     msg: "Changing...",
-                                                    backgroundColor: Colors
-                                                        .black,
+                                                    backgroundColor:
+                                                        Colors.black,
                                                     textColor: Colors.white);
 
                                                 try {
                                                   await UserController
                                                       .changeCurrentUserEmail(
                                                     oldPassword:
-                                                    oldPasswordController.text,
-                                                    newEmail:
-                                                    newEmailController.text
+                                                        oldPasswordController
+                                                            .text,
+                                                    newEmail: newEmailController
+                                                        .text
                                                         .trim(),
                                                   );
                                                   user.email =
@@ -495,13 +501,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   oldPasswordController.clear();
                                                   Fluttertoast.showToast(
                                                       msg:
-                                                      "Email changed successfully . Please verify new email..");
+                                                          "Email changed successfully . Please verify new email..");
                                                   Navigator.pop(context);
                                                 } catch (e) {
                                                   Fluttertoast.showToast(
                                                     msg: e.message,
-                                                    backgroundColor: Colors
-                                                        .black,
+                                                    backgroundColor:
+                                                        Colors.black,
                                                     textColor: Colors.white,
                                                   );
                                                 }
@@ -522,7 +528,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 showAlert(
                                   content: Column(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                        MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.only(
@@ -534,17 +540,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               TextFormField(
                                                   obscureText: true,
                                                   controller:
-                                                  alertPasswordController,
+                                                      alertPasswordController,
                                                   keyboardType: TextInputType
                                                       .visiblePassword,
                                                   decoration: kTextFieldDecoration
                                                       .copyWith(
-                                                      prefixIcon: Icon(
-                                                          UiIcons.padlock),
-                                                      hintText:
-                                                      "Enter old password",
-                                                      labelText:
-                                                      "Old Password"),
+                                                          prefixIcon: Icon(
+                                                              UiIcons.padlock),
+                                                          hintText:
+                                                              "Enter old password",
+                                                          labelText:
+                                                              "Old Password"),
                                                   onChanged: (value) {},
                                                   validator: (value) {
                                                     if (value.isEmpty) {
@@ -561,18 +567,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               TextFormField(
                                                   obscureText: true,
                                                   controller:
-                                                  alertNewPasswordController,
+                                                      alertNewPasswordController,
                                                   keyboardType: TextInputType
                                                       .visiblePassword,
                                                   decoration: kTextFieldDecoration
                                                       .copyWith(
-                                                      prefixIcon: Icon(
-                                                          UiIcons
-                                                              .padlock_1),
-                                                      hintText:
-                                                      "Enter new password",
-                                                      labelText:
-                                                      "New Password"),
+                                                          prefixIcon: Icon(
+                                                              UiIcons
+                                                                  .padlock_1),
+                                                          hintText:
+                                                              "Enter new password",
+                                                          labelText:
+                                                              "New Password"),
                                                   onChanged: (value) {},
                                                   validator: (value) {
                                                     if (value.isEmpty) {
@@ -589,18 +595,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               TextFormField(
                                                   obscureText: true,
                                                   controller:
-                                                  alertConfirmPasswordController,
+                                                      alertConfirmPasswordController,
                                                   keyboardType: TextInputType
                                                       .visiblePassword,
                                                   decoration: kTextFieldDecoration
                                                       .copyWith(
-                                                      prefixIcon: Icon(
-                                                          UiIcons
-                                                              .padlock_1),
-                                                      hintText:
-                                                      "Re-enter new password",
-                                                      labelText:
-                                                      "Confirm Password"),
+                                                          prefixIcon: Icon(
+                                                              UiIcons
+                                                                  .padlock_1),
+                                                          hintText:
+                                                              "Re-enter new password",
+                                                          labelText:
+                                                              "Confirm Password"),
                                                   onChanged: (value) {},
                                                   validator: (value) {
                                                     if (value.isEmpty) {
@@ -634,16 +640,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         await UserController
                                             .changeCurrentUserPassword(
                                           oldPassword:
-                                          alertPasswordController.text,
+                                              alertPasswordController.text,
                                           newPassword:
-                                          alertNewPasswordController.text,
+                                              alertNewPasswordController.text,
                                         );
                                         alertNewPasswordController.clear();
                                         alertPasswordController.clear();
                                         alertConfirmPasswordController.clear();
                                         Fluttertoast.showToast(
                                             msg:
-                                            "Password changed successfully");
+                                                "Password changed successfully");
                                         Navigator.pop(context);
                                       } catch (e) {
                                         Fluttertoast.showToast(
@@ -661,15 +667,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               dense: true,
                               title: Text(
                                 ('Change Password'),
-                                style: Theme
-                                    .of(context)
+                                style: Theme.of(context)
                                     .textTheme
                                     .headline5
                                     .copyWith(
-                                    fontWeight: FontWeight.w700,
-                                    color: Theme
-                                        .of(context)
-                                        .accentColor),
+                                        fontWeight: FontWeight.w700,
+                                        color: Theme.of(context).accentColor),
                                 textAlign: TextAlign.center,
                               ),
                             ),
@@ -686,8 +689,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               children: [
                                 Text(
                                   college.name,
-                                  style: NeumorphicTheme
-                                      .currentTheme(context)
+                                  style: NeumorphicTheme.currentTheme(context)
                                       .textTheme
                                       .headline3,
                                 ),
@@ -734,9 +736,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           elevation: 0,
                           padding: EdgeInsets.all(10),
                           color:
-                          NeumorphicTheme
-                              .currentTheme(context)
-                              .baseColor,
+                              NeumorphicTheme.currentTheme(context).baseColor,
                           onPressed: () {
                             Navigator.pushNamed(
                                 context, MyTransactionsHistory.id);
@@ -756,11 +756,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  showAlert({BuildContext context,
-    Widget content,
-    String heading,
-    String buttonText,
-    VoidCallback onPressed}) {
+  showAlert(
+      {BuildContext context,
+      Widget content,
+      String heading,
+      String buttonText,
+      VoidCallback onPressed}) {
     Alert(
       context: context,
       buttons: [
@@ -770,9 +771,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
           onPressed: onPressed,
-          color: NeumorphicTheme
-              .currentTheme(context)
-              .accentColor,
+          color: NeumorphicTheme.currentTheme(context).accentColor,
           radius: BorderRadius.circular(20.0),
         ),
       ],
