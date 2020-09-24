@@ -604,14 +604,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   onChanged: (value) {},
                                                   validator: (value) {
                                                     if (value.isEmpty) {
-                                                      return 'Please enter your old password';
+                                                      return 'Please confirm your password';
                                                     } else if (value.length <
                                                         6) {
                                                       return 'Min Length should be 6';
                                                     } else if (value !=
                                                         alertNewPasswordController
                                                             .text) {
-                                                      return "New password doesn't match to it";
+                                                      return "New password doesn't match";
                                                     }
                                                     return null;
                                                   })

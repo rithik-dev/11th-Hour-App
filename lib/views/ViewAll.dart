@@ -1,6 +1,7 @@
 import 'package:eleventh_hour/components/SmallCourseCard.dart';
 import 'package:eleventh_hour/models/Course.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class ViewAll extends StatelessWidget {
   static const id = '/view_all';
@@ -13,7 +14,7 @@ class ViewAll extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
+        appBar: NeumorphicAppBar(
           title: Text(this.data['title']),
           centerTitle: true,
         ),
