@@ -36,6 +36,7 @@ dependencies:
   flutter_bounce: ^1.0.8
   animations: ^1.1.2
   awsome_video_player: ^1.0.8+1
+  advance_pdf_viewer: ^1.2.0
   esys_flutter_share: ^1.0.2
   shimmer: ^1.1.1
   razorpay_flutter: ^1.1.4

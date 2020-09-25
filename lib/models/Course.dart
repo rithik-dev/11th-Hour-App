@@ -13,6 +13,7 @@ class Course {
   String instructorId;
   String courseThumbnail;
   List<dynamic> lectures;
+  List<dynamic> resources;
   Timestamp date;
   String collegeId;
   List<dynamic> enrolledUsers;
@@ -28,6 +29,7 @@ class Course {
       @required this.instructorName,
       @required this.price,
       @required this.lectures,
+      @required this.resources,
       @required this.date,
       @required this.instructorId,
       @required this.enrolledUsers,
@@ -43,6 +45,7 @@ class Course {
     return new Course(
       blackListed: snapshot['blackListed'] as bool,
       id: snapshot.documentID,
+      resources: snapshot['resources'] as List,
       description: snapshot['description'] as String,
       ratings: snapshot['ratings'] as List,
       title: snapshot['title'] as String,

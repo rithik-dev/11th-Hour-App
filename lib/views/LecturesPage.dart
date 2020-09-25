@@ -2,10 +2,13 @@ import 'package:eleventh_hour/components/CustomVideoPlayer.dart';
 import 'package:eleventh_hour/components/NeumoCard.dart';
 import 'package:eleventh_hour/models/Course.dart';
 import 'package:eleventh_hour/models/User.dart';
+import 'package:eleventh_hour/utilities/UiIcons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
+
+import 'ResourcesPage.dart';
 
 class LecturesPage extends StatefulWidget {
   final Course course;
@@ -25,6 +28,19 @@ class _LecturesPageState extends State<LecturesPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        floatingActionButton: NeumorphicFloatingActionButton(
+          style: NeumorphicTheme.currentTheme(context).buttonStyle.copyWith(
+                color: NeumorphicTheme.currentTheme(context).accentColor,
+              ),
+          onPressed: () {
+            Navigator.pushNamed(context, ResourcesPage.id);
+          },
+          tooltip: "Go to Resources",
+          child: Icon(
+            UiIcons.folder,
+            color: NeumorphicTheme.currentTheme(context).baseColor,
+          ),
+        ),
         body: Consumer<User>(
           builder: (context, user, child) {
             return ListView(
