@@ -62,7 +62,7 @@ class _CartScreenState extends State<CartScreen> {
 
 //  static const platform = const MethodChannel("razorpay_flutter");
   void handlerErrorFailure(PaymentFailureResponse response) async {
-    await TransactionController.addTransactionToUser(
+    String docId = await TransactionController.addTransactionToUser(
       transaction: T.Transaction(
           courseIds: courseNames,
           amount: amount.toDouble(),
@@ -71,6 +71,8 @@ class _CartScreenState extends State<CartScreen> {
           date: Timestamp.now()),
       userId: Provider.of<User>(context, listen: false).userId,
     );
+    Provider.of<User>(context, listen: false)
+        .handleCheckoutFailure(docId: docId);
     Fluttertoast.showToast(msg: "Payment Error");
   }
 

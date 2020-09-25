@@ -72,6 +72,11 @@ class User extends ChangeNotifier {
     notifyListeners();
   }
 
+  void handleCheckoutFailure({String docId}) {
+    this.transactionIds.add(docId);
+    notifyListeners();
+  }
+
   void handleCheckoutSuccess({String docId}) {
     this.cart.forEach((element) {
       this.myCourses.add(element);
