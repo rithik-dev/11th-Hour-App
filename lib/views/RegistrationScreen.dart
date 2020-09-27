@@ -104,216 +104,231 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NeumorphicAppBar(
-        title: Text("REGISTER"),
-        centerTitle: true,
-        leading: Container(),
-      ),
-      body: Stack(
-        children: [
-          ListView(physics: BouncingScrollPhysics(), children: [
-            Container(
-              padding: EdgeInsets.all(18),
-              margin: EdgeInsets.all(10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  CircleAvatar(
-                    backgroundImage: imageSelected
-                        ? FileImage(_image)
-                        : AssetImage('assets/images/userDefault.jpeg'),
-                    radius: 55,
-                  ),
-                  Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton(
-                            icon: Icon(Icons.camera),
-                            onPressed: () {
-                              getImage(ImageSource.camera);
-                            },
-                          ),
-                          SizedBox(
-                            child: Divider(
-                              color: Colors.black54,
-                              thickness: 30,
-                            ),
-                            height: 30,
-                            width: 5,
-                          ),
-                          IconButton(
-                              icon: Icon(Icons.image),
-                              onPressed: () {
-                                getImage(ImageSource.gallery);
-                              })
-                        ],
-                      ),
-                      Text(
-                        "Choose a pic/ \n Go Professor",
-                        textAlign: TextAlign.center,
-                        style: NeumorphicTheme.currentTheme(context)
-                            .textTheme
-                            .headline4
-                            .copyWith(
-                                fontSize: 14, fontWeight: FontWeight.w700),
-                      ),
-                    ],
-                  ),
-                ],
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              'assets/images/bg2.jpg',
+            ),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Stack(
+          children: [
+            ListView(physics: BouncingScrollPhysics(), children: [
+              Text(
+                "\nRegister",
+                textAlign: TextAlign.center,
+                style:
+                    NeumorphicTheme.currentTheme(context).textTheme.headline1,
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  CustomTextFormField(
-                    labelText: "Full Name",
-                    icon: Icons.text_fields,
-                    autofocus: true,
-                    onChanged: (String value) {
-                      _fullName = value;
-                    },
-                    validator: (String value) {
-                      if (value.isEmpty || value.trim() == "") {
-                        return 'Please Enter Your Full Name';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: 10.0),
-                  CustomTextFormField(
-                    labelText: "Email",
-                    icon: Icons.mail,
-                    autofocus: true,
-                    onChanged: (String value) {
-                      _email = value;
-                    },
-                    validator: (String value) {
-                      if (value.isEmpty || value.trim() == "") {
-                        return 'Please Enter Your Email';
-                      } else if (!(value.contains("@") && value.contains(".")))
-                        return "Invalid Email";
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: 10.0),
-                  ListTile(
-                    leading: Icon(FontAwesomeIcons.building),
-                    title: FutureBuilder(
-                      future: _future,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return CollegeDropdown(
-                            dropDownItems: _dropDownItems,
-                            onChanged: (College clg) {
-                              setState(() {
-                                _selectedCollege = clg;
-                              });
-                            },
-                          );
-                        } else
-                          return NeumorphicProgressIndeterminate();
+              Container(
+                padding: EdgeInsets.all(18),
+                margin: EdgeInsets.all(10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: imageSelected
+                          ? FileImage(_image)
+                          : AssetImage('assets/images/userDefault.jpeg'),
+                      radius: 55,
+                    ),
+                    Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.camera),
+                              onPressed: () {
+                                getImage(ImageSource.camera);
+                              },
+                            ),
+                            SizedBox(
+                              child: Divider(
+                                color: Colors.black54,
+                                thickness: 30,
+                              ),
+                              height: 30,
+                              width: 5,
+                            ),
+                            IconButton(
+                                icon: Icon(Icons.image),
+                                onPressed: () {
+                                  getImage(ImageSource.gallery);
+                                })
+                          ],
+                        ),
+                        Text(
+                          "Choose a pic/ \n Go Professor",
+                          textAlign: TextAlign.center,
+                          style: NeumorphicTheme.currentTheme(context)
+                              .textTheme
+                              .headline4
+                              .copyWith(
+                                  fontSize: 14, fontWeight: FontWeight.w700),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    CustomTextFormField(
+                      labelText: "Full Name",
+                      icon: Icons.text_fields,
+                      autofocus: true,
+                      onChanged: (String value) {
+                        _fullName = value;
+                      },
+                      validator: (String value) {
+                        if (value.isEmpty || value.trim() == "") {
+                          return 'Please Enter Your Full Name';
+                        }
+                        return null;
                       },
                     ),
-                  ),
-                  SizedBox(height: 10.0),
-                  CustomTextFormField(
-                    labelText: "Phone",
-                    icon: FontAwesomeIcons.phone,
-                    flipIcon: true,
-                    onChanged: (String value) {
-                      _phone = value;
-                    },
-                    validator: (String value) {
-                      if (value.isEmpty || value.trim() == "")
-                        return 'Please Enter your Phone Number';
-                      else if (value.length != 10)
-                        return "Invalid Phone Number";
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: 10.0),
-                  CustomTextFormField(
-                    labelText: "Password",
-                    icon: Icons.lock,
-                    onChanged: (String value) {
-                      _password = value;
-                    },
-                    validator: (String value) {
-                      if (value.isEmpty || value.trim() == "")
-                        return 'Please Enter Your Password';
-                      else if (value.length < 6) return "Invalid Password";
-                      return null;
-                    },
-                  ),
-                  Builder(
-                    builder: (context) {
-                      return FlatButton(
-                        child: Text("REGISTER"),
-                        onPressed: () async {
-                          if (_formKey.currentState.validate()) {
-                            setState(() {
-                              isAsyncCall = true;
-                            });
-                            String msg;
-                            try {
-                              final String userId =
-                                  await UserController.registerUser(
-                                      email: _email.trim(),
-                                      collegeId: _selectedCollege.cid,
-                                      profilePicURL:
-                                          "https://firebasestorage.googleapis.com/v0/b/eleventhhour-eb2e0.appspot.com/o/userDefault.jpeg?alt=media&token=ac1366cc-f928-4a08-8bee-1dfd5788db68",
-                                      phone: _phone,
-                                      password: _password,
-                                      name: _fullName);
-                              if (userId != null) {
-                                if (imageSelected) {
-                                  await uploadFile(userId);
-                                  await _firestore
-                                      .collection("users")
-                                      .document(userId)
-                                      .updateData({
-                                    "profilePicURL": _profilePicURL,
-                                  });
-                                }
-                                msg = "Verification Email Sent Successfully !";
-                              } else {
-                                msg = "Error While Registering New User";
-                              }
-                            } on RegistrationException catch (e) {
-                              if (e.message != null) msg = e.message;
-                            } catch (e) {
-                              msg = e.toString();
-                            } finally {
-                              setState(() {
-                                isAsyncCall = false;
-                              });
-                            }
-                            Fluttertoast.showToast(msg: msg);
-                          }
+                    SizedBox(height: 10.0),
+                    CustomTextFormField(
+                      labelText: "Email",
+                      icon: Icons.mail,
+                      autofocus: true,
+                      onChanged: (String value) {
+                        _email = value;
+                      },
+                      validator: (String value) {
+                        if (value.isEmpty || value.trim() == "") {
+                          return 'Please Enter Your Email';
+                        } else if (!(value.contains("@") &&
+                            value.contains("."))) return "Invalid Email";
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 10.0),
+                    ListTile(
+                      leading: Icon(FontAwesomeIcons.building),
+                      title: FutureBuilder(
+                        future: _future,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return CollegeDropdown(
+                              dropDownItems: _dropDownItems,
+                              onChanged: (College clg) {
+                                setState(() {
+                                  _selectedCollege = clg;
+                                });
+                              },
+                            );
+                          } else
+                            return NeumorphicProgressIndeterminate();
                         },
-                      );
-                    },
-                  ),
-                  FlatButton(
-                    child: Text("Login ?"),
-                    onPressed: () {
-                      Navigator.popAndPushNamed(context, LoginScreen.id);
-                    },
-                  )
-                ],
+                      ),
+                    ),
+                    SizedBox(height: 10.0),
+                    CustomTextFormField(
+                      labelText: "Phone",
+                      icon: FontAwesomeIcons.phone,
+                      flipIcon: true,
+                      onChanged: (String value) {
+                        _phone = value;
+                      },
+                      validator: (String value) {
+                        if (value.isEmpty || value.trim() == "")
+                          return 'Please Enter your Phone Number';
+                        else if (value.length != 10)
+                          return "Invalid Phone Number";
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 10.0),
+                    CustomTextFormField(
+                      labelText: "Password",
+                      icon: Icons.lock,
+                      onChanged: (String value) {
+                        _password = value;
+                      },
+                      validator: (String value) {
+                        if (value.isEmpty || value.trim() == "")
+                          return 'Please Enter Your Password';
+                        else if (value.length < 6) return "Invalid Password";
+                        return null;
+                      },
+                    ),
+                    Builder(
+                      builder: (context) {
+                        return FlatButton(
+                          child: Text("REGISTER"),
+                          onPressed: () async {
+                            if (_formKey.currentState.validate()) {
+                              setState(() {
+                                isAsyncCall = true;
+                              });
+                              String msg;
+                              try {
+                                final String userId =
+                                    await UserController.registerUser(
+                                        email: _email.trim(),
+                                        collegeId: _selectedCollege.cid,
+                                        profilePicURL:
+                                            "https://firebasestorage.googleapis.com/v0/b/eleventhhour-eb2e0.appspot.com/o/userDefault.jpeg?alt=media&token=ac1366cc-f928-4a08-8bee-1dfd5788db68",
+                                        phone: _phone,
+                                        password: _password,
+                                        name: _fullName);
+                                if (userId != null) {
+                                  if (imageSelected) {
+                                    await uploadFile(userId);
+                                    await _firestore
+                                        .collection("users")
+                                        .document(userId)
+                                        .updateData({
+                                      "profilePicURL": _profilePicURL,
+                                    });
+                                  }
+                                  msg =
+                                      "Verification Email Sent Successfully !";
+                                  Navigator.popAndPushNamed(
+                                      context, LoginScreen.id,
+                                      arguments: [_email.trim(), _password]);
+                                } else {
+                                  msg = "Error While Registering New User";
+                                }
+                              } on RegistrationException catch (e) {
+                                if (e.message != null) msg = e.message;
+                              } catch (e) {
+                                msg = e.toString();
+                              } finally {
+                                setState(() {
+                                  isAsyncCall = false;
+                                });
+                              }
+                              Fluttertoast.showToast(msg: msg);
+                            }
+                          },
+                        );
+                      },
+                    ),
+                    FlatButton(
+                      child: Text("Login ?"),
+                      onPressed: () {
+                        Navigator.popAndPushNamed(context, LoginScreen.id);
+                      },
+                    )
+                  ],
+                ),
               ),
-            ),
-          ]),
-          isAsyncCall ? LoadingScreen() : SizedBox.shrink(),
-        ],
+            ]),
+            isAsyncCall ? LoadingScreen() : SizedBox.shrink(),
+          ],
+        ),
       ),
     );
   }

@@ -43,9 +43,13 @@ const kDefaultProfilePicUrl =
 
 const kButtonTextStyle =
     TextStyle(fontFamily: 'karla', fontSize: 25, fontWeight: FontWeight.bold);
-const bodyStyle = TextStyle(fontSize: 19.0, color: Colors.black);
+const bodyStyle = TextStyle(
+  fontSize: 19.0,
+  color: Color(0xff616161),
+);
 const pageDecoration = const PageDecoration(
-  titleTextStyle: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700),
+  titleTextStyle: TextStyle(
+      fontSize: 28.0, fontWeight: FontWeight.w700, color: Colors.black),
   bodyTextStyle: bodyStyle,
   descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
   pageColor: Color(0xffEEEEEE),

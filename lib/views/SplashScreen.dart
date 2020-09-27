@@ -6,10 +6,11 @@ import 'package:eleventh_hour/models/College.dart';
 import 'package:eleventh_hour/models/DeviceDimension.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:eleventh_hour/views/IntroScreen.dart';
-import 'package:eleventh_hour/views/LoginScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'LoginScreen.dart';
 
 class SplashScreen extends StatefulWidget {
   static const id = '/';

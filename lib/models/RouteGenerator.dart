@@ -123,7 +123,11 @@ class RouteGenerator {
             child: CartScreen(), type: PageTransitionType.downToUp);
       case LoginScreen.id:
         return PageTransition(
-            child: LoginScreen(), type: PageTransitionType.rightToLeftWithFade);
+            child: LoginScreen(
+              email: args != null ? (args as List)[0] : "",
+              password: args != null ? (args as List)[1] : "",
+            ),
+            type: PageTransitionType.rightToLeftWithFade);
       case RegistrationScreen.id:
         return PageTransition(
             child: RegistrationScreen(),
