@@ -142,7 +142,8 @@ class _CourseDetailsState extends State<CourseDetails> {
                       children: [
                         StarRating(
                           size: 35.0,
-                          rating: widget.course.ratings.length == 0
+                          rating: widget.course.ratings == null ||
+                                  widget.course.ratings.length == 0
                               ? 0
                               : calcRating(widget.course.ratings),
                           color: Colors.amber,

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class CourseController extends ChangeNotifier {
   List<Course> courses;
+
   CourseController({@required this.courses});
 
   Future<void> getCourses() async {
@@ -34,12 +35,16 @@ class CourseController extends ChangeNotifier {
     if (ratings == null || ratings.length == 0)
       ratings = [newRating];
     else {
+      bool isRated = false;
       for (int i = 0; i < ratings.length; i++) {
         if (ratings[i]['userId'] == userId) {
           ratings[i]['userRating'] = newRating['userRating'];
-        } else {
-          ratings.add(newRating);
+          isRated = true;
+          break;
         }
+      }
+      if (!isRated) {
+        ratings.add(newRating);
       }
     }
 
