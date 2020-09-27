@@ -26,9 +26,11 @@ class CustomDrawer extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-              Colors.amber,
-//              NeumorphicTheme.currentTheme(context).variantColor,
-              NeumorphicTheme.currentTheme(context).accentColor,
+//              Colors.amber,
+              Colors.grey[900],
+              Colors.grey[900]
+//              NeumorphicTheme.currentTheme(context).baseColor,
+//              NeumorphicTheme.currentTheme(context).baseColor,
             ])),
         colorTransitionScaffold: Colors.black38,
         leftChild: DrawerContent(

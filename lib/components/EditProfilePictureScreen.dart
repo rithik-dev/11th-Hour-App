@@ -1,11 +1,13 @@
 import 'dart:io';
 
 import 'package:eleventh_hour/components/LoadingScreen.dart';
+import 'package:eleventh_hour/components/NeumoCard.dart';
 import 'package:eleventh_hour/components/ProfilePicture.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/models/User.dart';
 import 'package:eleventh_hour/utilities/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
@@ -84,13 +86,15 @@ class _EditProfilePictureScreenState extends State<EditProfilePictureScreen> {
                             IconButton(
                               icon: Icon(Icons.camera_alt),
                               iconSize: 40,
-                              color: Colors.grey[300],
+                              color: NeumorphicTheme.currentTheme(context)
+                                  .accentColor,
                               onPressed: () => getImage(ImageSource.camera),
                             ),
                             IconButton(
                               icon: Icon(Icons.photo),
                               iconSize: 40,
-                              color: Colors.grey[300],
+                              color: NeumorphicTheme.currentTheme(context)
+                                  .accentColor,
                               onPressed: () => getImage(ImageSource.gallery),
                             ),
                           ],
@@ -100,68 +104,79 @@ class _EditProfilePictureScreenState extends State<EditProfilePictureScreen> {
                     SizedBox(height: 20),
                     Builder(
                       builder: (context) {
-                        return RaisedButton.icon(
-                          icon: Icon(FontAwesomeIcons.upload),
-                          label: Text("Upload Picture"),
-                          onPressed: () async {
-                            if (_image != null) {
-                              setState(() {
-                                isLoading = true;
-                              });
-                              final String newUrl =
-                                  await UserController.updateProfilePicture(
-                                      newImage: _image,
-                                      oldImageURL: user.profilePicURL,
-                                      userId: user.userId);
-                              user.profilePicURL = newUrl;
-                              user.updateUserInProvider(user);
-                              await _image.delete();
-                              Navigator.pop(context);
+                        return NeumorphicCard(
+                          child: RaisedButton.icon(
+                            color:
+                                NeumorphicTheme.currentTheme(context).baseColor,
+                            elevation: 0,
+                            icon: Icon(FontAwesomeIcons.upload),
+                            label: Text("Upload Picture"),
+                            onPressed: () async {
+                              if (_image != null) {
+                                setState(() {
+                                  isLoading = true;
+                                });
+                                final String newUrl =
+                                    await UserController.updateProfilePicture(
+                                        newImage: _image,
+                                        oldImageURL: user.profilePicURL,
+                                        userId: user.userId);
+                                user.profilePicURL = newUrl;
+                                user.updateUserInProvider(user);
+                                await _image.delete();
+                                Navigator.pop(context);
 
-                              setState(() {
-                                isLoading = false;
-                              });
+                                setState(() {
+                                  isLoading = false;
+                                });
 
-                              Fluttertoast.showToast(
-                                  msg: "Profile Picture Updated");
-                            } else
-                              Fluttertoast.showToast(
-                                  msg: "Please Select an Image !");
-                          },
+                                Fluttertoast.showToast(
+                                    msg: "Profile Picture Updated");
+                              } else
+                                Fluttertoast.showToast(
+                                    msg: "Please Select an Image !");
+                            },
+                          ),
                         );
                       },
                     ),
                     SizedBox(height: 10.0),
                     Builder(
                       builder: (context) {
-                        return RaisedButton.icon(
-                          icon: Icon(Icons.remove),
-                          label: Text("Remove Picture"),
-                          onPressed: () async {
-                            if (user.profilePicURL != kDefaultProfilePicUrl) {
-                              setState(() {
-                                isLoading = true;
-                              });
+                        return NeumorphicCard(
+                          child: RaisedButton.icon(
+                            color:
+                                NeumorphicTheme.currentTheme(context).baseColor,
+                            elevation: 0,
+                            icon: Icon(Icons.remove),
+                            label: Text("Remove Picture"),
+                            onPressed: () async {
+                              if (user.profilePicURL != kDefaultProfilePicUrl) {
+                                setState(() {
+                                  isLoading = true;
+                                });
 
-                              final String defaultUrl =
-                                  await UserController.removeProfilePicture(
-                                      userId: user.userId,
-                                      oldImageURL: user.profilePicURL);
-                              Navigator.pop(context);
-                              user.profilePicURL = defaultUrl;
-                              user.updateUserInProvider(user);
+                                final String defaultUrl =
+                                    await UserController.removeProfilePicture(
+                                        userId: user.userId,
+                                        oldImageURL: user.profilePicURL);
+                                Navigator.pop(context);
+                                user.profilePicURL = defaultUrl;
+                                user.updateUserInProvider(user);
 
-                              setState(() {
-                                isLoading = false;
-                              });
+                                setState(() {
+                                  isLoading = false;
+                                });
 
-                              Fluttertoast.showToast(
-                                  msg: "Profile Picture Removed");
-                            } else {
-                              Fluttertoast.showToast(
-                                  msg: "Profile picture is already removed !");
-                            }
-                          },
+                                Fluttertoast.showToast(
+                                    msg: "Profile Picture Removed");
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg:
+                                        "Profile picture is already removed !");
+                              }
+                            },
+                          ),
                         );
                       },
                     ),

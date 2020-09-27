@@ -17,8 +17,8 @@ class CachedImage extends StatelessWidget {
         child: Container(
           width: double.infinity,
         ),
-        baseColor: Colors.grey,
-        highlightColor: Colors.white,
+        baseColor: Colors.white,
+        highlightColor: Colors.grey[300],
       ),
     );
   }

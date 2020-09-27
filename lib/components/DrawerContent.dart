@@ -119,14 +119,17 @@ class DrawerItem extends StatelessWidget {
       shadowColor: Colors.transparent,
       child: ListTile(
         contentPadding: EdgeInsets.all(20),
-        leading: FaIcon(icon),
+        leading: FaIcon(
+          icon,
+          color: Colors.white,
+        ),
         onTap: onTap,
         title: Text(
           title,
           style: Theme.of(context)
               .textTheme
               .headline3
-              .copyWith(color: Colors.black),
+              .copyWith(color: Colors.white),
         ),
       ),
     );

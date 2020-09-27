@@ -60,6 +60,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
   }
 
   List<Course> trendingCourses;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -167,10 +168,16 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                   height: 20,
                 ),
                 CarouselSlider(
-                    items: trendingCourses
-                        .sublist(0, 5)
-                        .map((course) => CourseCard(course: course, user: user))
-                        .toList(),
+                    items: trendingCourses.length <= 5
+                        ? trendingCourses
+                            .map((course) =>
+                                CourseCard(course: course, user: user))
+                            .toList()
+                        : trendingCourses
+                            .sublist(0, 5)
+                            .map((course) =>
+                                CourseCard(course: course, user: user))
+                            .toList(),
                     options: CarouselOptions(
                       height: 345,
                       viewportFraction: 0.8,

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 class CourseController extends ChangeNotifier {
   List<Course> courses;
-
   CourseController({@required this.courses});
 
   Future<void> getCourses() async {

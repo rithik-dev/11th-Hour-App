@@ -33,7 +33,8 @@ class _LecturesPageState extends State<LecturesPage> {
                 color: NeumorphicTheme.currentTheme(context).accentColor,
               ),
           onPressed: () {
-            Navigator.pushNamed(context, ResourcesPage.id);
+            Navigator.pushNamed(context, ResourcesPage.id,
+                arguments: widget.course);
           },
           tooltip: "Go to Resources",
           child: Icon(

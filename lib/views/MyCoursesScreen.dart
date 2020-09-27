@@ -15,7 +15,7 @@ class MyCoursesScreen extends StatelessWidget {
         child: Consumer2<User, CourseController>(
             builder: (context, user, courses, child) {
           if (user.myCourses == null || user.myCourses.length == 0)
-            return Card404(title: "COURSES");
+            return Card404(desc: "You don't have any course!!");
           else {
             return Column(
               children: <Widget>[

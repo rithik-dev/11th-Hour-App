@@ -189,7 +189,9 @@ class _CartScreenState extends State<CartScreen> {
                       .getCourses();
                 },
                 child: (user.cart == null || user.cart.length == 0)
-                    ? Card404(title: "CART")
+                    ? Card404(
+                        desc:
+                            "Uhm...looks like you\ndon't have any course in your cart!")
                     : ListView(
                         children: _courses
                             .map((course) => SmallCourseCard(

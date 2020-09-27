@@ -43,7 +43,9 @@ class MyUploadedCoursesScreen extends StatelessWidget {
             },
             child: (user.myUploadedCourses == null ||
                     user.myUploadedCourses.length == 0)
-                ? Card404(title: "UPLOADED COURSES")
+                ? Card404(
+                    desc:
+                        "The best revision is teaching others\n Start teaching!!")
                 : Column(
                     children: <Widget>[
                       Expanded(

@@ -14,7 +14,7 @@ class WishlistScreen extends StatelessWidget {
         child: Consumer2<User, CourseController>(
             builder: (context, user, courses, child) {
           if (user.wishlist == null || user.wishlist.length == 0)
-            return Card404(title: "Wishlist");
+            return Card404(desc: "There are no courses in your wishlist!!");
           else {
             return Column(
               children: <Widget>[

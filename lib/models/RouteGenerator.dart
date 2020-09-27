@@ -10,6 +10,7 @@ import 'package:eleventh_hour/views/LoginScreen.dart';
 import 'package:eleventh_hour/views/MyTransactionsHistory.dart';
 import 'package:eleventh_hour/views/MyUploadedCoursesScreen.dart';
 import 'package:eleventh_hour/views/NoCollegeScreen.dart';
+import 'package:eleventh_hour/views/PdfPage.dart';
 import 'package:eleventh_hour/views/ProfileScreen.dart';
 import 'package:eleventh_hour/views/RefundPolicy.dart';
 import 'package:eleventh_hour/views/RegistrationScreen.dart';
@@ -28,9 +29,18 @@ class RouteGenerator {
     final args = settings.arguments;
 
     switch (settings.name) {
+      case PdfPage.id:
+        return PageTransition(
+          child: PdfPage(
+            resourceUrl: args,
+          ),
+          type: PageTransitionType.downToUp,
+        );
       case ResourcesPage.id:
         return PageTransition(
-          child: ResourcesPage(),
+          child: ResourcesPage(
+            course: args,
+          ),
           type: PageTransitionType.downToUp,
         );
       case SubjectDetails.id:
