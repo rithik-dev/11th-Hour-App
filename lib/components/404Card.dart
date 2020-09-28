@@ -9,6 +9,7 @@ class Card404 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      padding: EdgeInsets.symmetric(horizontal: 10),
       children: [
         Lottie.asset('assets/lottie/404.json'),
         Text(

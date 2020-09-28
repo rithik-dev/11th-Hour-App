@@ -109,14 +109,15 @@ class _CourseDetailsState extends State<CourseDetails> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Column(
                   children: [
                     Text(
                       widget.course.description,
                       style: NeumorphicTheme.currentTheme(context)
                           .textTheme
-                          .headline5,
+                          .headline5
+                          .copyWith(fontSize: 18),
                     ),
                     isMyCourse
                         ? SizedBox.shrink()

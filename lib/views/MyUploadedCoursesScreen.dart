@@ -45,7 +45,7 @@ class MyUploadedCoursesScreen extends StatelessWidget {
                     user.myUploadedCourses.length == 0)
                 ? Card404(
                     desc:
-                        "The best revision is teaching others\n Start teaching!\n \nVisit website to upload your first course.")
+                        "The best revision is teaching others.\n Start teaching!\n \nVisit website to upload your first course.")
                 : Column(
                     children: <Widget>[
                       Expanded(

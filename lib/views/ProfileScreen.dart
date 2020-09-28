@@ -31,7 +31,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final FirebaseStorage _storage =
-      FirebaseStorage(storageBucket: 'gs://eleventhhour-eb2e0.appspot.com');
+      FirebaseStorage(storageBucket: 'gs://th-hour-de18e.appspot.com');
 
   final picker = ImagePicker();
 

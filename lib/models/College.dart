@@ -28,7 +28,8 @@ class College extends ChangeNotifier {
     return new College(
       cid: snapshot.documentID,
       name: snapshot['name'] as String,
-      subjectWithCourses: snapshot['subjects'] as Map<String, dynamic>,
+      subjectWithCourses:
+          snapshot['subjectWithCourses'] as Map<String, dynamic>,
     );
   }
 }

@@ -17,7 +17,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 
 final FirebaseStorage _storage =
-    FirebaseStorage(storageBucket: 'gs://eleventhhour-eb2e0.appspot.com');
+    FirebaseStorage(storageBucket: 'gs://th-hour-de18e.appspot.com');
 
 class RegistrationScreen extends StatefulWidget {
   static const id = '/register';
@@ -260,7 +260,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         if (value.isEmpty || value.trim() == "")
                           return 'Please Enter Your Password';
                         else if (value.length < 6)
-                          return "Length should be > 5";
+                          return "Length should be greater than 5";
                         return null;
                       },
                     ),

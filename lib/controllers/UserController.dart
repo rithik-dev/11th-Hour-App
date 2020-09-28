@@ -14,7 +14,7 @@ class UserController {
   static final Firestore _fireStore = Firestore.instance;
 
   static final FirebaseStorage _storage =
-      FirebaseStorage(storageBucket: 'gs://eleventhhour-eb2e0.appspot.com');
+      FirebaseStorage(storageBucket: 'gs://th-hour-de18e.appspot.com');
 
   static Future<String> uploadFile(String userId, File image) async {
     try {
