@@ -52,6 +52,7 @@ class _LecturesPageState extends State<LecturesPage> {
                   lectureUrl: widget.course.lectures[videoIndex]['lectureUrl'],
                 ),
                 NeumorphicCard(
+                  margin: EdgeInsets.all(20),
                   padding: EdgeInsets.all(10),
                   child: Row(
                     children: [
@@ -67,7 +68,8 @@ class _LecturesPageState extends State<LecturesPage> {
                           "${widget.course.lectures[videoIndex]['name']}",
                           style: NeumorphicTheme.currentTheme(context)
                               .textTheme
-                              .headline3,
+                              .headline3
+                              .copyWith(color: Colors.black),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
                         ),
@@ -77,6 +79,7 @@ class _LecturesPageState extends State<LecturesPage> {
                 ),
                 ListView.builder(
                     shrinkWrap: true,
+                    physics: BouncingScrollPhysics(),
                     itemCount: widget.course.lectures.length,
                     itemBuilder: (context, index) {
                       return Container(

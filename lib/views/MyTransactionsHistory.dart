@@ -1,3 +1,4 @@
+import 'package:eleventh_hour/components/404Card.dart';
 import 'package:eleventh_hour/components/HomeBoilerPlate.dart';
 import 'package:eleventh_hour/components/TransactionCard.dart';
 import 'package:eleventh_hour/controllers/TransactionController.dart';
@@ -32,36 +33,41 @@ class MyTransactionsHistory extends StatelessWidget {
           textStyle: NeumorphicTextStyle(fontSize: 20),
         ),
       ),
-      body: FutureBuilder<List<Transaction>>(
-        future: TransactionController.getTransactionsById(user.transactionIds),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return ListView.builder(
-              physics: BouncingScrollPhysics(),
-              itemBuilder: (context, index) {
-                return TransactionCard(transaction: snapshot.data[index]);
-              },
-              itemCount: snapshot.data.length,
-            );
-          } else {
-            return Shimmer.fromColors(
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return Container(
-                    height: 100,
-                    width: 300,
-                    margin: EdgeInsets.all(10),
-                    color: Colors.white,
+      body: user.transactionIds.length == 0
+          ? Card404(
+              desc: "You don't have any course.",
+            )
+          : FutureBuilder<List<Transaction>>(
+              future: TransactionController.getTransactionsById(
+                  user.transactionIds),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return TransactionCard(transaction: snapshot.data[index]);
+                    },
+                    itemCount: snapshot.data.length,
                   );
-                },
-                itemCount: user.transactionIds.length,
-              ),
-              baseColor: Colors.white,
-              highlightColor: Colors.grey[400],
-            );
-          }
-        },
-      ),
+                } else {
+                  return Shimmer.fromColors(
+                    child: ListView.builder(
+                      itemBuilder: (context, index) {
+                        return Container(
+                          height: 100,
+                          width: 300,
+                          margin: EdgeInsets.all(10),
+                          color: Colors.white,
+                        );
+                      },
+                      itemCount: user.transactionIds.length,
+                    ),
+                    baseColor: Colors.white,
+                    highlightColor: Colors.grey[400],
+                  );
+                }
+              },
+            ),
     );
   }
 }

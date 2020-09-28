@@ -28,7 +28,7 @@ class CustomVideoPlayer extends StatelessWidget {
         playIcon: Icon(
           Icons.play_circle_outline,
           size: 70,
-          color: Colors.black,
+          color: Colors.pink,
         ),
         showPlayIcon: true,
         videoControlBarStyle: VideoControlBarStyle(

@@ -259,7 +259,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       validator: (String value) {
                         if (value.isEmpty || value.trim() == "")
                           return 'Please Enter Your Password';
-                        else if (value.length < 6) return "Invalid Password";
+                        else if (value.length < 6)
+                          return "Length should be > 5";
                         return null;
                       },
                     ),
