@@ -8,6 +8,7 @@ import 'package:eleventh_hour/controllers/CollegeController.dart';
 import 'package:eleventh_hour/controllers/UserController.dart';
 import 'package:eleventh_hour/models/College.dart';
 import 'package:eleventh_hour/models/Exceptions.dart';
+import 'package:eleventh_hour/utilities/constants.dart';
 import 'package:eleventh_hour/views/LoginScreen.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -279,8 +280,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                     await UserController.registerUser(
                                         email: _email.trim(),
                                         collegeId: _selectedCollege.cid,
-                                        profilePicURL:
-                                            "https://firebasestorage.googleapis.com/v0/b/eleventhhour-eb2e0.appspot.com/o/userDefault.jpeg?alt=media&token=ac1366cc-f928-4a08-8bee-1dfd5788db68",
+                                        profilePicURL: kDefaultProfilePicUrl,
                                         phone: _phone,
                                         password: _password,
                                         name: _fullName);
