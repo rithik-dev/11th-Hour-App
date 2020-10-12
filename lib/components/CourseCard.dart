@@ -202,11 +202,7 @@ class _CourseCardState extends State<CourseCard> {
           ),
         ),
         isLoading
-            ? Center(
-                child: CircularProgressIndicator(
-                backgroundColor:
-                    NeumorphicTheme.currentTheme(context).accentColor,
-              ))
+            ? Center(child: CircularProgressIndicator())
             : SizedBox.shrink(),
       ],
     );
