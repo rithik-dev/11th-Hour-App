@@ -5,7 +5,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class CollapsingTile extends StatelessWidget {
   final String question;
   final String answer;
+
   CollapsingTile({this.question, this.answer});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -15,10 +17,10 @@ class CollapsingTile extends StatelessWidget {
         childrenPadding: EdgeInsets.all(20),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Icon(
-              FontAwesomeIcons.solidQuestionCircle,
+              FontAwesomeIcons.hashtag,
               size: 17,
             ),
             SizedBox(
@@ -34,27 +36,14 @@ class CollapsingTile extends StatelessWidget {
           ],
         ),
         children: [
-          Row(
-            children: [
-              Icon(
-                FontAwesomeIcons.flask,
-                size: 17,
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Expanded(
-                child: Text(
-                  answer,
-                  softWrap: true,
-                  style: NeumorphicTheme.currentTheme(context)
-                      .textTheme
-                      .headline5
-                      .copyWith(color: Colors.grey[900]),
-                ),
-              ),
-            ],
-          )
+          Text(
+            answer,
+            softWrap: true,
+            style: NeumorphicTheme.currentTheme(context)
+                .textTheme
+                .headline5
+                .copyWith(color: Colors.grey[900]),
+          ),
         ],
       ),
     );
