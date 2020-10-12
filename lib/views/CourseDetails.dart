@@ -81,7 +81,7 @@ class _CourseDetailsState extends State<CourseDetails> {
                   )),
               Container(
                 width: double.infinity,
-                height: Provider.of<DeviceDimension>(context).height * 0.14,
+                height: Provider.of<DeviceDimension>(context).height * 0.11,
                 decoration: BoxDecoration(
                   color: NeumorphicTheme.currentTheme(context).baseColor,
                 ),
@@ -323,9 +323,11 @@ class _CourseDetailsState extends State<CourseDetails> {
                         ),
                         onPressed: () async {
                           if (await canLaunch(
-                              "mailto:company.eleventhhour@gmail.com?subject=Requesting refund !&body=\n\n Course : ${widget.course.title}\nID : ${widget.course.id}")) {
+                              "mailto:company.eleventhhour@gmail.com?subject=Requesting refund !&body=\n\nCourse ID : ${widget
+                                  .course.id}")) {
                             await launch(
-                                "mailto:company.eleventhhour@gmail.com?subject=Requesting refund !&body=\n\n Course : ${widget.course.title}\nID : ${widget.course.id}");
+                                "mailto:company.eleventhhour@gmail.com?subject=Requesting refund !&body=\n\nCourse ID : ${widget
+                                    .course.id}");
                           } else {
                             throw 'Could not launch';
                           }

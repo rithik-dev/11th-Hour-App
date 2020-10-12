@@ -11,7 +11,8 @@ class CachedImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       fit: BoxFit.cover,
-      width: infinity ? double.infinity : null,
+      width: infinity ? double.infinity : 125.0,
+      height: double.infinity,
       imageUrl: url,
       placeholder: (context, _) => Shimmer.fromColors(
         child: Container(

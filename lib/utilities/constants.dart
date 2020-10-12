@@ -89,46 +89,46 @@ var kDefaultTheme = NeumorphicThemeData.dark().copyWith(
   textTheme: TextTheme(
     button: TextStyle(color: Color(0xFF252525)),
     headline5:
-        TextStyle(fontSize: 20.0, color: Colors.black, fontFamily: 'karla'),
+        TextStyle(fontSize: 18.0, color: Colors.black, fontFamily: 'karla'),
     headline4: TextStyle(
-        fontSize: 18.0,
+        fontSize: 16.0,
         fontWeight: FontWeight.w600,
         color: Colors.black54,
         fontFamily: 'karla'),
     headline3: TextStyle(
-        fontSize: 20.0,
+        fontSize: 18.0,
         fontWeight: FontWeight.w600,
         color: Colors.black54,
         fontFamily: 'karla'),
     headline2: TextStyle(
-        fontSize: 22.0,
+        fontSize: 20.0,
         fontWeight: FontWeight.w700,
         color: Colors.black,
         fontFamily: 'karla'),
     headline1: TextStyle(
-        fontSize: 32.0,
+        fontSize: 30.0,
         fontWeight: FontWeight.w300,
         color: Colors.black,
         fontFamily: 'karla'),
     subtitle1: TextStyle(
-        fontSize: 14.5,
+        fontSize: 12.5,
         fontWeight: FontWeight.w500,
         color: Colors.black54,
         fontFamily: 'karla'),
     headline6: TextStyle(
-        fontSize: 16.0,
+        fontSize: 14.0,
         fontWeight: FontWeight.w600,
         color: Colors.black45,
         fontFamily: 'karla'),
     bodyText2:
-        TextStyle(fontSize: 12.0, color: Colors.black54, fontFamily: 'karla'),
+    TextStyle(fontSize: 10.0, color: Colors.black54, fontFamily: 'karla'),
     bodyText1: TextStyle(
-        fontSize: 14.0,
+        fontSize: 12.0,
         fontWeight: FontWeight.w600,
         color: Colors.black54,
         fontFamily: 'karla'),
     caption:
-        TextStyle(fontSize: 12.0, color: Colors.black38, fontFamily: 'karla'),
+    TextStyle(fontSize: 10.0, color: Colors.black38, fontFamily: 'karla'),
   ),
 //  primaryColor: Color(0xFF1a1a2e),
 );
