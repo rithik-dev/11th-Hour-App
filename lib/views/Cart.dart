@@ -97,7 +97,7 @@ class _CartScreenState extends State<CartScreen> {
 
   void openCheckout(String phone, String email) {
     var options = {
-      "key": "rzp_test_NwfgCE8CdhXpFT",
+      "key": "rzp_live_L9GwPvLqbmqkQ8",
       "amount": amount * 100,
       "name": "11th Hour",
       "description": "Start Learning!!!",
