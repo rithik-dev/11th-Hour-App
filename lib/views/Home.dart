@@ -167,30 +167,33 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                 SizedBox(
                   height: 20,
                 ),
-                CarouselSlider(
-                    items: trendingCourses.length <= 5
-                        ? trendingCourses
-                            .map((course) =>
-                                CourseCard(course: course, user: user))
-                            .toList()
-                        : trendingCourses
-                            .sublist(0, 5)
-                            .map((course) =>
-                                CourseCard(course: course, user: user))
-                            .toList(),
-                    options: CarouselOptions(
-                      height: 345,
-                      viewportFraction: 0.8,
-                      initialPage: 0,
-                      enableInfiniteScroll: true,
-                      reverse: false,
-                      autoPlay: true,
-                      autoPlayInterval: Duration(seconds: 3),
-                      autoPlayAnimationDuration: Duration(milliseconds: 800),
-                      autoPlayCurve: Curves.fastOutSlowIn,
-                      enlargeCenterPage: true,
-                      scrollDirection: Axis.horizontal,
-                    )),
+                trendingCourses == null
+                    ? SizedBox.shrink()
+                    : CarouselSlider(
+                        items: trendingCourses.length <= 5
+                            ? trendingCourses
+                                .map((course) =>
+                                    CourseCard(course: course, user: user))
+                                .toList()
+                            : trendingCourses
+                                .sublist(0, 5)
+                                .map((course) =>
+                                    CourseCard(course: course, user: user))
+                                .toList(),
+                        options: CarouselOptions(
+                          height: 345,
+                          viewportFraction: 0.8,
+                          initialPage: 0,
+                          enableInfiniteScroll: true,
+                          reverse: false,
+                          autoPlay: true,
+                          autoPlayInterval: Duration(seconds: 3),
+                          autoPlayAnimationDuration:
+                              Duration(milliseconds: 800),
+                          autoPlayCurve: Curves.fastOutSlowIn,
+                          enlargeCenterPage: true,
+                          scrollDirection: Axis.horizontal,
+                        )),
                 SizedBox(height: 10),
                 // if no course in recent then check if course if "MyCourse" ,if not then show sized box else show my courses or if data in recent courses show recent courses
                 user.recentCoursesIds.length == 0
