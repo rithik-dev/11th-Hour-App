@@ -1,16 +1,11 @@
-# eleventh_hour
+# 11th Hour
 
-A new Flutter application.
+11th Hour is a mobile application in flutter to provide easily accessible college-specific study material,resources and video lectures a night before the exam to the students.
+Students can login/sign up, buy courses, add them to cart, wishlist courses, search courses. The profile screen allows them to edit profile details and see transactions history.
+The application uses razorpay for the payment gateway and firebase to store the courses and user authentication.
 
-## Getting Started
+Students can upload courses which gives them an opportunity to make a quick buck along with studies. The courses can be uploaded using the [Web Portal](https://github.com/sarcastic-verma/11th_hour)
 
-This project is a starting point for a Flutter application.
+Via this platform, we aim to reach as many colleges as possible to help them earn a quick buck and at the 11th hour!
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![screenshot](https://user-images.githubusercontent.com/56810766/100550010-d1bc5600-329c-11eb-88e1-1f0a3b1eb8b8.jpeg)
